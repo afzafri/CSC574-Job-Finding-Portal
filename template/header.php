@@ -43,11 +43,12 @@
                 <li class="menu-active"><a href="home.php">Home</a></li>
                 <li><a href="jobsearch.php">Job Search</a></li>
                 <li><a href="companies.php">Companies List</a></li>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="aboutus.php">About Us</a></li>
+                <li><a href="contactus.php">Contact</a></li>
                 <li class="menu-has-children"><a href="">Profile</a>
                   <ul>
                     <li><a href="elements.html">View Profile</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
                     <li><a href="search.html">Setting</a></li>
                     <li><a href="single.html">Log Out</a></li>
                   </ul>
