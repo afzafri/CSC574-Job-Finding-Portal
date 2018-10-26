@@ -47,7 +47,7 @@
                 <li><a href="contactus.php">Contact</a></li>
                 <li class="menu-has-children"><a href="">Profile</a>
                   <ul>
-                    <li><a href="elements.html">View Profile</a></li>
+                    <li><a href="./profile.php">View Profile</a></li>
                     <li><a href="./dashboard">Dashboard</a></li>
                     <li><a href="search.html">Setting</a></li>
                     <li><a href="single.html">Log Out</a></li>
