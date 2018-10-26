@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="./template/css/animate.min.css">
     <link rel="stylesheet" href="./template/css/owl.carousel.css">
     <link rel="stylesheet" href="./template/css/main.css">
+    <link rel="stylesheet" href="./template/plugins/DataTables/datatables.css">
   </head>
   <body>
 
@@ -41,7 +42,7 @@
               <ul class="nav-menu">
                 <li class="menu-active"><a href="home.php">Home</a></li>
                 <li><a href="jobsearch.php">Job Search</a></li>
-                <li><a href="category.html">Companies List</a></li>
+                <li><a href="companies.php">Companies List</a></li>
                 <li><a href="about-us.html">About Us</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li class="menu-has-children"><a href="">Profile</a>

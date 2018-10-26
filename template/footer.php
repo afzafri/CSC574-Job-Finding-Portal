@@ -86,5 +86,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="./template/js/parallax.min.js"></script>
 <script src="./template/js/mail-script.js"></script>
 <script src="./template/js/main.js"></script>
+<script src="./template/plugins/DataTables/datatables.js"></script>
+
 </body>
 </html>
