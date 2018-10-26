@@ -39,8 +39,8 @@
             </div>
             <nav id="nav-menu-container">
               <ul class="nav-menu">
-                <li class="menu-active"><a href="index.php">Home</a></li>
-                <li><a href="category.html">Job Search</a></li>
+                <li class="menu-active"><a href="home.php">Home</a></li>
+                <li><a href="jobsearch.php">Job Search</a></li>
                 <li><a href="category.html">Companies List</a></li>
                 <li><a href="about-us.html">About Us</a></li>
                 <li><a href="contact.html">Contact</a></li>
