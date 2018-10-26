@@ -26,6 +26,9 @@
 <script src="./template/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="./template/dist/js/adminlte.min.js"></script>
+<!-- DataTables -->
+<script src="./template/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./template/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
  Both of these plugins are recommended to enhance the
