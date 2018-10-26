@@ -64,9 +64,9 @@ desired effect
     <!-- Logo -->
     <a href="./index.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>J</b>FP</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>JFP</b> Dashboard</span>
     </a>
 
     <!-- Header Navbar -->
@@ -154,6 +154,7 @@ desired effect
           </a>
         </li>
         <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Posts</span></a></li>
+        <li><a href="../home.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>JFP Web</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">
