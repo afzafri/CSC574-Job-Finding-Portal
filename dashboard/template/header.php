@@ -1,3 +1,4 @@
+<?php $level = isset($_GET['level']) ? $_GET['level'] : 3; ?>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -22,7 +23,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
-  <link rel="stylesheet" href="./template/dist/css/skins/skin-purple.min.css">
+  <?php
+    /* level 1 = ministry/admin
+       level 2 = job provider
+       level 3 = youngster */
+    if($level == 1) { echo '<link rel="stylesheet" href="./template/dist/css/skins/skin-red.min.css">'; }
+    else if($level == 2) { echo '<link rel="stylesheet" href="./template/dist/css/skins/skin-green.min.css">'; }
+    else if($level == 3) { echo '<link rel="stylesheet" href="./template/dist/css/skins/skin-purple.min.css">'; }
+  ?>
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,7 +64,11 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-purple sidebar-mini">
+<?php
+  if($level == 1) { echo '<body class="hold-transition skin-red sidebar-mini">'; }
+  else if($level == 2) { echo '<body class="hold-transition skin-green sidebar-mini">'; }
+  else if($level == 3) { echo '<body class="hold-transition skin-purple sidebar-mini">'; }
+?>
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -66,7 +79,11 @@ desired effect
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>J</b>FP</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>JFP</b> Dashboard</span>
+      <?php
+        if($level == 1) { echo '<span class="logo-lg"><b>ADMIN</b> Dashboard</span>'; }
+        else if($level == 2) { echo '<span class="logo-lg"><b>JOB PROVIDER</b> Dashboard</span>'; }
+        else if($level == 3) { echo '<span class="logo-lg"><b>YOUNGSTER</b> Dashboard</span>'; }
+      ?>
     </a>
 
     <!-- Header Navbar -->
@@ -84,14 +101,14 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="./dist/img/avatar3.png" class="user-image" alt="User Image">
+              <img src="./template/dist/img/avatar.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs">Afif Zafri</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="./dist/img/avatar3.png" class="img-circle" alt="User Image">
+                <img src="./template/dist/img/avatar.png" class="img-circle" alt="User Image">
 
                 <p>
                   Afif Zafri - Web Developer
@@ -122,7 +139,7 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="./dist/img/avatar3.png" class="img-circle" alt="User Image">
+          <img src="./template/dist/img/avatar.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Afif Zafri</p>
@@ -147,13 +164,25 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active">
-          <a href="#">
-            <i class="fa fa-fw fa-list-alt"></i>
-            <span>Job Applications</span>
-          </a>
-        </li>
-        <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Posts</span></a></li>
+        <?php
+          if($level == 1) {
+            echo '<li class="active"><a href="#"><i class="fa fa-fw fa-list-alt"></i> <span>Portal Statistics</span></a></li>
+                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Account</span></a></li>
+                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Job Provider Account</span></a></li>
+                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Job Offers</span></a></li>
+                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Post</span></a></li>
+                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>View and Generate Report</span></a></li>';
+          }
+          else if($level == 2) {
+            echo '<li class="active"><a href="#"><i class="fa fa-fw fa-list-alt"></i> <span>Manage Job Offers</span></a></li>
+                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>View Job Applications</span></a></li>';
+          }
+          else if($level == 3) {
+            echo '<li class="active"><a href="#"><i class="fa fa-fw fa-list-alt"></i> <span>Job Applications</span></a></li>
+                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Posts</span></a></li>';
+          }
+        ?>
+
         <li><a href="../home.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>JFP Web</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
