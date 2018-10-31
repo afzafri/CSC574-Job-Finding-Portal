@@ -42,7 +42,7 @@
               <ul class="nav-menu">
                 <li class="menu-active"><a href="home.php">Home</a></li>
                 <li><a href="jobsearch.php">Job Search</a></li>
-                <li><a href="companies.php">Companies List</a></li>
+                <li><a href="providers.php">Providers List</a></li>
                 <li><a href="aboutus.php">About Us</a></li>
                 <li><a href="contactus.php">Contact</a></li>
                 <li class="menu-has-children"><a href="">Afif Zafri</a>

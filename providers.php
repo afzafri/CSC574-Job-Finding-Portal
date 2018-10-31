@@ -1,5 +1,5 @@
 <?php
-  $pageTitle = "Companies List";
+  $pageTitle = "Providers List";
   include './template/header.php';
 ?>
 
@@ -11,7 +11,7 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Company Name</th>
+            <th>Provider Name</th>
             <th>Address</th>
             <th>Job Scope</th>
             <th>Total Jobs</th>
@@ -31,6 +31,13 @@
             <td>Pekan Tapah</td>
             <td>Cashier, Finance</td>
             <td>15</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Haji Lekir bin Tuah</td>
+            <td>Tapah Road</td>
+            <td>Berkebun, Petik petola</td>
+            <td>5</td>
         </tr>
     </tbody>
 </table>
