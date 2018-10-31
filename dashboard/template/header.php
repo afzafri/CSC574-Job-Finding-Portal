@@ -183,7 +183,7 @@ desired effect
           }
         ?>
 
-        <li><a href="../home.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>JFP Web</span></a></li>
+        <li><a href="../index.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>JFP Web</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">

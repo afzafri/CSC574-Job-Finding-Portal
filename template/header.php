@@ -45,14 +45,27 @@
                 <li><a href="providers.php">Providers List</a></li>
                 <li><a href="aboutus.php">About Us</a></li>
                 <li><a href="contactus.php">Contact</a></li>
-                <li class="menu-has-children"><a href="">Afif Zafri</a>
-                  <ul>
-                    <li><a href="./profile.php">View Profile</a></li>
-                    <li><a href="./dashboard">Dashboard</a></li>
-                    <li><a href="search.html">Setting</a></li>
-                    <li><a href="./index.php">Log Out</a></li>
-                  </ul>
-                </li>
+                <?php $login = isset($_GET['login']) ? $_GET['login'] : 0; ?>
+                <?php
+                  if($login == 1) {
+                    ?>
+                    <li class="menu-has-children"><a href="">Afif Zafri</a>
+                      <ul>
+                        <li><a href="./profile.php">View Profile</a></li>
+                        <li><a href="./dashboard">Dashboard</a></li>
+                        <li><a href="search.html">Setting</a></li>
+                        <li><a href="./index.php">Log Out</a></li>
+                      </ul>
+                    </li>
+                    <?php
+                  } else {
+                    ?>
+                      <li class=""><a class="ticker-btn" href="./login.php">Login</a></li>
+                    <?php
+                  }
+
+                ?>
+
               </ul>
             </nav><!-- #nav-menu-container -->
           </div>
