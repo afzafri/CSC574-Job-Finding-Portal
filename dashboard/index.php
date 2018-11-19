@@ -17,10 +17,10 @@
     try
     {
       $stmt = $conn->prepare("INSERT INTO
-                              JOB (J_TITLE, J_DESC, J_AREA, J_SALARY, J_START, J_END, JP_ID)
-                              VALUES (?, ?, ?, ?, ?, ?, ?) ");
+                              JOB (J_TITLE, J_DESC, J_AREA, J_SALARY, J_START, J_END, JP_ID, J_STATUS)
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?) ");
 
-      $stmt->execute(array($jtitle, $jdesc, $jarea, $jsalary, $dateStart, $dateEnd, $user_id));
+      $stmt->execute(array($jtitle, $jdesc, $jarea, $jsalary, $dateStart, $dateEnd, $user_id, 1)); // 0 job close, 1 job open
 
       echo "
       <script>
@@ -78,6 +78,7 @@
         <th>Salary</th>
         <th>Start Date &amp; Time</th>
         <th>End Date &amp; Time</th>
+        <th>Status</th>
         <th>Action</th>
       </tr>
       </thead>
@@ -99,6 +100,7 @@
             $jsalary = $result['J_SALARY'];
             $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
             $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
+            $jstatus = $result['J_STATUS'];
 
             echo "
               <tr>
@@ -109,6 +111,9 @@
                 <td>".$jsalary."</td>
                 <td>".$jstart."</td>
                 <td>".$jend."</td>
+                <td>";
+                  echo ($jstatus == 0) ? "<h4><span class='label label-danger'>Closed</span></h4>" : "<h4><span class='label label-success'>Open</span></h4>";
+                echo "</td>
                 <td>
                   ";
                   ?>
