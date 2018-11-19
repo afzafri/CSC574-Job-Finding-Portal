@@ -116,6 +116,7 @@
                     <input type='hidden' name='jobid' value='<?php echo $jid; ?>'>
                     <button type='submit' name='deleteJob' class='btn btn-danger'><i class="fa fa-fw fa-trash"></i></button>
                   </form>
+                  <a href="./editjob.php?id=<?php echo $jid; ?>" class="btn btn-warning"><i class="fa fa-fw fa-edit"></i></a>
                   <?php
                   echo"
                 </td>
@@ -143,7 +144,7 @@
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Default Modal</h4>
+                <h4 class="modal-title">Add New Job</h4>
               </div>
               <form action="./index.php" method="post">
                 <div class="modal-body">
