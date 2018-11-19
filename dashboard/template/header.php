@@ -32,7 +32,7 @@ try
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $user_name = $result['JS_NAME'];
-    
+
   }
 
 
@@ -62,6 +62,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="./template/bower_components/Ionicons/css/ionicons.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="./template/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- DateTimePicker -->
+  <link rel="stylesheet" href="./template/bower_components/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="./template/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter

@@ -29,6 +29,9 @@
 <!-- DataTables -->
 <script src="./template/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="./template/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- DateTimePicker -->
+<script src="./template/bower_components/moment/min/moment.min.js"></script>
+<script src="./template/bower_components/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
  Both of these plugins are recommended to enhance the
