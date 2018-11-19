@@ -3,7 +3,41 @@
   include './template/header.php';
 
   if(isset($_POST['insertJob'])) {
-    
+
+    $jtitle = $_POST['jtitle'];
+    $jdesc = $_POST['jdesc'];
+    $jarea = $_POST['jarea'];
+    $jsalary = $_POST['jsalary'];
+    $jstart = $_POST['jstart'];
+    $jend = $_POST['jend'];
+
+    $dateStart = date("Y-m-d H:i:s",strtotime($jstart));
+    $dateEnd = date("Y-m-d H:i:s",strtotime($jend));
+
+    try
+    {
+      // check if email already registered
+      // insert into login table
+      $stmt = $conn->prepare("INSERT INTO
+                              JOB (J_TITLE, J_DESC, J_AREA, J_SALARY, J_START, J_END, JP_ID)
+                              VALUES (?, ?, ?, ?, ?, ?, ?) ");
+
+      $stmt->execute(array($jtitle, $jdesc, $jarea, $jsalary, $dateStart, $dateEnd, $user_id));
+
+      echo "
+      <script>
+      alert('New job posted.');
+      </script>";
+
+    }
+    catch(PDOException $e)
+    {
+      echo "
+      <script>
+      alert('". $e->getMessage()."');
+      </script>";
+      echo "Connection failed : " . $e->getMessage();
+    }
   }
 ?>
 
@@ -54,27 +88,27 @@
                 <div class="box-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Job Title</label>
-                    <input type="text" class="form-control" placeholder="Enter Job Title" required>
+                    <input type="text" class="form-control" placeholder="Enter Job Title" name="jtitle" required>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Job Description</label>
-                    <input type="text" class="form-control" placeholder="Enter Job Description" required>
+                    <input type="text" class="form-control" placeholder="Enter Job Description" name="jdesc" required>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Job Area</label>
-                    <input type="text" class="form-control" placeholder="Enter Job Area" required>
+                    <input type="text" class="form-control" placeholder="Enter Job Area" name="jarea" required>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Job Salary</label>
-                    <input type="text" class="form-control" placeholder="Enter Job Salary" required>
+                    <input type="text" class="form-control" placeholder="Enter Job Salary" name="jsalary" required>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Job Start</label>
-                    <input type="text" id="startDateTime" class="form-control" placeholder="Enter Job Start Date and Time" required>
+                    <input type="text" id="startDateTime" class="form-control" placeholder="Enter Job Start Date and Time" name="jstart" required>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Job End</label>
-                    <input type="text" id="endDateTime" class="form-control" placeholder="Enter Job End Date and Time" required>
+                    <input type="text" id="endDateTime" class="form-control" placeholder="Enter Job End Date and Time" name="jend" required>
                   </div>
 
 
