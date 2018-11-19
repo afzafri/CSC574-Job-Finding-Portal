@@ -1,12 +1,18 @@
 <?php
+include './config.php';
 
 ob_start();
 //Start session
 session_start();
-include './config.php';
+//Unset the variables stored in session
+unset($_SESSION['USER_ID']);
+unset($_SESSION['USER_EMAIL']);
+unset($_SESSION['USER_USERNAME']);
+unset($_SESSION['USER_LEVEL']);
 
 $errormsg = "";
 
+// Sign Up new account
 if(isset($_POST['signup'])) {
 
   $email = $_POST['email'];
@@ -76,9 +82,70 @@ if(isset($_POST['signup'])) {
     }
 
   } else {
+    echo "<script>alert('Please fill in all the information.')</script>";
     $errormsg = "<center><h4><font color='red'>Please fill in all the information.</font></h4></center>";
   }
 }
+
+// Login account
+if(isset($_POST['login'])) {
+
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+
+  if($email != "" && $password != "" ) {
+
+    try
+    {
+      //sql query
+      $stmt = $conn->prepare("SELECT * FROM LOGIN");
+
+      //execute query
+      $stmt->execute();
+
+      //fetch
+      while($result = $stmt->fetch(PDO::FETCH_ASSOC))
+      {
+        //store fetched data into variable
+        $i = $result['L_ID'];
+        $e = $result['L_EMAIL'];
+        $u = $result['L_USERNAME'];
+        $p = $result['L_PASSWORD'];
+        $l = $result['L_LEVEL'];
+
+        //check if credentials from login form
+        //match in the database. if match, set sessions, go to dashboard.
+        if($email == $e && md5($password) == $p)
+        {
+          session_regenerate_id();
+          $_SESSION['USER_ID'] = $i;
+          $_SESSION['USER_EMAIL'] = $e;
+          $_SESSION['USER_USERNAME'] = $u;
+          $_SESSION['USER_LEVEL'] = $l;
+          session_write_close();
+          header("location: ./dashboard");
+          exit();
+        }
+        else
+        {
+          echo "<script>alert('Wrong username and password')</script>";
+          $errormsg = "<center><h4><font color='red'>Wrong username and password</font></h4></center>";
+        }
+      }
+
+    }
+    catch(PDOException $e)
+    {
+      echo "Connection failed : " . $e->getMessage();
+    }
+
+  } else {
+    echo "<script>alert('Please fill in all the information.')</script>";
+    $errormsg = "<center><h4><font color='red'>Please fill in all the information.</font></h4></center>";
+  }
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -104,15 +171,16 @@ if(isset($_POST['signup'])) {
       <a href="#" class="active" id="login-box-link">Login</a>
       <a href="#" id="signup-box-link">Sign Up</a>
     </div>
-    <form class="email-login" action="home.php" method="post">
+    <form class="email-login" method="post" action="./login.php">
       <div class="u-form-group">
-        <input type="email" placeholder="Email" name="email"/>
+        <input type="email" placeholder="Email" name="email" required/>
       </div>
       <div class="u-form-group">
-        <input type="password" placeholder="Password" name="password"/>
+        <input type="password" placeholder="Password" name="password" required/>
       </div>
       <div class="u-form-group">
-        <button>Log in</button>
+        <button type="submit" name="login">Log in</button>
+        <?php echo $errormsg; ?>
       </div>
       <div class="u-form-group">
         <a href="#" class="forgot-password">Forgot password?</a>

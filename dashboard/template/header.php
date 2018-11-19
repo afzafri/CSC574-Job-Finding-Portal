@@ -1,3 +1,5 @@
+<?php include '../auth.php'; ?>
+
 <?php $level = isset($_GET['level']) ? $_GET['level'] : 3; ?>
 <!DOCTYPE html>
 <!--
