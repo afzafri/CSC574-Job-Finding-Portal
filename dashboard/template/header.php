@@ -23,7 +23,14 @@ try
     $stmt->execute(array($user_id));
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $user_ids = $result['JP_ID'];
     $user_name = $result['JP_NAME'];
+    $user_desc = $result['JP_DESCRIPTION'];
+    $user_area = $result['JP_AREA'];
+    $user_address = $result['JP_ADDRESS'];
+    $user_phone = $result['JP_PHONE'];
+    $user_website = $result['JP_WEBSITE'];
+    $user_profilepic = $result['JP_PROFILEPIC'];
 
   }
   else if($level == 3) {
@@ -164,7 +171,7 @@ desired effect
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="./profile.php" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <form action="../logout.php" method="post" onsubmit="return confirm('Sign out of the dashboard?')">
