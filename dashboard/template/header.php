@@ -1,6 +1,48 @@
-<?php include '../auth.php'; ?>
+<?php
+  include '../auth.php';
+  include '../config.php';
+?>
 
-<?php $level = isset($_GET['level']) ? $_GET['level'] : 3; ?>
+<?php
+
+$user_id = $_SESSION['USER_ID'];
+$user_email = $_SESSION['USER_EMAIL'];
+$user_username = $_SESSION['USER_USERNAME'];
+$level = $_SESSION['USER_LEVEL'];
+
+$user_name = "";
+
+try
+{
+  if($level == 1) {
+
+  }
+  else if($level == 2) {
+
+    $stmt = $conn->prepare("SELECT * FROM JOB_PROVIDER WHERE L_ID = ?");
+    $stmt->execute(array($user_id));
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $user_name = $result['JP_NAME'];
+
+  }
+  else if($level == 3) {
+    $stmt = $conn->prepare("SELECT * FROM JOB_SEEKER WHERE L_ID = ?");
+    $stmt->execute(array($user_id));
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $user_name = $result['JS_NAME'];
+    
+  }
+
+
+}
+catch(PDOException $e)
+{
+  echo "Connection failed : " . $e->getMessage();
+}
+
+?>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -105,7 +147,7 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="./template/dist/img/avatar.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Afif Zafri</span>
+              <span class="hidden-xs"><?php echo $user_name; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -113,7 +155,7 @@ desired effect
                 <img src="./template/dist/img/avatar.png" class="img-circle" alt="User Image">
 
                 <p>
-                  Afif Zafri - Web Developer
+                  <?php echo $user_name; ?>
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -123,7 +165,9 @@ desired effect
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <form action="../logout.php" method="post" onsubmit="return confirm('Sign out of the dashboard?')">
+                    <button type="submit" class="btn btn-default btn-flat">Sign out</button>
+                  </form>
                 </div>
               </li>
             </ul>
@@ -144,9 +188,9 @@ desired effect
           <img src="./template/dist/img/avatar.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Afif Zafri</p>
-          <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <p><?php echo $user_name; ?> (@<?php echo $user_username; ?>)</p>
+          <!-- Email -->
+          <i class="fa fa-fw fa-envelope"></i> <?php echo $user_email; ?>
         </div>
       </div>
 
@@ -211,10 +255,6 @@ desired effect
         Page Header
         <small>Optional description</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
     </section>
 
     <!-- Main content -->
