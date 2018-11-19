@@ -37,6 +37,28 @@
       echo "Connection failed : " . $e->getMessage();
     }
   }
+
+  if(isset($_POST['deleteJob'])) {
+
+    $jid = $_POST['jobid'];
+    try
+    {
+      $stmt = $conn->prepare("DELETE FROM JOB WHERE J_ID = ?");
+
+      $stmt->execute(array($jid));
+
+      echo "
+      <script>
+      alert('Job deleted.');
+      </script>";
+
+    }
+    catch(PDOException $e)
+    {
+      echo "Connection failed : " . $e->getMessage();
+    }
+
+  }
 ?>
 
 <div class="box">
@@ -88,10 +110,14 @@
                 <td>".$jstart."</td>
                 <td>".$jend."</td>
                 <td>
-                  <form action='./index.php' method='post'>
-                    <input type='hidden' name='jobid' value='".$jid."'>
-                    <button type='submit' name='deleteJob'>Delete</button>
+                  ";
+                  ?>
+                  <form action='./index.php' method='post' onsubmit='return confirm("Delete this job?");'>
+                    <input type='hidden' name='jobid' value='<?php echo $jid; ?>'>
+                    <button type='submit' name='deleteJob' class='btn btn-danger'><i class="fa fa-fw fa-trash"></i></button>
                   </form>
+                  <?php
+                  echo"
                 </td>
               </tr>
             ";
