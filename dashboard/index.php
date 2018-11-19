@@ -16,8 +16,6 @@
 
     try
     {
-      // check if email already registered
-      // insert into login table
       $stmt = $conn->prepare("INSERT INTO
                               JOB (J_TITLE, J_DESC, J_AREA, J_SALARY, J_START, J_END, JP_ID)
                               VALUES (?, ?, ?, ?, ?, ?, ?) ");
@@ -48,27 +46,66 @@
   </div>
   <!-- /.box-header -->
   <div class="box-body">
-    <table id="example1" class="table table-bordered table-striped">
+    <table id="jobTable" class="table table-bordered table-striped">
       <thead>
       <tr>
-        <th>Rendering engine</th>
-        <th>Browser</th>
-        <th>Platform(s)</th>
-        <th>Engine version</th>
-        <th>CSS grade</th>
+        <th>#</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Area</th>
+        <th>Salary</th>
+        <th>Start Date &amp; Time</th>
+        <th>End Date &amp; Time</th>
+        <th>Action</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>Trident</td>
-        <td>Internet
-          Explorer 4.0
-        </td>
-        <td>Win 95+</td>
-        <td> 4</td>
-        <td>X</td>
-      </tr>
-      </tfoot>
+        <?php
+        $count = 1;
+        try
+        {
+          $stmt = $conn->prepare("SELECT * FROM JOB WHERE JP_ID = ?");
+          $stmt->execute(array($user_id));
+
+          //fetch
+          while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+            $jid = $result['J_ID'];
+            $jtitle = $result['J_TITLE'];
+            $jdesc = $result['J_DESC'];
+            $jarea = $result['J_AREA'];
+            $jsalary = $result['J_SALARY'];
+            $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
+            $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
+
+            echo "
+              <tr>
+                <td>".$count."</td>
+                <td>".$jtitle."</td>
+                <td>".$jdesc."</td>
+                <td>".$jarea."</td>
+                <td>".$jsalary."</td>
+                <td>".$jstart."</td>
+                <td>".$jend."</td>
+                <td>
+                  <form action='./index.php' method='post'>
+                    <input type='hidden' name='jobid' value='".$jid."'>
+                    <button type='submit' name='deleteJob'>Delete</button>
+                  </form>
+                </td>
+              </tr>
+            ";
+
+            $count++;
+
+          }
+
+        }
+        catch(PDOException $e)
+        {
+          echo "Connection failed : " . $e->getMessage();
+        }
+        ?>
     </table>
   </div>
   <!-- /.box-body -->
@@ -128,7 +165,9 @@
 
 <script>
   $(function () {
-    $('#example1').DataTable();
+    $('#jobTable').DataTable({
+      "order": [[ 0, "desc" ]]
+    });
 
     $('#startDateTime, #endDateTime').datetimepicker();
 
