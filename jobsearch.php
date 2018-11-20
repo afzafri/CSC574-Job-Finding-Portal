@@ -45,32 +45,28 @@ if(isset($_POST['applyjob'])) {
   <div class="container">
 
     <?php
+    $searchVal = "";
     try
     {
-      if(isset($_POST['search'])) {
-          $val = $_POST["search"];
+      if(isset($_GET['search'])) {
+          $searchVal = $_GET["search"];
 
           $stmt = $conn->prepare("
             SELECT *
             FROM JOB J, JOB_PROVIDER P
             WHERE J.JP_ID = P.JP_ID
             AND J.J_STATUS = 1
-            LIKE '%".$val."%'
+            AND J.J_TITLE LIKE ?
           ");
-
+            $stmt->execute(array("%$searchVal%"));
+        } else {
+          $stmt = $conn->prepare("
+            SELECT *
+            FROM JOB J, JOB_PROVIDER P
+            WHERE J.JP_ID = P.JP_ID
+            AND J.J_STATUS = 1
+          ");
           $stmt->execute();
-          while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-              $jid = $result['J_ID'];
-              $jtitle = $result['J_TITLE'];
-              $jdesc = $result['J_DESC'];
-              $jarea = $result['J_AREA'];
-              $jsalary = $result['J_SALARY'];
-              $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
-              $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
-              $jstatus = $result['J_STATUS'];
-              $jpname = $result['JP_NAME'];
-          }
         }
       }
       catch(PDOException $e)
@@ -78,10 +74,10 @@ if(isset($_POST['applyjob'])) {
         echo "Connection failed : " . $e->getMessage();
       }
     ?>
-    <form action="#" class="serach-form-area single-widget" method="post">
+    <form action="./jobsearch.php" class="serach-form-area single-widget" method="get">
       <div class="row justify-content-center form-wrap">
         <div class="col-lg-4 form-cols">
-          <input type="text" class="form-control" name="search" placeholder="What job are you looking for?">
+          <input type="text" class="form-control" name="search" placeholder="What job are you looking for?" value="<?php echo $searchVal; ?>">
         </div>
         <div class="col-lg-3 form-cols">
           <div class="default-select" id="default-selects">
@@ -125,13 +121,6 @@ if(isset($_POST['applyjob'])) {
 
         try
         {
-            $stmt = $conn->prepare("
-              SELECT *
-              FROM JOB J, JOB_PROVIDER P
-              WHERE J.JP_ID = P.JP_ID
-              AND J.J_STATUS = 1
-            ");
-            $stmt->execute();
 
           while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
