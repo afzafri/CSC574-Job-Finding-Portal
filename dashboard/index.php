@@ -408,7 +408,7 @@
 
 <script>
   $(function () {
-    $('#jobTable').DataTable({
+    $('#jobTable, #applicationTable').DataTable({
       "order": [[ 0, "desc" ]]
     });
 
