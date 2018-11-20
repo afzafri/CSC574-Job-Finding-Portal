@@ -146,7 +146,7 @@ desired effect
       <?php
         if($level == 1) { echo '<span class="logo-lg"><b>ADMIN</b> Dashboard</span>'; }
         else if($level == 2) { echo '<span class="logo-lg"><b>JOB PROVIDER</b> Dashboard</span>'; }
-        else if($level == 3) { echo '<span class="logo-lg"><b>YOUNGSTER</b> Dashboard</span>'; }
+        else if($level == 3) { echo '<span class="logo-lg"><b>JOB SEEKER</b> Dashboard</span>'; }
       ?>
     </a>
 
@@ -232,7 +232,7 @@ desired effect
         <!-- Optionally, you can add icons to the links -->
         <?php
           if($level == 1) {
-            echo '<li class="active"><a href="#"><i class="fa fa-fw fa-list-alt"></i> <span>Portal Statistics</span></a></li>
+            echo '<li><a href="#"><i class="fa fa-fw fa-list-alt"></i> <span>Portal Statistics</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Account</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Job Provider Account</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Job Offers</span></a></li>
@@ -240,11 +240,11 @@ desired effect
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>View and Generate Report</span></a></li>';
           }
           else if($level == 2) {
-            echo '<li class="active"><a href="./index.php"><i class="fa fa-fw fa-list-alt"></i> <span>Manage Job Offers</span></a></li>
+            echo '<li><a href="./index.php"><i class="fa fa-fw fa-list-alt"></i> <span>Manage Job Offers</span></a></li>
                   <li><a href="./jobapplications.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>View Job Applications</span></a></li>';
           }
           else if($level == 3) {
-            echo '<li class="active"><a href="./index.php"><i class="fa fa-fw fa-list-alt"></i> <span>Job Applications</span></a></li>
+            echo '<li><a href="./index.php"><i class="fa fa-fw fa-list-alt"></i> <span>Job Applications</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Posts</span></a></li>';
           }
         ?>

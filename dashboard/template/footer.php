@@ -37,5 +37,11 @@
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
  Both of these plugins are recommended to enhance the
  user experience. -->
+ <script>
+   // add active class to navbar
+   var url = window.location.pathname;
+   var filename = url.substring(url.lastIndexOf('/')+1);
+   $('a[href="./' + filename + '"]').parent().addClass('active');
+ </script>
 </body>
 </html>
