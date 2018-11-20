@@ -44,7 +44,41 @@ if(isset($_POST['applyjob'])) {
 <section class="post-area section-gap">
   <div class="container">
 
-    <form action="#" class="serach-form-area single-widget">
+    <?php
+    try
+    {
+      if(isset($_POST['search'])) {
+          $val = $_POST["search"];
+
+          $stmt = $conn->prepare("
+            SELECT *
+            FROM JOB J, JOB_PROVIDER P
+            WHERE J.JP_ID = P.JP_ID
+            AND J.J_STATUS = 1
+            LIKE '%".$val."%'
+          ");
+
+          $stmt->execute();
+          while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+              $jid = $result['J_ID'];
+              $jtitle = $result['J_TITLE'];
+              $jdesc = $result['J_DESC'];
+              $jarea = $result['J_AREA'];
+              $jsalary = $result['J_SALARY'];
+              $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
+              $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
+              $jstatus = $result['J_STATUS'];
+              $jpname = $result['JP_NAME'];
+          }
+        }
+      }
+      catch(PDOException $e)
+      {
+        echo "Connection failed : " . $e->getMessage();
+      }
+    ?>
+    <form action="#" class="serach-form-area single-widget" method="post">
       <div class="row justify-content-center form-wrap">
         <div class="col-lg-4 form-cols">
           <input type="text" class="form-control" name="search" placeholder="What job are you looking for?">
@@ -85,7 +119,7 @@ if(isset($_POST['applyjob'])) {
     <div class="row justify-content-center d-flex">
 
       <!--Job offers -->
-      <div class="col-lg-8 post-list" i>
+      <div class="col-lg-8 post-list">
 
         <?php
 
@@ -111,50 +145,54 @@ if(isset($_POST['applyjob'])) {
             $jstatus = $result['J_STATUS'];
             $jpname = $result['JP_NAME'];
 
+            // check if user have applied the job
+            $stmtCheck = $conn->prepare("SELECT * FROM JOB_APPLICATION WHERE J_ID = ? AND JS_ID = ?");
+            $stmtCheck->execute(array($jid, $user_ids));
+            $btnstatus = "";
+            $btntitle = "Click to apply now";
+            if($stmtCheck->fetch(PDO::FETCH_ASSOC)) {
+              $btnstatus = "disabled";
+              $btntitle = "You have already applied for this job.";
+            }
 
           ?>
 
-            <div class="single-post d-flex flex-row">
+          <div class="single-post d-flex flex-row">
+            <div class="details">
+              <div class="title d-flex flex-row justify-content-between">
+                <div class="titles">
+                  <a href="single.html"><h4><?php echo $jtitle; ?></h4></a>
+                  <h6><?php echo $jpname; ?></h6>
+                </div>
+                <ul class="btns">
+                  <?php
+                    if($user_id != ""){
+                      ?>
+                      <form action="./jobsearch.php" method='post' onsubmit='return confirm("Do you want to apply this job?")'>
+                        <input type='hidden' name='jobid' value='<?php echo $jid;?>'/>
+                        <button type='submit' name="applyjob" class="btn btn-default <?php echo $btnstatus; ?>" title="<?php echo $btntitle; ?>" <?php echo $btnstatus; ?>>Apply</button>
+                      </form>
+                  <?php }?>
+                </ul>
+              </div>
+              <p>
+                ----------------------------------------------------------------------------------------------
+              </p>
+              <p><?php echo $jdesc; ?></p>
+              <p class="address"><span class="lnr lnr-map"></span> Wallagonia, Tapah Road, Perak</p>
+              <p class="address"><span class="fa fa-hourglass-start"></span> <?php echo "Start Date: ".$jstart; ?></p>
+              <p class="address"><span class="fa fa-hourglass-end"></span> <?php echo "End Date: ".$jend; ?></p>
+              <p class="address"><span class="lnr lnr-database"></span> <?php echo "RM ".$jsalary; ?></p>
+
               <div class="thumb">
-                <img src="./template/img/99-Speedmart_logo.jpg" alt="" width="109px">
                 <ul class="tags">
                   <li>
                     <a href="#"><?php echo $jarea; ?></a>
                   </li>
-
                 </ul>
               </div>
-              <div class="details">
-                <div class="title d-flex flex-row justify-content-between">
-                  <div class="titles">
-                    <a href="single.html"><h4><?php echo $jtitle; ?></h4></a>
-                    <h6><?php echo $jpname; ?></h6>
-                  </div>
-                  <ul class="btns">
-                    <li><i class="fa fa-heart" aria-hidden="true" id="like" val="false"></i></li>
-                    <?php
-                      if($user_id != ""){
-                        ?>
-                        <li>
-                        <form action="./jobsearch.php" method='post' onsubmit='return confirm("are u sure")'>
-                          <input type='hidden' name='jobid' value='<?php echo $jid;?>'/>
-                          <button type='submit' name="applyjob">Apply</button>
-                        </form>
-                          </li>
-                    <?php }?>
-
-                  </ul>
-                </div>
-                <p>
-                  <?php echo $jdesc; ?>
-                </p>
-                <h5>Job Nature: Part time</h5>
-                <p class="address"><span class="lnr lnr-map"></span> Wallagonia, Tapah Road, Perak</p>
-                <p class="address"><span class="fa fa-hourglass-start"></span> <?php echo "Start Date: ".$jstart; ?></p>
-                <p class="address"><span class="fa fa-hourglass-end"></span> <?php echo "End Date: ".$jend; ?></p>
-                <p class="address"><span class="lnr lnr-database"></span> <?php echo "RM ".$jsalary; ?></p>
-              </div>
             </div>
+          </div>
 
 
             <?php
@@ -254,12 +292,12 @@ if(isset($_POST['applyjob'])) {
     $("#kerja").fadeIn();
   });
 */
-  $(document).on("click", "#apply", function() {
-    /*event.preventDefault();
+  /*$(document).on("click", "#apply", function() {
+    event.preventDefault();
     $(this).html('<i class="fa fa-check-square" aria-hidden="true"></i> Job Applied');
     $(this).css({ color: "blue" });
-    */
-  });
+
+  });*/
 
 
   $(document).on("click", "#like", function() {
