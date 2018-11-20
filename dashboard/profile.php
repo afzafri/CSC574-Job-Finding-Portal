@@ -36,6 +36,10 @@
       }
       else
       {
+        // delete old profile pic
+        unlink('../images/profilepics/'.$currpicname);
+
+        // set new profile pic
         $profilepic = $stat['success']['filename'];
         $imgUpmsg = $stat['success']['status'];
       }

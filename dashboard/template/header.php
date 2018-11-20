@@ -30,7 +30,8 @@ try
     $user_address = $result['JP_ADDRESS'];
     $user_phone = $result['JP_PHONE'];
     $user_website = $result['JP_WEBSITE'];
-    $user_profilepic = ($result['JP_PROFILEPIC'] != "") ? "../images/profilepics/".$result['JP_PROFILEPIC'] : "./template/dist/img/avatar.png";
+    $currpicname = $result['JP_PROFILEPIC'];
+    $user_profilepic = ($currpicname != "") ? "../images/profilepics/".$currpicname : "./template/dist/img/avatar.png";
 
   }
   else if($level == 3) {
