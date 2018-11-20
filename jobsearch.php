@@ -18,7 +18,10 @@ if(isset($_POST['applyjob'])) {
 
     $stmt->execute(array($jid, $jsid, $applydate, 2));
 
-
+    echo "
+    <script>
+    alert('Job applied! Check the application status in your dashboard.');
+    </script>";
 
   }
   catch(PDOException $e)
@@ -29,14 +32,6 @@ if(isset($_POST['applyjob'])) {
     </script>";
     echo "Connection failed : " . $e->getMessage();
   }
-  echo "
-  <script>
-  alert('Job applied!');
-  </script>";
-  /*echo "
-  <script>
-  alert('Job have been applied!.');
-  </script>";*/
 }
 ?>
 
@@ -190,8 +185,7 @@ if(isset($_POST['applyjob'])) {
                 $stmtTags = $conn->prepare("SELECT J_AREA FROM JOB WHERE J_STATUS = 1");
                 $stmtTags->execute();
                 while($result = $stmtTags->fetch(PDO::FETCH_ASSOC)) {
-                  $listarea = str_replace(" ","",$result['J_AREA']);
-                  $arrarea = explode(",", $listarea);
+                  $arrarea = explode(",", $result['J_AREA']);
 
                   foreach ($arrarea as $arrarea) {
                     if(!in_array($arrarea, $listAreaTags)){
@@ -238,8 +232,7 @@ if(isset($_POST['applyjob'])) {
             $jid = $result['J_ID'];
             $jtitle = $result['J_TITLE'];
             $jdesc = $result['J_DESC'];
-            $jarea = str_replace(" ","",$result['J_AREA']);
-            $areaTags = explode(",", $jarea);
+            $areaTags = explode(",", $result['J_AREA']);
             $jsalary = $result['J_SALARY'];
             $jaddress = $result['J_ADDRESS'];
             $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
@@ -432,30 +425,3 @@ if(isset($_POST['applyjob'])) {
 <!-- End post Area -->
 
 <?php include './template/footer.php'; ?>
-
-<script type="text/javascript">
-  /*$(document).on("click", "#search", function() {
-    event.preventDefault();
-    $("#kerja").fadeIn();
-  });
-*/
-  /*$(document).on("click", "#apply", function() {
-    event.preventDefault();
-    $(this).html('<i class="fa fa-check-square" aria-hidden="true"></i> Job Applied');
-    $(this).css({ color: "blue" });
-
-  });*/
-
-
-  $(document).on("click", "#like", function() {
-    var liked = $(this).attr("val");
-    if(liked == "false") {
-      $(this).css({ color: "red" });
-      $(this).attr("val", "true");
-    } else {
-      $(this).css({ color: "black" });
-      $(this).attr("val", "false");
-    }
-
-  })
-</script>
