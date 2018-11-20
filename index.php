@@ -13,7 +13,7 @@
       <div class="col-lg-8 post-list blog-post-list">
 
         <?php
-          if($login == 1) {
+          if($user_id != ""){
             ?>
             <form class="form-area single-widget" id="myForm" action="mail.php" method="post" class="contact-form text-right">
               <div class="row">
