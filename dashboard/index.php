@@ -92,6 +92,30 @@
   }
 ?>
 
+<!-- modal alert if no profile data -->
+<div class="modal fade" id="modal-updateprofile" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Hi, Welcome to JFP!</h4>
+      </div>
+      <div class="modal-body">
+        <p>Hi! Welcome to JFP! You profile data still incomplete.</p>
+        <p>Please update your profile information by heading to your profile page setting.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <a href="./profile.php" type="button" class="btn btn-primary">Go to Profile Page</a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <?php
   if($level == 2) {
     ?>
@@ -237,11 +261,11 @@
                       <button type="submit" class="btn btn-primary" name="insertJob">Save changes</button>
                     </div>
                   </div>
+                  </form>
                   <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
               </div>
-            </form>
     <?php
   } else if($level == 3) {
 
@@ -260,3 +284,15 @@
 
   })
 </script>
+
+<?php
+if($user_name == "") {
+  ?>
+  <script>
+    $(function() {
+      $('#modal-updateprofile').modal('toggle');
+    })
+  </script>
+  <?php
+}
+?>
