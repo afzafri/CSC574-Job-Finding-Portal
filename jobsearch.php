@@ -127,7 +127,8 @@ if(isset($_POST['applyjob'])) {
             $jid = $result['J_ID'];
             $jtitle = $result['J_TITLE'];
             $jdesc = $result['J_DESC'];
-            $jarea = $result['J_AREA'];
+            $jarea = str_replace(" ","",$result['J_AREA']);
+            $areaTags = explode(",", $jarea);
             $jsalary = $result['J_SALARY'];
             $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
             $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
@@ -175,9 +176,15 @@ if(isset($_POST['applyjob'])) {
 
               <div class="thumb">
                 <ul class="tags">
-                  <li>
-                    <a href="#"><?php echo $jarea; ?></a>
-                  </li>
+                  <?php
+                    foreach ($areaTags as $area) {
+                      ?>
+                        <li>
+                          <a href="#"><?php echo $area; ?></a>
+                        </li>
+                      <?php
+                    }
+                  ?>
                 </ul>
               </div>
             </div>
