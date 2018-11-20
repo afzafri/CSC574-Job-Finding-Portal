@@ -110,7 +110,6 @@
                       <ul>
                         <li><a href="./dashboard/profile.php">View Profile</a></li>
                         <li><a href="./dashboard">Dashboard</a></li>
-                        <li><a href="search.html">Setting</a></li>
                         <li><a href="./logout.php">Log Out</a></li>
                       </ul>
                     </li>
