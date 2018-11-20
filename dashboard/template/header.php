@@ -30,7 +30,7 @@ try
     $user_address = $result['JP_ADDRESS'];
     $user_phone = $result['JP_PHONE'];
     $user_website = $result['JP_WEBSITE'];
-    $user_profilepic = $result['JP_PROFILEPIC'];
+    $user_profilepic = ($result['JP_PROFILEPIC'] != "") ? $result['JP_PROFILEPIC'] : "./template/dist/img/avatar.png";
 
   }
   else if($level == 3) {
@@ -154,14 +154,14 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="./template/dist/img/avatar.png" class="user-image" alt="User Image">
+              <img src="<?php echo $user_profilepic; ?>" class="user-image" alt="<?php echo $user_name; ?>">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs"><?php echo $user_name; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="./template/dist/img/avatar.png" class="img-circle" alt="User Image">
+                <img src="<?php echo $user_profilepic; ?>" class="img-circle" alt="<?php echo $user_name; ?>">
 
                 <p>
                   <?php echo $user_name; ?>
@@ -194,7 +194,7 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="./template/dist/img/avatar.png" class="img-circle" alt="User Image">
+          <img src="<?php echo $user_profilepic; ?>" class="img-circle" alt="<?php echo $user_name; ?>">
         </div>
         <div class="pull-left info">
           <p><?php echo $user_name; ?> (@<?php echo $user_username; ?>)</p>
