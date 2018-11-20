@@ -19,7 +19,7 @@
     {
       $stmt = $conn->prepare("INSERT INTO
                               JOB (J_TITLE, J_DESC, J_AREA, J_ADDRESS, J_SALARY, J_START, J_END, JP_ID, J_STATUS)
-                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+                              VALUES (?, ?, REPLACE(?,' ',''), ?, ?, ?, ?, ?, ?) ");
 
       $stmt->execute(array($jtitle, $jdesc, $jarea, $jaddress, $jsalary, $dateStart, $dateEnd, $user_ids, 1)); // 0 job close, 1 job open
 

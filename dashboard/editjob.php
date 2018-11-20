@@ -17,7 +17,7 @@
 
     try
     {
-      $stmt = $conn->prepare("UPDATE JOB SET J_TITLE = ?, J_DESC = ?, J_AREA = ?, J_ADDRESS = ?, J_SALARY = ?, J_START = ?, J_END = ? WHERE J_ID = ?");
+      $stmt = $conn->prepare("UPDATE JOB SET J_TITLE = ?, J_DESC = ?, J_AREA = REPLACE(?,' ',''), J_ADDRESS = ?, J_SALARY = ?, J_START = ?, J_END = ? WHERE J_ID = ?");
 
       $stmt->execute(array($jtitle, $jdesc, $jarea, $jaddress, $jsalary, $dateStart, $dateEnd, $jid));
 
