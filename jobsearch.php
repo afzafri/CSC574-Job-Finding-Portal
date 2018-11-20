@@ -155,7 +155,7 @@ if(isset($_POST['applyjob'])) {
                 </div>
                 <ul class="btns">
                   <?php
-                    if($user_id != ""){
+                    if($user_id != "" && $level == 3){
                       ?>
                       <form action="./jobsearch.php" method='post' onsubmit='return confirm("Do you want to apply this job?")'>
                         <input type='hidden' name='jobid' value='<?php echo $jid;?>'/>
