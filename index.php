@@ -24,7 +24,7 @@
 
                   <input name="image" class="common-input mb-20 form-control" type="file" id="jobImage">
 
-                  <button class="primary-btn mt-20 text-white" style="float: right;">Post Job Done</button>
+                  <button class="primary-btn mt-20 text-white" style="float: right;" type="submit" name="newPost">Post Job Done</button>
                   <div class="mt-20 alert-msg" style="text-align: left;"></div>
                 </div>
               </div>
