@@ -32,7 +32,8 @@
 <!-- DateTimePicker -->
 <script src="./template/bower_components/moment/min/moment.min.js"></script>
 <script src="./template/bower_components/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-
+<!-- Bootstrap FileInput -->
+<script src="./template/bower_components/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
  Both of these plugins are recommended to enhance the
  user experience. -->

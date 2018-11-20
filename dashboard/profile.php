@@ -88,7 +88,7 @@
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Upload profile picture</label>
-            <input type="file" class="form-control" name="profilepic">
+            <input type="file" class="form-control-file" name="profilepic" id="profilepic">
           </div>
         </div>
         <div class="box-footer">
@@ -106,3 +106,20 @@
 </div>
 
 <?php include './template/footer.php'; ?>
+
+<script>
+  $(function () {
+    $("#profilepic").fileinput({
+      theme: 'fa',
+      dropZoneEnabled: false,
+      showUpload: false,
+      allowedFileExtensions: ['png','jpg','jpeg'],
+      maxFileSize: 5000,
+      msgPlaceholder: 'Choose new profile picture...',
+      // for image files
+      initialPreview: [
+          "<img src='<?php echo $user_profilepic; ?>' class='file-preview-image'>",
+      ],
+    });
+  });
+  </script>
