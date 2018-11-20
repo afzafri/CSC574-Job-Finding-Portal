@@ -39,7 +39,15 @@ try
     $stmt->execute(array($user_id));
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $user_ids = $result['JS_ID'];
     $user_name = $result['JS_NAME'];
+    $user_about = $result['JS_ABOUT'];
+    $user_ic = $result['JS_IC'];
+    $user_address = $result['JS_ADDRESS'];
+    $user_skill = $result['JS_SKILL'];
+    $user_phone = $result['JS_PHONE'];
+    $currpicname = $result['JS_PROFILEPIC'];
+    $user_profilepic = ($currpicname != "") ? "../images/profilepics/".$currpicname : "./template/dist/img/avatar.png";
 
   }
 
