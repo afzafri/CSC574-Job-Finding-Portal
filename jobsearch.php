@@ -138,7 +138,7 @@ if(isset($_POST['applyjob'])) {
                   $stmt->execute(array("%$search%", "%$tags%"));
               }
 
-        // --- NO SEARCH TITLE ---
+        // --- NO SEARCH ---
         if($search == "" && $states == "" && $tags == "") {
           $stmt = $conn->prepare("
             SELECT *
@@ -183,11 +183,33 @@ if(isset($_POST['applyjob'])) {
           <div class="default-select" id="default-selects2">
             <select name="tags">
               <option value="">All area tags</option>
-              <option value="5">Retail</option>
-              <option value="2">Medical</option>
-              <option value="3">Technology</option>
-              <option value="4">Goverment</option>
-              <option value="5">Development</option>
+
+              <?php
+
+                $listAreaTags = array();
+                $stmtTags = $conn->prepare("SELECT J_AREA FROM JOB WHERE J_STATUS = 1");
+                $stmtTags->execute();
+                while($result = $stmtTags->fetch(PDO::FETCH_ASSOC)) {
+                  $listarea = str_replace(" ","",$result['J_AREA']);
+                  $arrarea = explode(",", $listarea);
+
+                  foreach ($arrarea as $arrarea) {
+                    if(!in_array($arrarea, $listAreaTags)){
+                      $listAreaTags[]=$arrarea;
+                    }
+                  }
+                }
+
+                foreach ($listAreaTags as $listAreaTags)
+                {
+                  if($tags == $listAreaTags) {
+                    echo "<option value='$listAreaTags' selected>$listAreaTags</option>";
+                  } else {
+                    echo "<option value='$listAreaTags'>$listAreaTags</option>";
+                  }
+                }
+
+              ?>
             </select>
           </div>
         </div>
@@ -267,10 +289,10 @@ if(isset($_POST['applyjob'])) {
               <div class="thumb">
                 <ul class="tags">
                   <?php
-                    foreach ($areaTags as $area) {
+                    foreach ($areaTags as $areaTags) {
                       ?>
                         <li>
-                          <a href="#"><?php echo $area; ?></a>
+                          <a href="./jobsearch.php?search=&states=&tags=<?php echo $areaTags; ?>"><?php echo $areaTags; ?></a>
                         </li>
                       <?php
                     }
