@@ -268,7 +268,106 @@
               </div>
     <?php
   } else if($level == 3) {
+    ?>
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Applications List</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table id="applicationTable" class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Job Provider</th>
+            <th>Job Title</th>
+            <th>Job Salary</th>
+            <th>Job Duration</th>
+            <th>Apply Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+            <?php
+            $count = 1;
+            try
+            {
+              $stmt = $conn->prepare("
 
+                SELECT *
+                FROM JOB_APPLICATION A, JOB J, JOB_PROVIDER P, JOB_SEEKER S
+                WHERE A.J_ID = J.J_ID
+                AND A.JS_ID = S.JS_ID
+                AND J.JP_ID = P.JP_ID
+                AND S.JS_ID = ?
+
+              ");
+              $stmt->execute(array($user_ids));
+
+              //fetch
+              while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                $jid = $result['J_ID'];
+                $jpid = $result['JP_ID'];
+                $applydate = date('m-d-Y h:i A', strtotime($result['APPLY_DATE']));
+                $astatus = $result['STATUS'];
+                $jobtitle = $result['J_TITLE'];
+                $jobsalary = $result['J_SALARY'];
+                $startdate = date('m-d-Y', strtotime($result['J_START']));
+                $enddate = date('m-d-Y', strtotime($result['J_END']));
+                $jobprovider = $result['JP_NAME'];
+
+                echo "
+                  <tr>
+                    <td>".$count."</td>
+                    <td>".$jobprovider."</td>
+                    <td>".$jobtitle."</td>
+                    <td>".$jobsalary."</td>
+                    <td>".$startdate." - ".$enddate."</td>
+                    <td>".$applydate."</td>
+                    <td>";
+                      if($astatus == 2) {
+                        echo "<h4><span class='label label-warning'>Pending</span></h4>";
+                      } else if($astatus == 1) {
+                        echo "<h4><span class='label label-success'>Approved</span></h4>";
+                      } else {
+                        echo "<h4><span class='label label-danger'>Declined</span></h4>";
+                      }
+                    echo "</td>
+                    <td>
+                      ";
+                      if($astatus == 2) {
+                        ?>
+                        <form action='./index.php' method='post' onsubmit='return confirm("Cancel Application?");'>
+                          <input type='hidden' name='jobid' value='<?php echo $jid; ?>'>
+                          <input type='hidden' name='seekerid' value='<?php echo $jsid; ?>'>
+                          <button type='submit' name='cancelApp' class='btn btn-danger' title='Cancel Application'><i class="fa fa-fw fa-ban"></i></button>
+                        </form>
+                        <?php
+                      } else {
+                        echo "<i>No actions</i>";
+                      }
+                      echo "
+                    </td>
+                  </tr>
+                ";
+
+                $count++;
+
+              }
+
+            }
+            catch(PDOException $e)
+            {
+              echo "Connection failed : " . $e->getMessage();
+            }
+            ?>
+        </table>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <?php
   }
 ?>
 
