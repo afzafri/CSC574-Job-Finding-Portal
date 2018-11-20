@@ -302,6 +302,7 @@
     <div class="box">
       <div class="box-header">
         <h3 class="box-title">Applications List</h3>
+        <a href="../jobsearch.php" class="btn btn-success pull-right"><i class="fa fa-fw fa-search"></i> Find Job Offers</a>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
