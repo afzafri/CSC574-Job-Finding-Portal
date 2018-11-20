@@ -15,14 +15,14 @@
         <?php
           if($user_id != ""){
             ?>
-            <form class="form-area single-widget" id="myForm" action="mail.php" method="post" class="contact-form text-right">
+            <form class="form-area single-widget" id="myForm" action="mail.php" method="post" class="contact-form text-right" enctype="multipart/form-data" onsubmit="return confirm('Post status?');">
               <div class="row">
                 <div class="col-lg-12 form-group">
                   <input name="title" placeholder="Enter post Title" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter post Title'" class="common-input mb-20 form-control" required="" type="text">
 
                   <textarea class="common-textarea mt-10 form-control" name="experience" placeholder="Share your job experience" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Share your job experience'" required=""></textarea>
 
-                  <input name="image" class="common-input mb-20 form-control" type="file">
+                  <input name="image" class="common-input mb-20 form-control" type="file" id="jobImage">
 
                   <button class="primary-btn mt-20 text-white" style="float: right;">Post Job Done</button>
                   <div class="mt-20 alert-msg" style="text-align: left;"></div>
@@ -203,3 +203,16 @@
 <!-- End blog-posts Area -->
 
 <?php include './template/footer.php'; ?>
+
+<script>
+  $(function () {
+    $("#jobImage").fileinput({
+      theme: 'fa',
+      dropZoneEnabled: false,
+      showUpload: false,
+      allowedFileExtensions: ['png','jpg','jpeg'],
+      maxFileSize: 5000,
+      msgPlaceholder: 'Choose image...',
+    });
+  });
+  </script>
