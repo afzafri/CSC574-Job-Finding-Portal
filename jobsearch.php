@@ -45,21 +45,101 @@ if(isset($_POST['applyjob'])) {
   <div class="container">
 
     <?php
-    $searchVal = "";
+    $search = (isset($_GET['search'])) ? $_GET['search'] : "";
+    $states = (isset($_GET['states'])) ? $_GET['states'] : "";
+    $tags = (isset($_GET['tags'])) ? $_GET['tags'] : "";
     try
     {
-      if(isset($_GET['search'])) {
-          $searchVal = $_GET["search"];
+      // --- SEARCH TITLE ---
+        // --- SEARCH
+        if($search != "" && $states == "" && $tags == "") {
+            $stmt = $conn->prepare("
+              SELECT *
+              FROM JOB J, JOB_PROVIDER P
+              WHERE J.JP_ID = P.JP_ID
+              AND J.J_STATUS = 1
+              AND J.J_TITLE LIKE ?
+            ");
+              $stmt->execute(array("%$search%"));
+          }
+          // --- SEARCH, STATES
+          if($search != "" && $states != "" && $tags == "") {
+              $stmt = $conn->prepare("
+                SELECT *
+                FROM JOB J, JOB_PROVIDER P
+                WHERE J.JP_ID = P.JP_ID
+                AND J.J_STATUS = 1
+                AND J.J_TITLE LIKE ?
+                AND J.J_ADDRESS LIKE ?
+              ");
+                $stmt->execute(array("%$search%","%$states%"));
+            }
+          // --- SEARCH, STATES, TAGS
+          if($search != "" && $states != "" && $tags != "") {
+              $stmt = $conn->prepare("
+                SELECT *
+                FROM JOB J, JOB_PROVIDER P
+                WHERE J.JP_ID = P.JP_ID
+                AND J.J_STATUS = 1
+                AND J.J_TITLE LIKE ?
+                AND J.J_ADDRESS LIKE ?
+                AND J.J_AREA LIKE ?
+              ");
+                $stmt->execute(array("%$search%","%$states%","%$tags%"));
+          }
 
-          $stmt = $conn->prepare("
-            SELECT *
-            FROM JOB J, JOB_PROVIDER P
-            WHERE J.JP_ID = P.JP_ID
-            AND J.J_STATUS = 1
-            AND J.J_TITLE LIKE ?
-          ");
-            $stmt->execute(array("%$searchVal%"));
-        } else {
+        // --- STATES ---
+          // --- STATES
+          if($search == "" && $states != "" && $tags == "") {
+              $stmt = $conn->prepare("
+                SELECT *
+                FROM JOB J, JOB_PROVIDER P
+                WHERE J.JP_ID = P.JP_ID
+                AND J.J_STATUS = 1
+                AND J.J_ADDRESS LIKE ?
+              ");
+                $stmt->execute(array("%$states%"));
+            }
+            // --- STATES, TAGS
+            if($search == "" && $states != "" && $tags != "") {
+                $stmt = $conn->prepare("
+                  SELECT *
+                  FROM JOB J, JOB_PROVIDER P
+                  WHERE J.JP_ID = P.JP_ID
+                  AND J.J_STATUS = 1
+                  AND J.J_ADDRESS LIKE ?
+                  AND J.J_AREA LIKE ?
+                ");
+                  $stmt->execute(array("%$states%","%$tags%"));
+              }
+
+        // --- TAGS ---
+          // --- TAGS
+          if($search == "" && $states == "" && $tags != "") {
+              $stmt = $conn->prepare("
+                SELECT *
+                FROM JOB J, JOB_PROVIDER P
+                WHERE J.JP_ID = P.JP_ID
+                AND J.J_STATUS = 1
+                AND J.J_AREA LIKE ?
+              ");
+                $stmt->execute(array("%$tags%"));
+            }
+            // --- TAGS, SEARCH
+            if($search != "" && $states == "" && $tags != "") {
+                $stmt = $conn->prepare("
+                  SELECT *
+                  FROM JOB J, JOB_PROVIDER P
+                  WHERE J.JP_ID = P.JP_ID
+                  AND J.J_STATUS = 1
+                  AND J.J_TITLE LIKE ?
+                  AND J.J_AREA LIKE ?
+                ");
+                  $stmt->execute(array("%$search%", "%$tags%"));
+              }
+
+        // --- NO SEARCH TITLE ---
+        if($search == "" && $states == "" && $tags == "") {
           $stmt = $conn->prepare("
             SELECT *
             FROM JOB J, JOB_PROVIDER P
@@ -77,23 +157,32 @@ if(isset($_POST['applyjob'])) {
     <form action="./jobsearch.php" class="serach-form-area single-widget" method="get">
       <div class="row justify-content-center form-wrap">
         <div class="col-lg-4 form-cols">
-          <input type="text" class="form-control" name="search" placeholder="What job are you looking for?" value="<?php echo $searchVal; ?>">
+          <input type="text" class="form-control" name="search" placeholder="What job are you looking for?" value="<?php echo $search; ?>">
         </div>
         <div class="col-lg-3 form-cols">
           <div class="default-select" id="default-selects">
-            <select>
-              <option value="1">Select area</option>
-              <option value="2">Perak</option>
-              <option value="3">Kelantan</option>
-              <option value="4">Terangganu</option>
-              <option value="5">Sarawak</option>
+            <select name="states">
+              <option value="">Select state</option>
+
+              <?php
+                $listnegeri = ["JOHOR","KEDAH","KELANTAN","MELAKA","NEGERI SEMBILAN","PAHANG","PERLIS","PULAU PINANG","PERAK","SABAH","SELANGOR","KUALA LUMPUR","PUTRAJAYA","SARAWAK","TERENGGANU","LABUAN"];
+
+                foreach ($listnegeri as $listnegeri)
+                {
+                  if($states == $listnegeri) {
+                    echo "<option value='$listnegeri' selected>$listnegeri</option>";
+                  } else {
+                    echo "<option value='$listnegeri'>$listnegeri</option>";
+                  }
+                }
+              ?>
             </select>
           </div>
         </div>
         <div class="col-lg-3 form-cols">
           <div class="default-select" id="default-selects2">
-            <select>
-              <option value="1">All Category</option>
+            <select name="tags">
+              <option value="">All area tags</option>
               <option value="5">Retail</option>
               <option value="2">Medical</option>
               <option value="3">Technology</option>
@@ -130,6 +219,7 @@ if(isset($_POST['applyjob'])) {
             $jarea = str_replace(" ","",$result['J_AREA']);
             $areaTags = explode(",", $jarea);
             $jsalary = $result['J_SALARY'];
+            $jaddress = $result['J_ADDRESS'];
             $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
             $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
             $jstatus = $result['J_STATUS'];
@@ -169,7 +259,7 @@ if(isset($_POST['applyjob'])) {
                 ----------------------------------------------------------------------------------------------
               </p>
               <p><?php echo $jdesc; ?></p>
-              <p class="address"><span class="lnr lnr-map"></span> Wallagonia, Tapah Road, Perak</p>
+              <p class="address"><span class="lnr lnr-map"></span> <?php echo $jaddress ?></p>
               <p class="address"><span class="fa fa-hourglass-start"></span> <?php echo "Start Date: ".$jstart; ?></p>
               <p class="address"><span class="fa fa-hourglass-end"></span> <?php echo "End Date: ".$jend; ?></p>
               <p class="address"><span class="lnr lnr-database"></span> <?php echo "RM ".$jsalary; ?></p>
