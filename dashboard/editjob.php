@@ -77,7 +77,7 @@
         <input type="text" class="form-control" placeholder="Enter Job Description" name="jdesc" value="<?php echo $jdesc; ?>" required>
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Job Area</label>
+        <label for="exampleInputPassword1">Job Area Tag (no space)</label>
         <input type="text" class="form-control" placeholder="Separated by coma for multiple areas. Ex: 'programming,kitchen,office'" name="jarea" value="<?php echo $jarea; ?>" required>
       </div>
       <div class="form-group">
