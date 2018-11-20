@@ -7,6 +7,7 @@
     $jtitle = $_POST['jtitle'];
     $jdesc = $_POST['jdesc'];
     $jarea = $_POST['jarea'];
+    $jaddress = $_POST['jaddress'];
     $jsalary = $_POST['jsalary'];
     $jstart = $_POST['jstart'];
     $jend = $_POST['jend'];
@@ -16,9 +17,9 @@
 
     try
     {
-      $stmt = $conn->prepare("UPDATE JOB SET J_TITLE = ?, J_DESC = ?, J_AREA = ?, J_SALARY = ?, J_START = ?, J_END = ? WHERE J_ID = ?");
+      $stmt = $conn->prepare("UPDATE JOB SET J_TITLE = ?, J_DESC = ?, J_AREA = ?, J_ADDRESS = ?, J_SALARY = ?, J_START = ?, J_END = ? WHERE J_ID = ?");
 
-      $stmt->execute(array($jtitle, $jdesc, $jarea, $jsalary, $dateStart, $dateEnd, $jid));
+      $stmt->execute(array($jtitle, $jdesc, $jarea, $jaddress, $jsalary, $dateStart, $dateEnd, $jid));
 
       echo ("<script LANGUAGE='JavaScript'>
       window.alert('Succesfully Updated');
@@ -48,6 +49,7 @@
     $jtitle = $result['J_TITLE'];
     $jdesc = $result['J_DESC'];
     $jarea = $result['J_AREA'];
+    $jaddress = $result['J_ADDRESS'];
     $jsalary = $result['J_SALARY'];
     $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
     $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
@@ -77,6 +79,10 @@
       <div class="form-group">
         <label for="exampleInputPassword1">Job Area</label>
         <input type="text" class="form-control" placeholder="Enter Job Area" name="jarea" value="<?php echo $jarea; ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Job Address</label>
+        <textarea class="form-control" placeholder="Enter Address for the job" name="jaddress" required><?php echo $jaddress; ?></textarea>
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Job Salary</label>

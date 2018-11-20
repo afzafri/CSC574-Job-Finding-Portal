@@ -7,6 +7,7 @@
     $jtitle = $_POST['jtitle'];
     $jdesc = $_POST['jdesc'];
     $jarea = $_POST['jarea'];
+    $jaddress = $_POST['jaddress'];
     $jsalary = $_POST['jsalary'];
     $jstart = $_POST['jstart'];
     $jend = $_POST['jend'];
@@ -17,10 +18,10 @@
     try
     {
       $stmt = $conn->prepare("INSERT INTO
-                              JOB (J_TITLE, J_DESC, J_AREA, J_SALARY, J_START, J_END, JP_ID, J_STATUS)
-                              VALUES (?, ?, ?, ?, ?, ?, ?, ?) ");
+                              JOB (J_TITLE, J_DESC, J_AREA, J_ADDRESS, J_SALARY, J_START, J_END, JP_ID, J_STATUS)
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 
-      $stmt->execute(array($jtitle, $jdesc, $jarea, $jsalary, $dateStart, $dateEnd, $user_ids, 1)); // 0 job close, 1 job open
+      $stmt->execute(array($jtitle, $jdesc, $jarea, $jaddress, $jsalary, $dateStart, $dateEnd, $user_ids, 1)); // 0 job close, 1 job open
 
       echo "
       <script>
@@ -270,6 +271,10 @@
                       <div class="form-group">
                         <label for="exampleInputPassword1">Job Area</label>
                         <input type="text" class="form-control" placeholder="Enter Job Area" name="jarea" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Job Address</label>
+                        <textarea class="form-control" placeholder="Enter Address for the job" name="jaddress" required></textarea>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1">Job Salary</label>
