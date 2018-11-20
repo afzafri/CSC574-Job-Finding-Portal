@@ -252,49 +252,49 @@ if(isset($_POST['applyjob'])) {
 
           ?>
 
-          <div class="single-post d-flex flex-row">
-            <div class="details">
-              <div class="title d-flex flex-row justify-content-between">
-                <div class="titles">
-                  <a href="single.html"><h4><?php echo $jtitle; ?></h4></a>
-                  <h6><?php echo $jpname; ?></h6>
-                </div>
-                <ul class="btns">
-                  <?php
-                    if($user_id != "" && $level == 3){
-                      ?>
-                      <form action="./jobsearch.php" method='post' onsubmit='return confirm("Do you want to apply this job?")'>
-                        <input type='hidden' name='jobid' value='<?php echo $jid;?>'/>
-                        <button type='submit' name="applyjob" class="btn btn-default <?php echo $btnstatus; ?>" title="<?php echo $btntitle; ?>" <?php echo $btnstatus; ?>>Apply</button>
-                      </form>
-                  <?php }?>
-                </ul>
+          <div class="single-post">
+            <div class="row">
+              <div class="col-sm-10">
+                <a href="single.html"><h4><?php echo $jtitle; ?></h4></a>
+                <h6>by <?php echo $jpname; ?></h6>
               </div>
-              <p>
-                ----------------------------------------------------------------------------------------------
-              </p>
-              <p><?php echo $jdesc; ?></p>
-              <p class="address"><span class="lnr lnr-map"></span> <?php echo $jaddress ?></p>
-              <p class="address"><span class="fa fa-hourglass-start"></span> <?php echo "Start Date: ".$jstart; ?></p>
-              <p class="address"><span class="fa fa-hourglass-end"></span> <?php echo "End Date: ".$jend; ?></p>
-              <p class="address"><span class="lnr lnr-database"></span> <?php echo "RM ".$jsalary; ?></p>
+              <div class="col-sm-2">
+                <?php
+                  if($user_id != "" && $level == 3){
+                    ?>
+                    <form action="./jobsearch.php" method='post' onsubmit='return confirm("Do you want to apply this job?")'>
+                      <input type='hidden' name='jobid' value='<?php echo $jid;?>'/>
+                      <button type='submit' name="applyjob" class="btn btn-default <?php echo $btnstatus; ?>" title="<?php echo $btntitle; ?>" <?php echo $btnstatus; ?>>Apply</button>
+                    </form>
+                <?php }?>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <hr>
+                <p><?php echo $jdesc; ?></p>
+                <hr>
+                <p class="address"><span class="lnr lnr-map"></span> <?php echo $jaddress ?></p>
+                <p class="address"><span class="fa fa-hourglass-start"></span> <?php echo "Start Date: ".$jstart; ?></p>
+                <p class="address"><span class="fa fa-hourglass-end"></span> <?php echo "End Date: ".$jend; ?></p>
+                <p class="address"><span class="lnr lnr-database"></span> <?php echo "RM ".$jsalary; ?></p>
 
-              <div class="thumb">
-                <ul class="tags">
-                  <?php
-                    foreach ($areaTags as $areaTags) {
-                      ?>
-                        <li>
-                          <a href="./jobsearch.php?search=&states=&tags=<?php echo $areaTags; ?>"><?php echo $areaTags; ?></a>
-                        </li>
-                      <?php
-                    }
-                  ?>
-                </ul>
+                <div class="thumb">
+                  <ul class="tags">
+                    <?php
+                      foreach ($areaTags as $areaTags) {
+                        ?>
+                          <li>
+                            <a href="./jobsearch.php?search=&states=&tags=<?php echo $areaTags; ?>"><?php echo $areaTags; ?></a>
+                          </li>
+                        <?php
+                      }
+                    ?>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-
 
             <?php
 
