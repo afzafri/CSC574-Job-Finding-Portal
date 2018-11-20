@@ -200,12 +200,12 @@ if(isset($_POST['applyjob'])) {
                   }
                 }
 
-                foreach ($listAreaTags as $listAreaTags)
+                foreach ($listAreaTags as $areaTags)
                 {
-                  if($tags == $listAreaTags) {
-                    echo "<option value='$listAreaTags' selected>$listAreaTags</option>";
+                  if($tags == $areaTags) {
+                    echo "<option value='$areaTags' selected>$areaTags</option>";
                   } else {
-                    echo "<option value='$listAreaTags'>$listAreaTags</option>";
+                    echo "<option value='$areaTags'>$areaTags</option>";
                   }
                 }
 
@@ -339,12 +339,48 @@ if(isset($_POST['applyjob'])) {
 
               foreach ($jobLocArr as $loc) {
                 ?>
-                  <li><a class="justify-content-between d-flex" href="./jobsearch.php?search=&states=<?php echo $loc['state']; ?>&tags="><p><?php echo $loc['state']; ?></p><span><?php echo $loc['total']; ?></span></a></li>
+                  <li>
+                    <a class="justify-content-between d-flex" href="./jobsearch.php?search=&states=<?php echo $loc['state']; ?>&tags=">
+                      <p><?php echo $loc['state']; ?></p>
+                      <span><?php echo $loc['total']; ?></span>
+                    </a>
+                  </li>
                 <?php
               }
             ?>
 
           </ul>
+        </div>
+
+        <div class="single-widget tags-widget">
+          <h4 class="title">Jobs by Area Tags</h4>
+           <ul>
+             <?php
+               $tagsArr = array();
+               // loop tags, to find total of jobs
+               foreach ($listAreaTags as $artag)
+               {
+                 $stmtArTag = $conn->prepare("SELECT COUNT(*) TOTAL FROM JOB WHERE J_AREA LIKE ?");
+                 $stmtArTag->execute(array("%$artag%"));
+                 $resArTag = $stmtArTag->fetch(PDO::FETCH_ASSOC);
+                 $totalArTag = $resArTag['TOTAL'];
+
+                 $tagsArr[] = array('tag' => $artag, 'total' => $totalArTag);
+               }
+               // sort the array by descending order by total jobs
+               array_multisort(array_column($tagsArr, "total"), SORT_DESC, $tagsArr);
+
+               foreach ($tagsArr as $newtag) {
+                 ?>
+                   	<li>
+                      <a href="./jobsearch.php?search=&states=&tags=<?php echo $newtag['tag']; ?>">
+                        <?php echo $newtag['tag']; ?> (<?php echo $newtag['total']; ?>)
+                      </a>
+                    </li>
+                 <?php
+               }
+             ?>
+           </ul>
         </div>
 
         <div class="single-slidebar">
@@ -387,19 +423,6 @@ if(isset($_POST['applyjob'])) {
               <a href="#" class="btns text-uppercase">Apply job</a>
             </div>
           </div>
-        </div>
-
-        <div class="single-slidebar">
-          <h4>Jobs by Category</h4>
-          <ul class="cat-list">
-            <li><a class="justify-content-between d-flex" href="#"><p>Technology</p><span>37</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Media & News</p><span>57</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Goverment</p><span>33</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Medical</p><span>36</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Restaurants</p><span>47</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Developer</p><span>27</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Accounting</p><span>17</span></a></li>
-          </ul>
         </div>
 
       </div>
