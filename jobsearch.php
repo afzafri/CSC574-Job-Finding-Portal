@@ -167,12 +167,12 @@ if(isset($_POST['applyjob'])) {
               <?php
                 $listnegeri = ["JOHOR","KEDAH","KELANTAN","MELAKA","NEGERI SEMBILAN","PAHANG","PERLIS","PULAU PINANG","PERAK","SABAH","SELANGOR","KUALA LUMPUR","PUTRAJAYA","SARAWAK","TERENGGANU","LABUAN"];
 
-                foreach ($listnegeri as $listnegeri)
+                foreach ($listnegeri as $negeri)
                 {
-                  if($states == $listnegeri) {
-                    echo "<option value='$listnegeri' selected>$listnegeri</option>";
+                  if($states == $negeri) {
+                    echo "<option value='$negeri' selected>$negeri</option>";
                   } else {
-                    echo "<option value='$listnegeri'>$listnegeri</option>";
+                    echo "<option value='$negeri'>$negeri</option>";
                   }
                 }
               ?>
@@ -321,13 +321,29 @@ if(isset($_POST['applyjob'])) {
         <div class="single-slidebar">
           <h4>Jobs by Location</h4>
           <ul class="cat-list">
-            <li><a class="justify-content-between d-flex" href="#"><p>Perak</p><span>37</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Kelantan</p><span>57</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Negeri Sembilan</p><span>33</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Sarawak</p><span>36</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Sabah</p><span>27</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Terengganu</p><span>17</span></a></li>
-            <li><a class="justify-content-between d-flex" href="#"><p>Perlis</p><span>2</span></a></li>
+
+            <?php
+              $jobLocArr = array();
+              // loop states, to find total of jobs
+              foreach ($listnegeri as $negeri)
+              {
+                $stmtJobLoc = $conn->prepare("SELECT COUNT(*) TOTAL FROM JOB WHERE J_ADDRESS LIKE ?");
+                $stmtJobLoc->execute(array("%$negeri%"));
+                $resJobLoc = $stmtJobLoc->fetch(PDO::FETCH_ASSOC);
+                $totalJobLoc = $resJobLoc['TOTAL'];
+
+                $jobLocArr[] = array('state' => $negeri, 'total' => $totalJobLoc);
+              }
+              // sort the array by descending order by total jobs
+              array_multisort(array_column($jobLocArr, "total"), SORT_DESC, $jobLocArr);
+
+              foreach ($jobLocArr as $loc) {
+                ?>
+                  <li><a class="justify-content-between d-flex" href="./jobsearch.php?search=&states=<?php echo $loc['state']; ?>&tags="><p><?php echo $loc['state']; ?></p><span><?php echo $loc['total']; ?></span></a></li>
+                <?php
+              }
+            ?>
+
           </ul>
         </div>
 
