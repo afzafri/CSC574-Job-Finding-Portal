@@ -53,7 +53,7 @@
   </div>
   <!-- /.box-header -->
   <div class="box-body">
-    <table id="jobTable" class="table table-bordered table-striped">
+    <table id="applicationsTable" class="table table-bordered table-striped">
       <thead>
       <tr>
         <th>#</th>
@@ -145,3 +145,11 @@
 </div>
 
 <?php include './template/footer.php'; ?>
+
+<script>
+  $(function () {
+    $('#applicationsTable').DataTable({
+      "order": [[ 0, "desc" ]]
+    });
+  })
+</script>
