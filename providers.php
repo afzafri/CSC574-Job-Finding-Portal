@@ -34,6 +34,7 @@
 
             while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
+              $jpid = $result['JP_ID'];
               $jpname = $result['JP_NAME'];
               $jpaddress = $result['JP_ADDRESS'];
               $jpphone = $result['JP_PHONE'];
@@ -41,6 +42,11 @@
               $jpwebsite = $result['JP_WEBSITE'];
               $jparea = $result['JP_AREA'];
               $jpdesc = $result['JP_DESCRIPTION'];
+
+              $stmtCount = $conn->prepare("SELECT COUNT(*) AS TOTAL FROM JOB WHERE JP_ID = ?");
+              $stmtCount->execute(array($jpid));
+              $countRes = $stmtCount->fetch(PDO::FETCH_ASSOC);
+              $totalJob = $countRes['TOTAL'];
 
               echo "
                 <tr>
@@ -54,7 +60,7 @@
                   </td>
                   <td>$jparea</td>
                   <td>$jpdesc</td>
-                  <td></td>
+                  <td>$totalJob</td>
                 </tr>
               ";
 
