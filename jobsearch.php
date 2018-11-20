@@ -3,6 +3,43 @@
   include './template/header.php';
 ?>
 
+<?php
+if(isset($_POST['applyjob'])) {
+
+  $jid = $_POST["jobid"];
+  $jsid = $user_ids;
+  $applydate = "2018-11-21 13:48:00";
+
+  try
+  {
+    $stmt = $conn->prepare("INSERT INTO
+                            JOB_APPLICATION (J_ID, JS_ID, APPLY_DATE, STATUS)
+                            VALUES (?, ?, ?, ?) ");
+
+    $stmt->execute(array($jid, $jsid, $applydate, 2));
+
+
+
+  }
+  catch(PDOException $e)
+  {
+    echo "
+    <script>
+    alert('". $e->getMessage()."');
+    </script>";
+    echo "Connection failed : " . $e->getMessage();
+  }
+  echo "
+  <script>
+  alert('Job applied!');
+  </script>";
+  /*echo "
+  <script>
+  alert('Job have been applied!.');
+  </script>";*/
+}
+?>
+
 <!-- Start post Area -->
 <section class="post-area section-gap">
   <div class="container">
@@ -47,57 +84,89 @@
 
     <div class="row justify-content-center d-flex">
 
-
-
-      <!-- Job offers -->
+      <!--Job offers -->
       <div class="col-lg-8 post-list" i>
-
-        <div style="display: none" id="kerja">
 
         <?php
 
-        for($i=0;$i<3;$i++) {
+        try
+        {
+            $stmt = $conn->prepare("
+              SELECT *
+              FROM JOB J, JOB_PROVIDER P
+              WHERE J.JP_ID = P.JP_ID
+              AND J.J_STATUS = 1
+            ");
+            $stmt->execute();
+
+          while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+            $jid = $result['J_ID'];
+            $jtitle = $result['J_TITLE'];
+            $jdesc = $result['J_DESC'];
+            $jarea = $result['J_AREA'];
+            $jsalary = $result['J_SALARY'];
+            $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
+            $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
+            $jstatus = $result['J_STATUS'];
+            $jpname = $result['JP_NAME'];
+
+
           ?>
 
-          <div class="single-post d-flex flex-row">
-            <div class="thumb">
-              <img src="./template/img/99-Speedmart_logo.jpg" alt="" width="109px">
-              <ul class="tags">
-                <li>
-                  <a href="#">Cashier</a>
-                </li>
-                <li>
-                  <a href="#">Finance</a>
-                </li>
-              </ul>
-            </div>
-            <div class="details">
-              <div class="title d-flex flex-row justify-content-between">
-                <div class="titles">
-                  <a href="single.html"><h4>Part Time Speedmart</h4></a>
-                  <h6>99 Speedmart</h6>
-                </div>
-                <ul class="btns">
-                  <li><i class="fa fa-heart" aria-hidden="true" id="like" val="false"></i></li>
-                  <li><a href="#" id="apply">Apply</a></li>
+            <div class="single-post d-flex flex-row">
+              <div class="thumb">
+                <img src="./template/img/99-Speedmart_logo.jpg" alt="" width="109px">
+                <ul class="tags">
+                  <li>
+                    <a href="#"><?php echo $jarea; ?></a>
+                  </li>
+
                 </ul>
               </div>
-              <p>
-                Tolong restock barang baru sampai. Kerja cun, gaji up cun. Semua boleh nego. Free bonus meggi kari sebungkuih.
-              </p>
-              <h5>Job Nature: Part time</h5>
-              <p class="address"><span class="lnr lnr-map"></span> Wallagonia, Tapah Road, Perak</p>
-              <p class="address"><span class="lnr lnr-database"></span> 900 - 1.2k</p>
+              <div class="details">
+                <div class="title d-flex flex-row justify-content-between">
+                  <div class="titles">
+                    <a href="single.html"><h4><?php echo $jtitle; ?></h4></a>
+                    <h6><?php echo $jpname; ?></h6>
+                  </div>
+                  <ul class="btns">
+                    <li><i class="fa fa-heart" aria-hidden="true" id="like" val="false"></i></li>
+                    <?php
+                      if($user_id != ""){
+                        ?>
+                        <li>
+                        <form action="./jobsearch.php" method='post' onsubmit='return confirm("are u sure")'>
+                          <input type='hidden' name='jobid' value='<?php echo $jid;?>'/>
+                          <button type='submit' name="applyjob">Apply</button>
+                        </form>
+                          </li>
+                    <?php }?>
+
+                  </ul>
+                </div>
+                <p>
+                  <?php echo $jdesc; ?>
+                </p>
+                <h5>Job Nature: Part time</h5>
+                <p class="address"><span class="lnr lnr-map"></span> Wallagonia, Tapah Road, Perak</p>
+                <p class="address"><span class="fa fa-hourglass-start"></span> <?php echo "Start Date: ".$jstart; ?></p>
+                <p class="address"><span class="fa fa-hourglass-end"></span> <?php echo "End Date: ".$jend; ?></p>
+                <p class="address"><span class="lnr lnr-database"></span> <?php echo "RM ".$jsalary; ?></p>
+              </div>
             </div>
-          </div>
 
 
-          <?php
+            <?php
+
+          }
+
         }
-
+        catch(PDOException $e)
+        {
+          echo "Connection failed : " . $e->getMessage();
+        }
         ?>
-
-        </div>
 
       </div> <!-- end job offer -->
 
@@ -180,15 +249,16 @@
 <?php include './template/footer.php'; ?>
 
 <script type="text/javascript">
-  $(document).on("click", "#search", function() {
+  /*$(document).on("click", "#search", function() {
     event.preventDefault();
     $("#kerja").fadeIn();
   });
-
+*/
   $(document).on("click", "#apply", function() {
-    event.preventDefault();
+    /*event.preventDefault();
     $(this).html('<i class="fa fa-check-square" aria-hidden="true"></i> Job Applied');
     $(this).css({ color: "blue" });
+    */
   });
 
 

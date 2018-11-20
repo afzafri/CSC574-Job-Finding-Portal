@@ -1,3 +1,54 @@
+<?php
+
+  include './config.php';
+  session_start();
+  //Check whether the session variable SESS_MEMBER_ID is present or not
+
+  $user_id = (isset($_SESSION['USER_ID'])) ? $_SESSION['USER_ID'] : "";
+  $user_email = (isset($_SESSION['USER_EMAIL'])) ? $_SESSION['USER_EMAIL'] : "";
+  $user_username = (isset($_SESSION['USER_USERNAME'])) ? $_SESSION['USER_USERNAME'] : "";
+  $level = (isset($_SESSION['USER_LEVEL'])) ? $_SESSION['USER_LEVEL'] : "";
+  $user_name = "";
+
+  try
+  {
+    if($level == 1) {
+
+    }
+    else if($level == 2) {
+
+      $stmt = $conn->prepare("SELECT * FROM JOB_PROVIDER WHERE L_ID = ?");
+      $stmt->execute(array($user_id));
+      $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      $user_ids = $result['JP_ID'];
+      $user_name = $result['JP_NAME'];
+      $user_desc = $result['JP_DESCRIPTION'];
+      $user_area = $result['JP_AREA'];
+      $user_address = $result['JP_ADDRESS'];
+      $user_phone = $result['JP_PHONE'];
+      $user_website = $result['JP_WEBSITE'];
+      $user_profilepic = $result['JP_PROFILEPIC'];
+
+    }
+    else if($level == 3) {
+      $stmt = $conn->prepare("SELECT * FROM JOB_SEEKER WHERE L_ID = ?");
+      $stmt->execute(array($user_id));
+      $result = $stmt->fetch(PDO::FETCH_ASSOC);
+      $user_ids = $result['JS_ID'];
+      $user_name = $result['JS_NAME'];
+
+    }
+
+
+  }
+  catch(PDOException $e)
+  {
+    echo "Connection failed : " . $e->getMessage();
+  }
+
+  ?>
+
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 <head>
@@ -45,16 +96,16 @@
                 <li><a href="providers.php">Providers List</a></li>
                 <li><a href="aboutus.php">About Us</a></li>
                 <li><a href="contactus.php">Contact</a></li>
-                <?php $login = isset($_GET['login']) ? $_GET['login'] : 0; ?>
                 <?php
-                  if($login == 1) {
+                  if($user_id != ""){
+
                     ?>
-                    <li class="menu-has-children"><a href="">Afif Zafri</a>
+                    <li class="menu-has-children"><a href=""><?php echo $user_name; ?></a>
                       <ul>
-                        <li><a href="./profile.php">View Profile</a></li>
+                        <li><a href="./dashboard/profile.php">View Profile</a></li>
                         <li><a href="./dashboard">Dashboard</a></li>
                         <li><a href="search.html">Setting</a></li>
-                        <li><a href="./index.php">Log Out</a></li>
+                        <li><a href="./logout.php">Log Out</a></li>
                       </ul>
                     </li>
                     <?php
