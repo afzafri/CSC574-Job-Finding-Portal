@@ -14,6 +14,33 @@
     $website = $_POST['website'];
     $profilepic = "";
 
+    // upload pic
+    $imgUpmsg = "";
+    if(isset($_FILES['profilepic']) && $_FILES['profilepic']['size'] > 0)
+    {
+      require_once('../uploader.class.php');
+      $obj = new Uploader();
+
+      $obj->dir = "../images/profilepics/"; //directory to store the image/file
+      $obj->files = $_FILES["profilepic"]; //receive from form
+      $obj->filetype = array('png','jpg','jpeg'); //set the allowed image/file extensions
+      $obj->size = 5000000; //set file/image size limit. note: 100000 is 100KB
+      $obj->upimg = true; //set true if want to upload image.
+
+      //upload
+      $stat = json_decode($obj->upload(), true);
+
+      if(array_key_exists('errors', $stat))
+      {
+        $imgUpmsg = $stat['errors']['status'];
+      }
+      else
+      {
+        $profilepic = $stat['success']['filename'];
+        $imgUpmsg = $stat['success']['status'];
+      }
+    }
+
     try
     {
       $stmt = $conn->prepare("UPDATE JOB_PROVIDER SET JP_NAME = ?, JP_DESCRIPTION = ?, JP_AREA = ?, JP_ADDRESS = ?, JP_PHONE = ?, JP_WEBSITE = ?, JP_PROFILEPIC = ? WHERE JP_ID = ?");
@@ -52,7 +79,7 @@
     if($level == 2) {
       ?>
 
-      <form action="./profile.php" method="post" onsubmit="return confirm('Update profile?');">
+      <form action="./profile.php" method="post" enctype="multipart/form-data" onsubmit="return confirm('Update profile?');">
         <div class="box-body">
           <div class="form-group">
             <label for="exampleInputEmail1">Name</label>
