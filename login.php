@@ -104,6 +104,7 @@ if(isset($_POST['login'])) {
       $stmt->execute();
 
       //fetch
+      $logerr = false;
       while($result = $stmt->fetch(PDO::FETCH_ASSOC))
       {
         //store fetched data into variable
@@ -128,9 +129,13 @@ if(isset($_POST['login'])) {
         }
         else
         {
-          echo "<script>alert('Wrong username and password')</script>";
-          $errormsg = "<center><h4><font color='red'>Wrong username and password</font></h4></center>";
+          $logerr = true;
         }
+      }
+
+      if($logerr) {
+        echo "<script>alert('Wrong username and password')</script>";
+        $errormsg = "<center><h4><font color='red'>Wrong username and password</font></h4></center>";
       }
 
     }
