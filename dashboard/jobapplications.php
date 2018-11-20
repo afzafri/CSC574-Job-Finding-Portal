@@ -59,6 +59,8 @@
         <th>#</th>
         <th>Applicant</th>
         <th>Job Title</th>
+        <th>Job Salary</th>
+        <th>Job Duration</th>
         <th>Apply Date</th>
         <th>Status</th>
         <th>Action</th>
@@ -89,6 +91,9 @@
             $applydate = date('m-d-Y h:i A', strtotime($result['APPLY_DATE']));
             $astatus = $result['STATUS'];
             $jobtitle = $result['J_TITLE'];
+            $jobsalary = $result['J_SALARY'];
+            $startdate = date('m-d-Y', strtotime($result['J_START']));
+            $enddate = date('m-d-Y', strtotime($result['J_END']));
             $applicant = $result['JS_NAME'];
 
             echo "
@@ -96,6 +101,8 @@
                 <td>".$count."</td>
                 <td>".$applicant."</td>
                 <td>".$jobtitle."</td>
+                <td>".$jobsalary."</td>
+                <td>".$startdate." - ".$enddate."</td>
                 <td>".$applydate."</td>
                 <td>";
                   if($astatus == 2) {
