@@ -145,7 +145,7 @@
       msgPlaceholder: 'Choose new profile picture...',
       // for image files
       initialPreview: [
-          "<img src='<?php echo $user_profilepic; ?>' class='file-preview-image'>",
+          "<img src='<?php echo $user_profilepic; ?>' width='150px' class='file-preview-image'>",
       ],
     });
   });
