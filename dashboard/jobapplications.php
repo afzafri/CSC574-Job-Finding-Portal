@@ -1,6 +1,50 @@
 <?php
   $pageTitle = "Job Applications";
   include './template/header.php';
+
+  if(isset($_POST['approveJob'])) {
+
+    $jid = $_POST['jobid'];
+    $jsid = $_POST['seekerid'];
+    try
+    {
+      $stmt = $conn->prepare("UPDATE JOB_APPLICATION SET STATUS = ? WHERE J_ID = ? AND JS_ID = ?");
+
+      $stmt->execute(array(1,$jid, $jsid));
+
+      echo "
+      <script>
+      alert('Job application approved.');
+      </script>";
+    }
+    catch(PDOException $e)
+    {
+      echo "Connection failed : " . $e->getMessage();
+    }
+
+  }
+
+  if(isset($_POST['declineJob'])) {
+
+    $jid = $_POST['jobid'];
+    $jsid = $_POST['seekerid'];
+    try
+    {
+      $stmt = $conn->prepare("UPDATE JOB_APPLICATION SET STATUS = ? WHERE J_ID = ? AND JS_ID = ?");
+
+      $stmt->execute(array(0,$jid, $jsid));
+
+      echo "
+      <script>
+      alert('Job application declined.');
+      </script>";
+    }
+    catch(PDOException $e)
+    {
+      echo "Connection failed : " . $e->getMessage();
+    }
+
+  }
 ?>
 
 <div class="box">
@@ -62,7 +106,26 @@
                     echo "<h4><span class='label label-danger'>Declined</span></h4>";
                   }
                 echo "</td>
-                <td></td>
+                <td>
+                  ";
+                  if($astatus == 2) {
+                    ?>
+                    <form action='./jobapplications.php' method='post' onsubmit='return confirm("Approve this job application?");'>
+                      <input type='hidden' name='jobid' value='<?php echo $jid; ?>'>
+                      <input type='hidden' name='seekerid' value='<?php echo $jsid; ?>'>
+                      <button type='submit' name='approveJob' class='btn btn-success' title='Approve application'><i class="fa fa-fw fa-check"></i></button>
+                    </form>
+                    <form action='./jobapplications.php' method='post' onsubmit='return confirm("Decline this job application?");'>
+                      <input type='hidden' name='jobid' value='<?php echo $jid; ?>'>
+                      <input type='hidden' name='seekerid' value='<?php echo $jsid; ?>'>
+                      <button type='submit' name='declineJob' class='btn btn-danger' title='Decline application'><i class="fa fa-fw fa-close"></i></button>
+                    </form>
+                    <?php
+                  } else {
+                    echo "<i>No actions</i>";
+                  }
+                  echo "
+                </td>
               </tr>
             ";
 
