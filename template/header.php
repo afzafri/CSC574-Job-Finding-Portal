@@ -81,6 +81,11 @@
     <link rel="stylesheet" href="./template/css/owl.carousel.css">
     <link rel="stylesheet" href="./template/css/main.css">
     <link rel="stylesheet" href="./template/plugins/DataTables/datatables.css">
+    <style>
+    .btn[disabled] {
+        cursor: not-allowed !important;
+    }
+    </style>
   </head>
   <body>
 
