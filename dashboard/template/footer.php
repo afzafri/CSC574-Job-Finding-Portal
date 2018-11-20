@@ -42,6 +42,10 @@
    var url = window.location.pathname;
    var filename = url.substring(url.lastIndexOf('/')+1);
    $('a[href="./' + filename + '"]').parent().addClass('active');
+
+   if(filename == "") {
+     $('a[href="./index.php"]').parent().addClass('active');
+   }
  </script>
 </body>
 </html>
