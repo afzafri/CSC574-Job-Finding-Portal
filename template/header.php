@@ -9,6 +9,7 @@
   $user_username = (isset($_SESSION['USER_USERNAME'])) ? $_SESSION['USER_USERNAME'] : "";
   $level = (isset($_SESSION['USER_LEVEL'])) ? $_SESSION['USER_LEVEL'] : "";
   $user_name = "";
+  $user_ids = "";
 
   try
   {
