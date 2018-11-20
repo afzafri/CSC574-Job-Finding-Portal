@@ -90,6 +90,30 @@
     }
 
   }
+
+  if(isset($_POST['cancelApp'])) {
+
+    $jid = $_POST['jobid'];
+    $jsid = $_POST['seekerid'];
+    try
+    {
+      $stmt = $conn->prepare("DELETE FROM JOB_APPLICATION WHERE J_ID = ? AND JS_ID = ?");
+
+      $stmt->execute(array($jid, $jsid));
+
+      echo "
+      <script>
+      alert('Application has been canceled.');
+      </script>";
+
+    }
+    catch(PDOException $e)
+    {
+      echo "Connection failed : " . $e->getMessage();
+    }
+
+  }
+
 ?>
 
 <!-- modal alert if no profile data -->
@@ -310,6 +334,7 @@
 
                 $jid = $result['J_ID'];
                 $jpid = $result['JP_ID'];
+                $jsid = $result['JS_ID'];
                 $applydate = date('m-d-Y h:i A', strtotime($result['APPLY_DATE']));
                 $astatus = $result['STATUS'];
                 $jobtitle = $result['J_TITLE'];
