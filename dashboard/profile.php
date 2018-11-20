@@ -12,7 +12,7 @@
     $address = $_POST['address'];
     $phone = $_POST['phone'];
     $website = $_POST['website'];
-    $profilepic = "";
+    $profilepic = $currpicname;
 
     // upload pic
     $imgUpmsg = "";
@@ -37,7 +37,9 @@
       else
       {
         // delete old profile pic
-        unlink('../images/profilepics/'.$currpicname);
+        if($currpicname != "") {
+          unlink('../images/profilepics/'.$currpicname);
+        }
 
         // set new profile pic
         $profilepic = $stat['success']['filename'];
