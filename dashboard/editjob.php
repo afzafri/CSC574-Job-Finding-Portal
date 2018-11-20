@@ -78,7 +78,7 @@
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Job Area</label>
-        <input type="text" class="form-control" placeholder="Enter Job Area" name="jarea" value="<?php echo $jarea; ?>" required>
+        <input type="text" class="form-control" placeholder="Separated by coma for multiple areas. Ex: 'programming,kitchen,office'" name="jarea" value="<?php echo $jarea; ?>" required>
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Job Address</label>
