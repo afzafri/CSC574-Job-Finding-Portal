@@ -158,8 +158,8 @@
             <th>Description</th>
             <th>Area</th>
             <th>Salary</th>
-            <th>Start Date &amp; Time</th>
-            <th>End Date &amp; Time</th>
+            <th>Job Duration</th>
+            <th>No. Applications</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -169,6 +169,7 @@
             $count = 1;
             try
             {
+              // list all job for current logged in job provider
               $stmt = $conn->prepare("SELECT * FROM JOB WHERE JP_ID = ?");
               $stmt->execute(array($user_ids));
 
@@ -184,6 +185,12 @@
                 $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
                 $jstatus = $result['J_STATUS'];
 
+                // count and get number of applications for each job
+                $stmtApp = $conn->prepare("SELECT COUNT(*) AS TOTAL FROM JOB_APPLICATION WHERE J_ID = ?");
+                $stmtApp->execute(array($jid));
+                $resApp = $stmtApp->fetch(PDO::FETCH_ASSOC);
+                $totalApp = $resApp['TOTAL'];
+
                 echo "
                   <tr>
                     <td>".$count."</td>
@@ -191,8 +198,8 @@
                     <td>".$jdesc."</td>
                     <td>".$jarea."</td>
                     <td>".$jsalary."</td>
-                    <td>".$jstart."</td>
-                    <td>".$jend."</td>
+                    <td>".$jstart." to ".$jend."</td>
+                    <td>".$totalApp."</td>
                     <td>";
                       echo ($jstatus == 0) ? "<h4><span class='label label-danger'>Closed</span></h4>" : "<h4><span class='label label-success'>Open</span></h4>";
                     echo "</td>
@@ -200,7 +207,6 @@
                       ";
                       ?>
                       <a href="./editjob.php?id=<?php echo $jid; ?>" class="btn btn-warning" title='Edit job'><i class="fa fa-fw fa-edit"></i></a>
-
                       <?php
                         $statusmsg = "Open";
                         $btncolor = 'btn btn-success';
@@ -317,6 +323,7 @@
             $count = 1;
             try
             {
+              // list all job application for current logged in job seeker
               $stmt = $conn->prepare("
 
                 SELECT *
