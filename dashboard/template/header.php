@@ -176,7 +176,6 @@ desired effect
 
                 <p>
                   <?php echo $user_name; ?>
-                  <small>Member since Nov. 2012</small>
                 </p>
               </li>
               <!-- Menu Footer-->
