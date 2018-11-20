@@ -79,7 +79,7 @@
             AND J.JP_ID = ?
 
           ");
-          $stmt->execute(array($user_id));
+          $stmt->execute(array($user_ids));
 
           //fetch
           while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {

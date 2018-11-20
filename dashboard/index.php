@@ -20,7 +20,7 @@
                               JOB (J_TITLE, J_DESC, J_AREA, J_SALARY, J_START, J_END, JP_ID, J_STATUS)
                               VALUES (?, ?, ?, ?, ?, ?, ?, ?) ");
 
-      $stmt->execute(array($jtitle, $jdesc, $jarea, $jsalary, $dateStart, $dateEnd, $user_id, 1)); // 0 job close, 1 job open
+      $stmt->execute(array($jtitle, $jdesc, $jarea, $jsalary, $dateStart, $dateEnd, $user_ids, 1)); // 0 job close, 1 job open
 
       echo "
       <script>
@@ -122,7 +122,7 @@
             try
             {
               $stmt = $conn->prepare("SELECT * FROM JOB WHERE JP_ID = ?");
-              $stmt->execute(array($user_id));
+              $stmt->execute(array($user_ids));
 
               //fetch
               while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
