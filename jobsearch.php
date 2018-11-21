@@ -346,7 +346,7 @@ if(isset($_POST['applyjob'])) {
 
         <div class="single-slidebar tags-widget">
           <h4 class="title">Jobs by Area Tags</h4>
-           <ul>
+           <ul class="cat-list">
              <?php
                $tagsArr = array();
                // loop tags, to find total of jobs
@@ -365,7 +365,7 @@ if(isset($_POST['applyjob'])) {
                foreach ($tagsArr as $newtag) {
                  ?>
                    	<li>
-                      <a href="./jobsearch.php?search=&states=&tags=<?php echo $newtag['tag']; ?>">
+                      <a class="justify-content-between d-flex" href="./jobsearch.php?search=&states=&tags=<?php echo $newtag['tag']; ?>">
                         <?php echo $newtag['tag']; ?> (<?php echo $newtag['total']; ?>)
                       </a>
                     </li>
