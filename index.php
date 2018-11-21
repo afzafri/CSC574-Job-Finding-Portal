@@ -38,7 +38,7 @@
     try
     {
       $stmt = $conn->prepare("
-                      INSERT INTO JOB_DONE (JD_DESC, JD_PICTURE, U_ID, J_ID, POST_TIME)
+                      INSERT INTO JOB_DONE (JD_DESC, JD_PICTURE, JS_ID, J_ID, POST_TIME)
                       VALUES (?, ?, ?, ?, NOW())
                     ");
       $stmt->execute(array($experience, $imagepath, $user_ids, $job));
@@ -67,7 +67,7 @@
     <div class="row">
 
       <!-- list post -->
-      <div class="col-lg-8 post-list blog-post-list">
+      <div class="col-lg-8 post-list">
 
         <?php
           if($user_id != "" && $level == 3){
@@ -131,42 +131,82 @@
 
         <?php
 
-        for($i=0;$i<3;$i++) {
-          ?>
+        try
+        {
+          $stmtJD = $conn->prepare("
+                                  SELECT *
+                                  FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
+                                  WHERE D.JS_ID = S.JS_ID
+                                  AND D.J_ID = J.J_ID
+                                  AND J.JP_ID = P.JP_ID
+                                  ORDER BY POST_TIME DESC
+                                  ");
 
-          <div class="single-post">
+          $stmtJD->execute();
 
-            <a href="blog-single.html">
-              <h1>
-                Memotong Rumput di UiTM
-              </h1>
-            </a>
+          while($resultJD = $stmtJD->fetch(PDO::FETCH_ASSOC)) {
+            $jdid = $resultJD['JD_ID'];
+            $jddesc = $resultJD['JD_DESC'];
+            $jdpic = $resultJD['JD_PICTURE'];
+            $jdposttime = date('F d, Y \a\t h:i A', strtotime($resultJD['POST_TIME']));
+            $jid = $resultJD['J_ID'];
+            $jsid = $resultJD['JS_ID'];
+            $jpname = $resultJD['JP_NAME'];
+            $jsname = $resultJD['JS_NAME'];
+            $jsprofilepic = ($resultJD['JS_PROFILEPIC'] != "") ? "./images/profilepics/".$resultJD['JS_PROFILEPIC'] : "./dashboard/template/dist/img/avatar.png";
+            $jtitle = $resultJD['J_TITLE'];
+            $jaddress = $resultJD['J_ADDRESS'];
 
-            <table>
-              <tr>
-                <td>
-                  <img src="./template/img/blog/c2.jpg" alt=""> &nbsp;
-                </td>
-                <td>
-                  <br>
-                  <h5><a href="#">Emilly Blunt</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm </p>
+            ?>
 
-                </td>
-              </tr>
-            </table>
+              <div class="single-post">
 
-            <p><i class="fa fa-building" aria-hidden="true"></i> Universiti Teknologi MARA, Tapah</p>
-            <p>
-              <img class="img-fluid" src="./template/img/blog/p3.jpg" alt=""> <br><br>
-              MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower to actually sit through a self-imposed MCSE training. who has the willpower to actually sit through a self-imposed MCSE training.
-            </p>
+                <a href="blog-single.html">
+                  <h1>
+                    <?php echo $jtitle; ?>
+                  </h1>
+                </a>
 
-            <hr>
+                <table>
+                  <tr>
+                    <td>
+                      <img src='<?php echo $jsprofilepic; ?>' alt='$jtitle' width="50px"> &nbsp;
+                    </td>
+                    <td>
+                      <br>
+                      <h5><a href="#"></a></h5>
+                      <p class="date"><?php echo $jdposttime; ?> </p>
 
-          </div>
+                    </td>
+                  </tr>
+                </table>
 
-          <?php
+                <p class="text-left">
+                  <i class="fa fa-building" aria-hidden="true"></i> <?php echo $jpname; ?> <br>
+                  <i class="fa fa-fw fa-map-marker"></i> <?php echo $jaddress; ?>
+                </p>
+                <p>
+                  <?php
+                    if($jdpic !== "") {
+                      echo "<img class='img-fluid' src='./images/postspics/$jdpic' alt='$jtitle' width='80%'> <br><br>";
+                    }
+                  ?>
+                  <?php echo $jddesc; ?>
+                </p>
+
+              </div>
+
+            <?php
+
+          }
+        }
+        catch(PDOException $e)
+        {
+          echo "
+          <script>
+          alert('". $e->getMessage()."');
+          </script>";
+          echo "Connection failed : " . $e->getMessage();
         }
 
         ?>
