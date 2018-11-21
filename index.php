@@ -19,7 +19,7 @@
               <div class="row">
                 <div class="col-lg-12 form-group">
 
-                  <select name="job" class="common-input mb-20 form-control" required="">
+                  <select name="job" class="common-input mb-20 form-control select2" required="">
                     <option>Choose job</option>
 
                     <?php
@@ -58,6 +58,7 @@
                     }
                     ?>
                   </select>
+                  <br><br>
 
                   <textarea class="common-textarea mt-10 form-control" name="experience" placeholder="Share your job experience" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Share your job experience'" required=""></textarea>
 

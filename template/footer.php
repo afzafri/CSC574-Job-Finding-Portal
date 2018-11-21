@@ -37,6 +37,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="./template/plugins/DataTables/datatables.js"></script>
 <!-- Bootstrap FileInput -->
 <script src="./dashboard/template/bower_components/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
-
+<!-- Select2 -->
+<script src="./dashboard/template/bower_components/select2/dist/js/select2.full.min.js"></script>
+<script>
+  $(function() {
+    $('.select2').select2();
+  })
+</script>
 </body>
 </html>

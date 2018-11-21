@@ -83,6 +83,8 @@
     <link rel="stylesheet" href="./template/plugins/DataTables/datatables.css">
     <!-- Bootstrap FileInput -->
     <link rel="stylesheet" href="./dashboard/template/bower_components/bootstrap-fileinput/css/fileinput.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="./dashboard/template/bower_components/select2/dist/css/select2.min.css">
     <style>
     .btn[disabled] {
         cursor: not-allowed !important;
