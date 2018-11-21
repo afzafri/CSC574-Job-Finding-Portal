@@ -143,7 +143,7 @@
           <div class="blog-list ">
             <div class="single-recent-post d-flex flex-row">
               <div class="recent-thumb">
-                <img class="img-fluid" src="img/blog/r1.jpg" alt="">
+                <img class="img-fluid" src="./template/img/blog/r1.jpg" alt="">
               </div>
               <div class="recent-details">
                 <a href="blog-single.html">
@@ -159,7 +159,7 @@
             </div>
             <div class="single-recent-post d-flex flex-row">
               <div class="recent-thumb">
-                <img class="img-fluid" src="img/blog/r2.jpg" alt="">
+                <img class="img-fluid" src="./template/img/blog/r2.jpg" alt="">
               </div>
               <div class="recent-details">
                 <a href="blog-single.html">
@@ -175,7 +175,7 @@
             </div>
             <div class="single-recent-post d-flex flex-row">
               <div class="recent-thumb">
-                <img class="img-fluid" src="img/blog/r3.jpg" alt="">
+                <img class="img-fluid" src="./template/img/blog/r3.jpg" alt="">
               </div>
               <div class="recent-details">
                 <a href="blog-single.html">
@@ -191,7 +191,7 @@
             </div>
             <div class="single-recent-post d-flex flex-row">
               <div class="recent-thumb">
-                <img class="img-fluid" src="img/blog/r4.jpg" alt="">
+                <img class="img-fluid" src="./template/img/blog/r4.jpg" alt="">
               </div>
               <div class="recent-details">
                 <a href="blog-single.html">

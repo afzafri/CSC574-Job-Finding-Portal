@@ -89,6 +89,9 @@
     .btn[disabled] {
         cursor: not-allowed !important;
     }
+    .navActive {
+      background-color: #49e4fa;
+    }
     </style>
   </head>
   <body>
@@ -101,11 +104,11 @@
             </div>
             <nav id="nav-menu-container">
               <ul class="nav-menu">
-                <li class="menu-active"><a href="index.php">Home</a></li>
-                <li><a href="jobsearch.php">Job Search</a></li>
-                <li><a href="providers.php">Providers List</a></li>
-                <li><a href="aboutus.php">About Us</a></li>
-                <li><a href="contactus.php">Contact</a></li>
+                <li><a href="./index.php">Home</a></li>
+                <li><a href="./jobsearch.php">Job Search</a></li>
+                <li><a href="./providers.php">Providers List</a></li>
+                <li><a href="./aboutus.php">About Us</a></li>
+                <li><a href="./contactus.php">Contact</a></li>
                 <?php
                   if($user_id != ""){
 

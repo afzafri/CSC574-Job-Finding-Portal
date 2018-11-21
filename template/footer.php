@@ -41,6 +41,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="./dashboard/template/bower_components/select2/dist/js/select2.full.min.js"></script>
 <script>
   $(function() {
+    // add active class to navbar
+    var url = window.location.pathname;
+    var filename = url.substring(url.lastIndexOf('/')+1);
+    $('a[href="./' + filename + '"]').parent().addClass('navActive');
+
+    if(filename == "") {
+      $('a[href="./index.php"]').parent().addClass('navActive');
+    }
+
     $('.select2').select2();
   })
 </script>
