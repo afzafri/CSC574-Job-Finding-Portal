@@ -88,12 +88,12 @@
 
             $jid = $result['J_ID'];
             $jsid = $result['JS_ID'];
-            $applydate = date('m-d-Y h:i A', strtotime($result['APPLY_DATE']));
+            $applydate = date('d/m/Y h:i A', strtotime($result['APPLY_DATE']));
             $astatus = $result['STATUS'];
             $jobtitle = $result['J_TITLE'];
             $jobsalary = $result['J_SALARY'];
-            $startdate = date('m-d-Y', strtotime($result['J_START']));
-            $enddate = date('m-d-Y', strtotime($result['J_END']));
+            $startdate = date('d/m/Y', strtotime($result['J_START']));
+            $enddate = date('d/m/Y', strtotime($result['J_END']));
             $applicant = $result['JS_NAME'];
 
             echo "

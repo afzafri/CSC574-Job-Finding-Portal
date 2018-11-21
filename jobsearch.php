@@ -8,7 +8,6 @@ if(isset($_POST['applyjob'])) {
 
   $jid = $_POST["jobid"];
   $jsid = $user_ids;
-  $applydate = "2018-11-21 13:48:00";
 
   try
   {
@@ -355,8 +354,8 @@ if(isset($_POST['applyjob'])) {
             $areaTags = explode(",", $result['J_AREA']);
             $jsalary = $result['J_SALARY'];
             $jaddress = $result['J_ADDRESS'];
-            $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
-            $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
+            $jstart = date('d/m/Y h:i A', strtotime($result['J_START']));
+            $jend = date('d/m/Y h:i A', strtotime($result['J_END']));
             $jstatus = $result['J_STATUS'];
             $jpname = $result['JP_NAME'];
 

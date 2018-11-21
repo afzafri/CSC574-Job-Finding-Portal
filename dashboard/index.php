@@ -182,8 +182,8 @@
                 $jdesc = $result['J_DESC'];
                 $jarea = $result['J_AREA'];
                 $jsalary = $result['J_SALARY'];
-                $jstart = date('m-d-Y h:i A', strtotime($result['J_START']));
-                $jend = date('m-d-Y h:i A', strtotime($result['J_END']));
+                $jstart = date('d/m/Y h:i A', strtotime($result['J_START']));
+                $jend = date('d/m/Y h:i A', strtotime($result['J_END']));
                 $jstatus = $result['J_STATUS'];
 
                 // count and get number of applications for each job
@@ -348,12 +348,12 @@
                 $jid = $result['J_ID'];
                 $jpid = $result['JP_ID'];
                 $jsid = $result['JS_ID'];
-                $applydate = date('m-d-Y h:i A', strtotime($result['APPLY_DATE']));
+                $applydate = date('d/m/Y h:i A', strtotime($result['APPLY_DATE']));
                 $astatus = $result['STATUS'];
                 $jobtitle = $result['J_TITLE'];
                 $jobsalary = $result['J_SALARY'];
-                $startdate = date('m-d-Y', strtotime($result['J_START']));
-                $enddate = date('m-d-Y', strtotime($result['J_END']));
+                $startdate = date('d/m/Y', strtotime($result['J_START']));
+                $enddate = date('d/m/Y', strtotime($result['J_END']));
                 $jobprovider = $result['JP_NAME'];
 
                 echo "
