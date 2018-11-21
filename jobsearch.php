@@ -149,14 +149,15 @@ if(isset($_POST['applyjob'])) {
         echo "Connection failed : " . $e->getMessage();
       }
     ?>
-    <form action="./jobsearch.php" class="serach-form-area single-widget" method="get">
-      <div class="row justify-content-center form-wrap">
-        <div class="col-lg-4 form-cols">
-          <input type="text" class="form-control" name="search" placeholder="What job are you looking for?" value="<?php echo $search; ?>">
-        </div>
-        <div class="col-lg-3 form-cols">
-          <div class="default-select" id="default-selects">
-            <select name="states">
+
+    <div class="banner-content col-lg-12">
+      <form class="serach-form-area" action="./jobsearch.php" method="get">
+        <div class="row justify-content-center form-wrap">
+          <div class="col-lg-4 form-cols">
+            <input type="text" class="form-control" name="search" placeholder="What job are you looking for?" value="<?php echo $search; ?>">
+          </div>
+          <div class="col-lg-3 form-cols">
+            <select name="states" class="default-select select2">
               <option value="">Select state</option>
 
               <?php
@@ -173,10 +174,8 @@ if(isset($_POST['applyjob'])) {
               ?>
             </select>
           </div>
-        </div>
-        <div class="col-lg-3 form-cols">
-          <div class="default-select" id="default-selects2">
-            <select name="tags">
+          <div class="col-lg-3 form-cols">
+            <select name="tags" class="select2">
               <option value="">All area tags</option>
 
               <?php
@@ -206,14 +205,14 @@ if(isset($_POST['applyjob'])) {
               ?>
             </select>
           </div>
+          <div class="col-lg-2 form-cols">
+              <button type="submit" class="btn btn-info">
+                <span class="lnr lnr-magnifier"></span> Search
+              </button>
+          </div>
         </div>
-        <div class="col-lg-2 form-cols">
-            <button class="btn btn-info" id="search">
-              <span class="lnr lnr-magnifier"></span> Search
-            </button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
 
     <br>
 
