@@ -244,7 +244,7 @@ desired effect
           }
           else if($level == 3) {
             echo '<li><a href="./index.php"><i class="fa fa-fw fa-list-alt"></i> <span>Job Applications</span></a></li>
-                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Posts</span></a></li>';
+                  <li><a href="./jobdoneposts.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Posts</span></a></li>';
           }
         ?>
 
