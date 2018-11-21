@@ -1,6 +1,27 @@
 <?php
   $pageTitle = "Manage Job Done Posts";
   include './template/header.php';
+
+  if(isset($_POST['deletePost'])) {
+
+    $postid = $_POST['postid'];
+    try
+    {
+      $stmt = $conn->prepare("DELETE FROM JOB_DONE WHERE JD_ID = ?");
+
+      $stmt->execute(array($postid));
+
+      echo "
+      <script>
+      alert('Post deleted.');
+      </script>";
+
+    }
+    catch(PDOException $e)
+    {
+      echo "Connection failed : " . $e->getMessage();
+    }
+  }
 ?>
 
 <div class="box">
@@ -55,11 +76,19 @@
                 <td>";
                   if($jdpicture != "") {
                     echo "<img src='../images/postspics/".$jdpicture."'  height='200px'/>";
-                  } 
+                  }
                 echo "
                 </td>
                 <td>".$posttime."</td>
-                <td></td>
+                <td>";
+                ?>
+                <a href="./editpost.php?id=<?php echo $jdid; ?>" class="btn btn-warning" title='Edit post'><i class="fa fa-fw fa-edit"></i></a>
+                <form action='./jobdoneposts.php' method='post' onsubmit='return confirm("Delete this post?");'>
+                  <input type='hidden' name='postid' value='<?php echo $jdid; ?>'>
+                  <button type='submit' name='deletePost' class='btn btn-danger' title='Delete post'><i class="fa fa-fw fa-trash"></i></button>
+                </form>
+                <?php
+                echo "</td>
               </tr>
             ";
 
