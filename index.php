@@ -142,10 +142,12 @@
         $maxLimit = (($pagination->get_page() - 1) * $records_per_page) . ', ' . $records_per_page;
         $totalRows = 0;
 
+        $search = (isset($_GET['search'])) ? $_GET['search'] : "";
         $tags = (isset($_GET['tags'])) ? $_GET['tags'] : "";
         try
         {
-          if($tags == "") {
+          // no search
+          if($tags == "" && $search == "") {
             $stmtJD = $conn->prepare("
                                     SELECT *
                                     FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
@@ -171,7 +173,35 @@
             $totalRows = $stmtCount->rowCount();
           }
 
-          if($tags != "") {
+          if($search != "" && $tags == "") {
+            $stmtJD = $conn->prepare("
+                                    SELECT *
+                                    FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
+                                    WHERE D.JS_ID = S.JS_ID
+                                    AND D.J_ID = J.J_ID
+                                    AND J.JP_ID = P.JP_ID
+                                    AND J.J_TITLE LIKE ?
+                                    ORDER BY POST_TIME DESC
+                                    LIMIT $maxLimit
+                                    ");
+
+            $stmtJD->execute(array("%$search%"));
+
+            // get total row count
+            $stmtCount = $conn->prepare("
+              SELECT *
+              FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
+              WHERE D.JS_ID = S.JS_ID
+              AND D.J_ID = J.J_ID
+              AND J.JP_ID = P.JP_ID
+              AND J.J_TITLE LIKE ?
+              ORDER BY POST_TIME DESC
+            ");
+            $stmtCount->execute(array("%$search%"));
+            $totalRows = $stmtCount->rowCount();
+          }
+
+          if($search == "" && $tags != "") {
             $stmtJD = $conn->prepare("
                                     SELECT *
                                     FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
@@ -296,8 +326,8 @@
       <!-- sidebar -->
       <div class="col-lg-4 sidebar">
         <div class="single-widget search-widget">
-          <form class="example" action="#" style="margin:auto;max-width:300px">
-            <input type="text" placeholder="Search Posts" name="search2">
+          <form class="example" action="./index.php" style="margin:auto;max-width:300px">
+            <input type="text" placeholder="Search Posts" name="search">
             <button type="submit"><i class="fa fa-search"></i></button>
           </form>
         </div>
