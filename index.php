@@ -89,6 +89,7 @@
                                               AND J.JP_ID = P.JP_ID
                                               AND STATUS = 1
                                               AND A.JS_ID = ?
+                                              ORDER BY J.J_START DESC
                                               ");
 
                       $stmtLJ->execute(array($user_ids));
