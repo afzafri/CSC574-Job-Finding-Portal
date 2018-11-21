@@ -205,7 +205,7 @@
                     </td>
                     <td>
                       <br>
-                      <h5><a href="#"></a></h5>
+                      <h5><a href="#"><?php echo $jsname; ?></a></h5>
                       <p class="date"><?php echo $jdposttime; ?> </p>
 
                     </td>
