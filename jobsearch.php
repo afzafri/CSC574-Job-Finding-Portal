@@ -14,9 +14,9 @@ if(isset($_POST['applyjob'])) {
   {
     $stmt = $conn->prepare("INSERT INTO
                             JOB_APPLICATION (J_ID, JS_ID, APPLY_DATE, STATUS)
-                            VALUES (?, ?, ?, ?) ");
+                            VALUES (?, ?, NOW(), ?) ");
 
-    $stmt->execute(array($jid, $jsid, $applydate, 2));
+    $stmt->execute(array($jid, $jsid, 2));
 
     echo "
     <script>
