@@ -282,7 +282,7 @@
                 <p>
                   <?php
                     if($jdpic !== "") {
-                      echo "<img class='img-fluid' src='./images/postspics/$jdpic' alt='$jtitle' width='80%'> <br><br>";
+                      echo "<img src='./images/postspics/$jdpic' alt='$jtitle' height='400px'> <br><br>";
                     }
                   ?>
                   <?php echo $jddesc; ?>
