@@ -66,6 +66,7 @@ if(isset($_POST['applyjob'])) {
               WHERE J.JP_ID = P.JP_ID
               AND J.J_STATUS = 1
               AND J.J_TITLE LIKE ?
+              ORDER BY J_START DESC
               LIMIT $maxLimit
             ");
               $stmt->execute(array("%$search%"));
@@ -77,6 +78,7 @@ if(isset($_POST['applyjob'])) {
                 WHERE J.JP_ID = P.JP_ID
                 AND J.J_STATUS = 1
                 AND J.J_TITLE LIKE ?
+                ORDER BY J_START DESC
               ");
               $stmtCount->execute(array("%$search%"));
               $totalRows = $stmtCount->rowCount();
@@ -90,6 +92,7 @@ if(isset($_POST['applyjob'])) {
                 AND J.J_STATUS = 1
                 AND J.J_TITLE LIKE ?
                 AND J.J_ADDRESS LIKE ?
+                ORDER BY J_START DESC
                 LIMIT $maxLimit
               ");
                 $stmt->execute(array("%$search%","%$states%"));
@@ -102,6 +105,7 @@ if(isset($_POST['applyjob'])) {
                   AND J.J_STATUS = 1
                   AND J.J_TITLE LIKE ?
                   AND J.J_ADDRESS LIKE ?
+                  ORDER BY J_START DESC
                 ");
                 $stmtCount->execute(array("%$search%","%$states%"));
                 $totalRows = $stmtCount->rowCount();
@@ -116,6 +120,7 @@ if(isset($_POST['applyjob'])) {
                 AND J.J_TITLE LIKE ?
                 AND J.J_ADDRESS LIKE ?
                 AND J.J_AREA LIKE ?
+                ORDER BY J_START DESC
                 LIMIT $maxLimit
               ");
                 $stmt->execute(array("%$search%","%$states%","%$tags%"));
@@ -129,6 +134,7 @@ if(isset($_POST['applyjob'])) {
                   AND J.J_TITLE LIKE ?
                   AND J.J_ADDRESS LIKE ?
                   AND J.J_AREA LIKE ?
+                  ORDER BY J_START DESC
                 ");
                 $stmtCount->execute(array("%$search%","%$states%","%$tags%"));
                 $totalRows = $stmtCount->rowCount();
@@ -143,6 +149,7 @@ if(isset($_POST['applyjob'])) {
                 WHERE J.JP_ID = P.JP_ID
                 AND J.J_STATUS = 1
                 AND J.J_ADDRESS LIKE ?
+                ORDER BY J_START DESC
                 LIMIT $maxLimit
               ");
                 $stmt->execute(array("%$states%"));
@@ -154,6 +161,7 @@ if(isset($_POST['applyjob'])) {
                   WHERE J.JP_ID = P.JP_ID
                   AND J.J_STATUS = 1
                   AND J.J_ADDRESS LIKE ?
+                  ORDER BY J_START DESC
                 ");
                 $stmtCount->execute(array("%$states%"));
                 $totalRows = $stmtCount->rowCount();
@@ -167,6 +175,7 @@ if(isset($_POST['applyjob'])) {
                   AND J.J_STATUS = 1
                   AND J.J_ADDRESS LIKE ?
                   AND J.J_AREA LIKE ?
+                  ORDER BY J_START DESC
                   LIMIT $maxLimit
                 ");
                   $stmt->execute(array("%$states%","%$tags%"));
@@ -179,6 +188,7 @@ if(isset($_POST['applyjob'])) {
                     AND J.J_STATUS = 1
                     AND J.J_ADDRESS LIKE ?
                     AND J.J_AREA LIKE ?
+                    ORDER BY J_START DESC
                   ");
                   $stmtCount->execute(array("%$states%","%$tags%"));
                   $totalRows = $stmtCount->rowCount();
@@ -193,6 +203,7 @@ if(isset($_POST['applyjob'])) {
                 WHERE J.JP_ID = P.JP_ID
                 AND J.J_STATUS = 1
                 AND J.J_AREA LIKE ?
+                ORDER BY J_START DESC
                 LIMIT $maxLimit
               ");
                 $stmt->execute(array("%$tags%"));
@@ -204,6 +215,7 @@ if(isset($_POST['applyjob'])) {
                   WHERE J.JP_ID = P.JP_ID
                   AND J.J_STATUS = 1
                   AND J.J_AREA LIKE ?
+                  ORDER BY J_START DESC
                 ");
                 $stmtCount->execute(array("%$tags%"));
                 $totalRows = $stmtCount->rowCount();
@@ -217,6 +229,7 @@ if(isset($_POST['applyjob'])) {
                   AND J.J_STATUS = 1
                   AND J.J_TITLE LIKE ?
                   AND J.J_AREA LIKE ?
+                  ORDER BY J_START DESC
                   LIMIT $maxLimit
                 ");
                   $stmt->execute(array("%$search%", "%$tags%"));
@@ -229,6 +242,7 @@ if(isset($_POST['applyjob'])) {
                     AND J.J_STATUS = 1
                     AND J.J_TITLE LIKE ?
                     AND J.J_AREA LIKE ?
+                    ORDER BY J_START DESC
                   ");
                   $stmtCount>execute(array("%$search%", "%$tags%"));
                   $totalRows = $stmtCount->rowCount();
@@ -241,6 +255,7 @@ if(isset($_POST['applyjob'])) {
             FROM JOB J, JOB_PROVIDER P
             WHERE J.JP_ID = P.JP_ID
             AND J.J_STATUS = 1
+            ORDER BY J_START DESC
             LIMIT $maxLimit
           ");
           $stmt->execute();
@@ -251,6 +266,7 @@ if(isset($_POST['applyjob'])) {
             FROM JOB J, JOB_PROVIDER P
             WHERE J.JP_ID = P.JP_ID
             AND J.J_STATUS = 1
+            ORDER BY J_START DESC
           ");
           $stmtCount->execute();
           $totalRows = $stmtCount->rowCount();

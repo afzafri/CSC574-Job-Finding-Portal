@@ -131,6 +131,17 @@
 
         <?php
 
+        // PHP pagination library
+        // include the pagination class
+        require './Zebra_Pagination.php';
+        // how many records should be displayed on a page?
+        $records_per_page = 5;
+        // instantiate the pagination object
+        $pagination = new Zebra_Pagination();
+        // get mysql query limit
+        $maxLimit = (($pagination->get_page() - 1) * $records_per_page) . ', ' . $records_per_page;
+        $totalRows = 0;
+
         try
         {
           $stmtJD = $conn->prepare("
@@ -140,9 +151,29 @@
                                   AND D.J_ID = J.J_ID
                                   AND J.JP_ID = P.JP_ID
                                   ORDER BY POST_TIME DESC
+                                  LIMIT $maxLimit
                                   ");
 
           $stmtJD->execute();
+
+          // get total row count
+          $stmtCount = $conn->prepare("
+            SELECT *
+            FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
+            WHERE D.JS_ID = S.JS_ID
+            AND D.J_ID = J.J_ID
+            AND J.JP_ID = P.JP_ID
+            ORDER BY POST_TIME DESC
+          ");
+          $stmtCount->execute();
+          $totalRows = $stmtCount->rowCount();
+
+          // pass the total number of records to the pagination class
+          $pagination->records($totalRows);
+          // records per page
+          $pagination->records_per_page($records_per_page);
+          // custom previous next icon
+          $pagination->labels('<i class="fa fa-arrow-left"></i>', '<i class="fa fa-arrow-right"></i>');
 
           while($resultJD = $stmtJD->fetch(PDO::FETCH_ASSOC)) {
             $jdid = $resultJD['JD_ID'];
@@ -208,6 +239,9 @@
           </script>";
           echo "Connection failed : " . $e->getMessage();
         }
+
+        // render the pagination links
+        $pagination->render();
 
         ?>
       </div>
