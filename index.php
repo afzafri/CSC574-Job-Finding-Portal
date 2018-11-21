@@ -19,8 +19,8 @@
               <div class="row">
                 <div class="col-lg-12 form-group">
 
-                  <select name="job" class="common-input mb-20 form-control select2" required="">
-                    <option>Choose job</option>
+                  <select name="job" class="common-input mb-20 form-control select2" required>
+                    <option value="">Choose job</option>
 
                     <?php
                     try
