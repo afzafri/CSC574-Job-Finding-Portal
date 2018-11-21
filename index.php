@@ -18,7 +18,46 @@
             <form class="form-area single-widget" id="myForm" action="mail.php" method="post" class="contact-form text-right" enctype="multipart/form-data" onsubmit="return confirm('Post status?');">
               <div class="row">
                 <div class="col-lg-12 form-group">
-                  <input name="title" placeholder="Enter post Title" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter post Title'" class="common-input mb-20 form-control" required="" type="text">
+
+                  <select name="job" class="common-input mb-20 form-control" required="">
+                    <option>Choose job</option>
+
+                    <?php
+                    try
+                    {
+                      $stmtLJ = $conn->prepare("
+                                              SELECT *
+                                              FROM JOB_APPLICATION A, JOB J, JOB_PROVIDER P
+                                              WHERE A.J_ID = J.J_ID
+                                              AND J.JP_ID = P.JP_ID
+                                              AND STATUS = 1
+                                              AND A.JS_ID = ?
+                                              ");
+
+                      $stmtLJ->execute(array($user_ids));
+
+                      while($resultLJ = $stmtLJ->fetch(PDO::FETCH_ASSOC)) {
+
+                        $jobid = $resultLJ['J_ID'];
+                        $jobname = $resultLJ['J_TITLE'];
+                        $jobstart = date('m/y', strtotime($resultLJ['J_START']));
+                        $jobend = date('m/y', strtotime($resultLJ['J_END']));
+                        $jpname = $resultLJ['JP_NAME'];
+
+                        echo "<option value='$jobid'>$jobname by $jpname ($jobstart - $jobend)</option>";
+
+                      }
+                    }
+                    catch(PDOException $e)
+                    {
+                      echo "
+                      <script>
+                      alert('". $e->getMessage()."');
+                      </script>";
+                      echo "Connection failed : " . $e->getMessage();
+                    }
+                    ?>
+                  </select>
 
                   <textarea class="common-textarea mt-10 form-control" name="experience" placeholder="Share your job experience" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Share your job experience'" required=""></textarea>
 
