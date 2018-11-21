@@ -344,7 +344,7 @@ if(isset($_POST['applyjob'])) {
           </ul>
         </div>
 
-        <div class="single-widget tags-widget">
+        <div class="single-slidebar tags-widget">
           <h4 class="title">Jobs by Area Tags</h4>
            <ul>
              <?php
