@@ -90,7 +90,10 @@
         cursor: not-allowed !important;
     }
     .navActive {
-      background-color: #49e4fa;
+      background-image: -moz-linear-gradient(0deg, #bfacff 0%, #795fff 100%);
+      background-image: -webkit-linear-gradient(0deg, #bfacff 0%, #795fff 100%);
+      background-image: -ms-linear-gradient(0deg, #bfacff 0%, #795fff 100%);
+      border: 1px solid #49e4fa;
     }
     </style>
   </head>
