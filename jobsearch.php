@@ -40,11 +40,24 @@ if(isset($_POST['applyjob'])) {
   <div class="container">
 
     <?php
+
+    // PHP pagination library
+    // include the pagination class
+    require './Zebra_Pagination.php';
+    // how many records should be displayed on a page?
+    $records_per_page = 5;
+    // instantiate the pagination object
+    $pagination = new Zebra_Pagination();
+    // get mysql query limit
+    $maxLimit = (($pagination->get_page() - 1) * $records_per_page) . ', ' . $records_per_page;
+
     $search = (isset($_GET['search'])) ? $_GET['search'] : "";
     $states = (isset($_GET['states'])) ? $_GET['states'] : "";
     $tags = (isset($_GET['tags'])) ? $_GET['tags'] : "";
+    $totalRows = 0;
     try
     {
+      // ----- SQL QUERIES -----
       // --- SEARCH TITLE ---
         // --- SEARCH
         if($search != "" && $states == "" && $tags == "") {
@@ -54,8 +67,20 @@ if(isset($_POST['applyjob'])) {
               WHERE J.JP_ID = P.JP_ID
               AND J.J_STATUS = 1
               AND J.J_TITLE LIKE ?
+              LIMIT $maxLimit
             ");
               $stmt->execute(array("%$search%"));
+
+              // get total row count
+              $stmtCount = $conn->prepare("
+                SELECT *
+                FROM JOB J, JOB_PROVIDER P
+                WHERE J.JP_ID = P.JP_ID
+                AND J.J_STATUS = 1
+                AND J.J_TITLE LIKE ?
+              ");
+              $stmtCount->execute(array("%$search%"));
+              $totalRows = $stmtCount->rowCount();
           }
           // --- SEARCH, STATES
           if($search != "" && $states != "" && $tags == "") {
@@ -66,8 +91,21 @@ if(isset($_POST['applyjob'])) {
                 AND J.J_STATUS = 1
                 AND J.J_TITLE LIKE ?
                 AND J.J_ADDRESS LIKE ?
+                LIMIT $maxLimit
               ");
                 $stmt->execute(array("%$search%","%$states%"));
+
+                // get total row count
+                $stmtCount = $conn->prepare("
+                  SELECT *
+                  FROM JOB J, JOB_PROVIDER P
+                  WHERE J.JP_ID = P.JP_ID
+                  AND J.J_STATUS = 1
+                  AND J.J_TITLE LIKE ?
+                  AND J.J_ADDRESS LIKE ?
+                ");
+                $stmtCount->execute(array("%$search%","%$states%"));
+                $totalRows = $stmtCount->rowCount();
             }
           // --- SEARCH, STATES, TAGS
           if($search != "" && $states != "" && $tags != "") {
@@ -79,8 +117,22 @@ if(isset($_POST['applyjob'])) {
                 AND J.J_TITLE LIKE ?
                 AND J.J_ADDRESS LIKE ?
                 AND J.J_AREA LIKE ?
+                LIMIT $maxLimit
               ");
                 $stmt->execute(array("%$search%","%$states%","%$tags%"));
+
+                // get total row count
+                $stmtCount = $conn->prepare("
+                  SELECT *
+                  FROM JOB J, JOB_PROVIDER P
+                  WHERE J.JP_ID = P.JP_ID
+                  AND J.J_STATUS = 1
+                  AND J.J_TITLE LIKE ?
+                  AND J.J_ADDRESS LIKE ?
+                  AND J.J_AREA LIKE ?
+                ");
+                $stmtCount->execute(array("%$search%","%$states%","%$tags%"));
+                $totalRows = $stmtCount->rowCount();
           }
 
         // --- STATES ---
@@ -92,8 +144,20 @@ if(isset($_POST['applyjob'])) {
                 WHERE J.JP_ID = P.JP_ID
                 AND J.J_STATUS = 1
                 AND J.J_ADDRESS LIKE ?
+                LIMIT $maxLimit
               ");
                 $stmt->execute(array("%$states%"));
+
+                // get total row count
+                $stmtCount = $conn->prepare("
+                  SELECT *
+                  FROM JOB J, JOB_PROVIDER P
+                  WHERE J.JP_ID = P.JP_ID
+                  AND J.J_STATUS = 1
+                  AND J.J_ADDRESS LIKE ?
+                ");
+                $stmtCount->execute(array("%$states%"));
+                $totalRows = $stmtCount->rowCount();
             }
             // --- STATES, TAGS
             if($search == "" && $states != "" && $tags != "") {
@@ -104,8 +168,21 @@ if(isset($_POST['applyjob'])) {
                   AND J.J_STATUS = 1
                   AND J.J_ADDRESS LIKE ?
                   AND J.J_AREA LIKE ?
+                  LIMIT $maxLimit
                 ");
                   $stmt->execute(array("%$states%","%$tags%"));
+
+                  // get total row count
+                  $stmtCount = $conn->prepare("
+                    SELECT *
+                    FROM JOB J, JOB_PROVIDER P
+                    WHERE J.JP_ID = P.JP_ID
+                    AND J.J_STATUS = 1
+                    AND J.J_ADDRESS LIKE ?
+                    AND J.J_AREA LIKE ?
+                  ");
+                  $stmtCount->execute(array("%$states%","%$tags%"));
+                  $totalRows = $stmtCount->rowCount();
               }
 
         // --- TAGS ---
@@ -117,8 +194,20 @@ if(isset($_POST['applyjob'])) {
                 WHERE J.JP_ID = P.JP_ID
                 AND J.J_STATUS = 1
                 AND J.J_AREA LIKE ?
+                LIMIT $maxLimit
               ");
                 $stmt->execute(array("%$tags%"));
+
+                // get total row count
+                $stmtCount = $conn->prepare("
+                  SELECT *
+                  FROM JOB J, JOB_PROVIDER P
+                  WHERE J.JP_ID = P.JP_ID
+                  AND J.J_STATUS = 1
+                  AND J.J_AREA LIKE ?
+                ");
+                $stmtCount->execute(array("%$tags%"));
+                $totalRows = $stmtCount->rowCount();
             }
             // --- TAGS, SEARCH
             if($search != "" && $states == "" && $tags != "") {
@@ -129,8 +218,21 @@ if(isset($_POST['applyjob'])) {
                   AND J.J_STATUS = 1
                   AND J.J_TITLE LIKE ?
                   AND J.J_AREA LIKE ?
+                  LIMIT $maxLimit
                 ");
                   $stmt->execute(array("%$search%", "%$tags%"));
+
+                  // get total row count
+                  $stmtCount = $conn->prepare("
+                    SELECT *
+                    FROM JOB J, JOB_PROVIDER P
+                    WHERE J.JP_ID = P.JP_ID
+                    AND J.J_STATUS = 1
+                    AND J.J_TITLE LIKE ?
+                    AND J.J_AREA LIKE ?
+                  ");
+                  $stmtCount>execute(array("%$search%", "%$tags%"));
+                  $totalRows = $stmtCount->rowCount();
               }
 
         // --- NO SEARCH ---
@@ -140,14 +242,33 @@ if(isset($_POST['applyjob'])) {
             FROM JOB J, JOB_PROVIDER P
             WHERE J.JP_ID = P.JP_ID
             AND J.J_STATUS = 1
+            LIMIT $maxLimit
           ");
           $stmt->execute();
+
+          // get total row count
+          $stmtCount = $conn->prepare("
+            SELECT *
+            FROM JOB J, JOB_PROVIDER P
+            WHERE J.JP_ID = P.JP_ID
+            AND J.J_STATUS = 1
+          ");
+          $stmtCount->execute();
+          $totalRows = $stmtCount->rowCount();
         }
       }
       catch(PDOException $e)
       {
         echo "Connection failed : " . $e->getMessage();
       }
+
+      // pass the total number of records to the pagination class
+      $pagination->records($totalRows);
+      // records per page
+      $pagination->records_per_page($records_per_page);
+      // custom previous next icon
+      $pagination->labels('<i class="fa fa-arrow-left"></i>', '<i class="fa fa-arrow-right"></i>');
+
     ?>
 
     <div class="banner-content col-lg-12">
@@ -304,6 +425,10 @@ if(isset($_POST['applyjob'])) {
         {
           echo "Connection failed : " . $e->getMessage();
         }
+
+        // render the pagination links
+        $pagination->render();
+
         ?>
 
       </div> <!-- end job offer -->
