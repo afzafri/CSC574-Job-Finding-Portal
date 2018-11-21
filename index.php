@@ -1,6 +1,63 @@
 <?php
   $pageTitle = "Job Done Posts";
   include './template/header.php';
+
+  if(isset($_POST['newPost'])) {
+    $job = $_POST['job'];
+    $experience = $_POST['experience'];
+    $imagepath = "";
+
+    // upload pic
+    $imgUpmsg = "";
+    if(isset($_FILES['image']) && $_FILES['image']['size'] > 0)
+    {
+      require_once('./uploader.class.php');
+      $obj = new Uploader();
+
+      $obj->dir = "./images/postspics/"; //directory to store the image/file
+      $obj->files = $_FILES["image"]; //receive from form
+      $obj->filetype = array('png','jpg','jpeg'); //set the allowed image/file extensions
+      $obj->size = 5000000; //set file/image size limit. note: 100000 is 100KB
+      $obj->upimg = true; //set true if want to upload image.
+
+      //upload
+      $stat = json_decode($obj->upload(), true);
+
+      if(array_key_exists('errors', $stat))
+      {
+        $imgUpmsg = $stat['errors']['status'];
+      }
+      else
+      {
+        // set image path
+        $imagepath = $stat['success']['filename'];
+        $imgUpmsg = $stat['success']['status'];
+      }
+    }
+
+    try
+    {
+      $stmt = $conn->prepare("
+                      INSERT INTO JOB_DONE (JD_DESC, JD_PICTURE, U_ID, J_ID, POST_TIME)
+                      VALUES (?, ?, ?, ?, NOW())
+                    ");
+      $stmt->execute(array($experience, $imagepath, $user_ids, $job));
+
+      echo ("<script LANGUAGE='JavaScript'>
+      window.alert('Create new post success.');
+      </script>");
+
+    }
+    catch(PDOException $e)
+    {
+      echo "
+      <script>
+      alert('". $e->getMessage()."');
+      </script>";
+      echo "Connection failed : " . $e->getMessage();
+    }
+  }
+
 ?>
 
 
@@ -13,9 +70,9 @@
       <div class="col-lg-8 post-list blog-post-list">
 
         <?php
-          if($user_id != ""){
+          if($user_id != "" && $level == 3){
             ?>
-            <form class="form-area single-widget" id="myForm" action="mail.php" method="post" class="contact-form text-right" enctype="multipart/form-data" onsubmit="return confirm('Post status?');">
+            <form class="form-area single-widget" action="./index.php" method="post" class="contact-form text-right" enctype="multipart/form-data" onsubmit="return confirm('Post status?');">
               <div class="row">
                 <div class="col-lg-12 form-group">
 
