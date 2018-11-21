@@ -142,31 +142,62 @@
         $maxLimit = (($pagination->get_page() - 1) * $records_per_page) . ', ' . $records_per_page;
         $totalRows = 0;
 
+        $tags = (isset($_GET['tags'])) ? $_GET['tags'] : "";
         try
         {
-          $stmtJD = $conn->prepare("
-                                  SELECT *
-                                  FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
-                                  WHERE D.JS_ID = S.JS_ID
-                                  AND D.J_ID = J.J_ID
-                                  AND J.JP_ID = P.JP_ID
-                                  ORDER BY POST_TIME DESC
-                                  LIMIT $maxLimit
-                                  ");
+          if($tags == "") {
+            $stmtJD = $conn->prepare("
+                                    SELECT *
+                                    FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
+                                    WHERE D.JS_ID = S.JS_ID
+                                    AND D.J_ID = J.J_ID
+                                    AND J.JP_ID = P.JP_ID
+                                    ORDER BY POST_TIME DESC
+                                    LIMIT $maxLimit
+                                    ");
 
-          $stmtJD->execute();
+            $stmtJD->execute();
 
-          // get total row count
-          $stmtCount = $conn->prepare("
-            SELECT *
-            FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
-            WHERE D.JS_ID = S.JS_ID
-            AND D.J_ID = J.J_ID
-            AND J.JP_ID = P.JP_ID
-            ORDER BY POST_TIME DESC
-          ");
-          $stmtCount->execute();
-          $totalRows = $stmtCount->rowCount();
+            // get total row count
+            $stmtCount = $conn->prepare("
+              SELECT *
+              FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
+              WHERE D.JS_ID = S.JS_ID
+              AND D.J_ID = J.J_ID
+              AND J.JP_ID = P.JP_ID
+              ORDER BY POST_TIME DESC
+            ");
+            $stmtCount->execute();
+            $totalRows = $stmtCount->rowCount();
+          }
+
+          if($tags != "") {
+            $stmtJD = $conn->prepare("
+                                    SELECT *
+                                    FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
+                                    WHERE D.JS_ID = S.JS_ID
+                                    AND D.J_ID = J.J_ID
+                                    AND J.JP_ID = P.JP_ID
+                                    AND J.J_AREA LIKE ?
+                                    ORDER BY POST_TIME DESC
+                                    LIMIT $maxLimit
+                                    ");
+
+            $stmtJD->execute(array("%$tags%"));
+
+            // get total row count
+            $stmtCount = $conn->prepare("
+              SELECT *
+              FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
+              WHERE D.JS_ID = S.JS_ID
+              AND D.J_ID = J.J_ID
+              AND J.JP_ID = P.JP_ID
+              AND J.J_AREA LIKE ?
+              ORDER BY POST_TIME DESC
+            ");
+            $stmtCount->execute(array("%$tags%"));
+            $totalRows = $stmtCount->rowCount();
+          }
 
           // pass the total number of records to the pagination class
           $pagination->records($totalRows);
@@ -181,11 +212,12 @@
             $jdpic = $resultJD['JD_PICTURE'];
             $jdposttime = date('F d, Y \a\t h:i A', strtotime($resultJD['POST_TIME']));
             $jid = $resultJD['J_ID'];
+            $jtitle = $resultJD['J_TITLE'];
+            $areaTags = explode(",", $resultJD['J_AREA']);
             $jsid = $resultJD['JS_ID'];
             $jpname = $resultJD['JP_NAME'];
             $jsname = $resultJD['JS_NAME'];
             $jsprofilepic = ($resultJD['JS_PROFILEPIC'] != "") ? "./images/profilepics/".$resultJD['JS_PROFILEPIC'] : "./dashboard/template/dist/img/avatar.png";
-            $jtitle = $resultJD['J_TITLE'];
             $jaddress = $resultJD['J_ADDRESS'];
 
             ?>
@@ -224,6 +256,20 @@
                   ?>
                   <?php echo $jddesc; ?>
                 </p>
+
+                <div class="thumb">
+                  <ul class="tags">
+                    <?php
+                      foreach ($areaTags as $areaTags) {
+                        ?>
+                          <li>
+                            <a href="./index.php?tags=<?php echo $areaTags; ?>"><?php echo $areaTags; ?></a>
+                          </li>
+                        <?php
+                      }
+                    ?>
+                  </ul>
+                </div>
 
               </div>
 
@@ -355,15 +401,44 @@
         <div class="single-widget tags-widget">
           <h4 class="title">Tag Clouds</h4>
            <ul>
-            <li><a href="#">Lifestyle</a></li>
-            <li><a href="#">Art</a></li>
-            <li><a href="#">Adventure</a></li>
-            <li><a href="#">Food</a></li>
-            <li><a href="#">Techlology</a></li>
-            <li><a href="#">Fashion</a></li>
-            <li><a href="#">Architecture</a></li>
-            <li><a href="#">Food</a></li>
-            <li><a href="#">Technology</a></li>
+             <?php
+               $listAreaTags = array();
+               $stmtTags = $conn->prepare("SELECT J_AREA FROM JOB WHERE J_STATUS = 1");
+               $stmtTags->execute();
+               while($result = $stmtTags->fetch(PDO::FETCH_ASSOC)) {
+                 $arrarea = explode(",", $result['J_AREA']);
+
+                 foreach ($arrarea as $arrarea) {
+                   if(!in_array($arrarea, $listAreaTags)){
+                     $listAreaTags[]=$arrarea;
+                   }
+                 }
+               }
+
+               $tagsArr = array();
+               // loop tags, to find total of jobs
+               foreach ($listAreaTags as $artag)
+               {
+                 $stmtArTag = $conn->prepare("SELECT COUNT(*) TOTAL FROM JOB WHERE J_AREA LIKE ?");
+                 $stmtArTag->execute(array("%$artag%"));
+                 $resArTag = $stmtArTag->fetch(PDO::FETCH_ASSOC);
+                 $totalArTag = $resArTag['TOTAL'];
+
+                 $tagsArr[] = array('tag' => $artag, 'total' => $totalArTag);
+               }
+               // sort the array by descending order by total jobs
+               array_multisort(array_column($tagsArr, "total"), SORT_DESC, $tagsArr);
+
+               foreach ($tagsArr as $newtag) {
+                 ?>
+                    <li>
+                      <a class="justify-content-between d-flex" href="./index.php?tags=<?php echo $newtag['tag']; ?>">
+                        <?php echo $newtag['tag']; ?> (<?php echo $newtag['total']; ?>)
+                      </a>
+                    </li>
+                 <?php
+               }
+             ?>
            </ul>
         </div>
 
