@@ -157,7 +157,7 @@ if(isset($_POST['applyjob'])) {
             <input type="text" class="form-control" name="search" placeholder="What job are you looking for?" value="<?php echo $search; ?>">
           </div>
           <div class="col-lg-3 form-cols">
-            <select name="states" class="default-select select2">
+            <select name="states" class="default-select select2" style="width: 100%">
               <option value="">Select state</option>
 
               <?php
@@ -175,7 +175,7 @@ if(isset($_POST['applyjob'])) {
             </select>
           </div>
           <div class="col-lg-3 form-cols">
-            <select name="tags" class="select2">
+            <select name="tags" class="select2" style="width: 100%">
               <option value="">All area tags</option>
 
               <?php
