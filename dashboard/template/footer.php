@@ -34,6 +34,10 @@
 <script src="./template/bower_components/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
 <!-- Bootstrap FileInput -->
 <script src="./template/bower_components/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
+<!-- Select2 -->
+<script src="./template/bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- CK Editor -->
+<script src="./template/bower_components/ckeditor/ckeditor.js"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
  Both of these plugins are recommended to enhance the
  user experience. -->
@@ -46,6 +50,8 @@
    if(filename == "") {
      $('a[href="./index.php"]').parent().addClass('active');
    }
+
+   $('.select2').select2();
  </script>
 </body>
 </html>
