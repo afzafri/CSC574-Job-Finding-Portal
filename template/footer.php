@@ -39,6 +39,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="./dashboard/template/bower_components/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
 <!-- Select2 -->
 <script src="./dashboard/template/bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- CK Editor -->
+<script src="./dashboard/template/bower_components/ckeditor/ckeditor.js"></script>
 <script>
   $(function() {
     // add active class to navbar

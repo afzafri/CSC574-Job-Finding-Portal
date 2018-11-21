@@ -118,7 +118,7 @@
                   </select>
                   <br><br>
 
-                  <textarea class="common-textarea mt-10 form-control" name="experience" placeholder="Share your job experience" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Share your job experience'" required=""></textarea>
+                  <textarea class="common-textarea mt-10 form-control" name="experience" placeholder="Share your job experience" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Share your job experience'" id="jobDoneExperience" required=""></textarea>
 
                   <input name="image" class="common-input mb-20 form-control" type="file" id="jobImage">
 
@@ -483,6 +483,9 @@
 
 <script>
   $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('jobDoneExperience');
     $("#jobImage").fileinput({
       theme: 'fa',
       dropZoneEnabled: false,
