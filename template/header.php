@@ -117,7 +117,7 @@
                   if($user_id != ""){
 
                     ?>
-                    <li class="menu-has-children"><a href=""><?php echo $user_name; ?></a>
+                    <li class="menu-has-children"><a href="#"><?php echo $user_name; ?></a>
                       <ul>
                         <li><a href="./dashboard/profile.php">View Profile</a></li>
                         <li><a href="./dashboard">Dashboard</a></li>
