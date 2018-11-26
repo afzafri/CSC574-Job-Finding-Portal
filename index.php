@@ -485,7 +485,14 @@
   $(function () {
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
-    CKEDITOR.replace('jobDoneExperience');
+    <?php
+      if($user_id != "" && $level == 3){
+        ?>
+          CKEDITOR.replace('jobDoneExperience');
+        <?php
+      }
+    ?>
+
     $("#jobImage").fileinput({
       theme: 'fa',
       dropZoneEnabled: false,
