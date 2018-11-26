@@ -311,7 +311,7 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        <table id="applicationTable" class="table table-bordered table-striped">
+        <table id="applicationsTable" class="table table-bordered table-striped">
           <thead>
           <tr>
             <th>#</th>
@@ -413,9 +413,6 @@
 
 <script>
   $(function () {
-    $('#jobTable, #applicationTable').DataTable({
-      "order": [[ 0, "desc" ]]
-    });
 
     $('#startDateTime, #endDateTime').datetimepicker();
 

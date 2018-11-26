@@ -51,6 +51,53 @@
    }
 
    $('.select2').select2();
+
+   // DataTables
+   var table = $('#jobTable, #applicationsTable, #postsTable').DataTable( {
+       dom: 'Bfrtilp',
+       buttons: [
+             'copy',
+             {
+                  extend: 'excel',
+                  text: '<i class="fa fa-fw fa-file-excel-o"></i> Excel',
+                  titleAttr: 'Export all data into Excel file',
+                  title: 'Exported Data',
+                  exportOptions: {
+                      columns: 'th:not(:last-child)'
+                  }
+              },
+              {
+                   extend: 'csv',
+                   text: '<i class="fa fa-fw fa-file-excel-o"></i> CSV',
+                   titleAttr: 'Export all data into CSV file',
+                   title: 'Exported Data',
+                   exportOptions: {
+                       columns: 'th:not(:last-child)'
+                   }
+               },
+            {
+                 extend: 'pdf',
+                 text: '<i class="fa fa-fw fa-file-pdf-o"></i> PDF',
+                 titleAttr: 'Export all data into PDF file',
+                 title: 'Exported Data',
+                 exportOptions: {
+                     columns: 'th:not(:last-child)'
+                 }
+             },
+             {
+                  extend: 'print',
+                  text: '<i class="fa fa-fw fa-print"></i> Print',
+                  titleAttr: 'Print Data',
+                  title: 'Exported Data',
+                  exportOptions: {
+                      columns: 'th:not(:last-child)'
+                  }
+              }
+       ],
+       order: [
+         [0,"desc"]
+       ]
+   });
  </script>
 </body>
 </html>

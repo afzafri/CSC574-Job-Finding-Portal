@@ -152,11 +152,3 @@
 </div>
 
 <?php include './template/footer.php'; ?>
-
-<script>
-  $(function () {
-    $('#applicationsTable').DataTable({
-      "order": [[ 0, "desc" ]]
-    });
-  })
-</script>
