@@ -145,6 +145,52 @@
       echo "Connection failed : " . $e->getMessage();
     }
   }
+
+  $cpErr = "";
+  if(isset($_POST['changePassword'])) {
+    $curPass = $_POST['curPass'];
+    $newPass = $_POST['newPass'];
+    $confirmNewPass = $_POST['confirmNewPass'];
+    $loginID = $_POST['loginid'];
+
+    try
+    {
+      // check if email already registered
+      $stmt = $conn->prepare("SELECT * FROM LOGIN WHERE L_ID = ?");
+      $stmt->execute(array($loginID));
+      $resL = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      // if current pass entered match in db, allow change pass
+      if(md5($curPass) == $resL['L_PASSWORD']) {
+        // if new pass and confirm new pass match
+        if($newPass == $confirmNewPass) {
+          $stmtUP = $conn->prepare("UPDATE LOGIN SET L_PASSWORD = ? WHERE L_ID = ?");
+          $stmtUP->execute(array(md5($newPass), $loginID));
+          echo ("<script LANGUAGE='JavaScript'>
+          alert('Password updated.')
+          </script>");
+        } else {
+          $cpErr = "<center><font color='red'><b>New password entered does not match.</b></font></center>";
+          echo ("<script LANGUAGE='JavaScript'>
+          alert('New password entered does not match.')
+          </script>");
+        }
+      } else {
+        $cpErr = "<center><font color='red'><b>Incorrect current password.</b></font></center>";
+        echo ("<script LANGUAGE='JavaScript'>
+        alert('Incorrect current password.')
+        </script>");
+      }
+    }
+    catch(PDOException $e)
+    {
+      echo "
+      <script>
+      alert('". $e->getMessage()."');
+      </script>";
+      echo "Connection failed : " . $e->getMessage();
+    }
+  }
 ?>
 
 <div class="box">
@@ -152,7 +198,6 @@
     <h3 class="box-title">Edit Profile</h3>
   </div>
 
-<!--modal body-->
   <?php
     if($level == 2) {
       ?>
@@ -254,7 +299,33 @@
       <?php
     }
   ?>
+</div>
 
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Change Password</h3>
+  </div>
+  <form action="./profile.php" method="post" onsubmit="return confirm('Update password?');">
+    <div class="box-body">
+      <div class="form-group">
+        <label>Current password</label>
+        <input type="password" class="form-control" placeholder="Enter current password" name="curPass" required>
+      </div>
+      <div class="form-group">
+        <label>New password</label>
+        <input type="password" class="form-control" placeholder="Enter new password" name="newPass" required>
+      </div>
+      <div class="form-group">
+        <label>Confirm New password</label>
+        <input type="password" class="form-control" placeholder="Confrm new password" name="confirmNewPass" required>
+      </div>
+      <?php echo $cpErr; ?>
+    </div>
+    <div class="box-footer">
+      <input type="hidden" name="loginid" value="<?php echo $user_id; ?>">
+      <button type="submit" class="btn btn-success pull-right" name="changePassword">Save changes</button>
+    </div>
+  </form>
 </div>
 
 <?php include './template/footer.php'; ?>
