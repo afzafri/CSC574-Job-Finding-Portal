@@ -80,7 +80,8 @@
     <link rel="stylesheet" href="./template/css/animate.min.css">
     <link rel="stylesheet" href="./template/css/owl.carousel.css">
     <link rel="stylesheet" href="./template/css/main.css">
-    <link rel="stylesheet" href="./template/plugins/DataTables/datatables.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="./dashboard/template/bower_components/DataTables/datatables.css">
     <!-- Bootstrap FileInput -->
     <link rel="stylesheet" href="./dashboard/template/bower_components/bootstrap-fileinput/css/fileinput.css">
     <!-- Select2 -->

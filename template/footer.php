@@ -22,7 +22,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="./template/js/vendor/jquery-2.2.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="./template/js/vendor/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
   <script src="./template/js/easing.min.js"></script>
 <script src="./template/js/hoverIntent.js"></script>
 <script src="./template/js/superfish.min.js"></script>
@@ -34,7 +33,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="./template/js/parallax.min.js"></script>
 <script src="./template/js/mail-script.js"></script>
 <script src="./template/js/main.js"></script>
-<script src="./template/plugins/DataTables/datatables.js"></script>
+<script src="./dashboard/template/bower_components/DataTables/datatables.js"></script>
 <!-- Bootstrap FileInput -->
 <script src="./dashboard/template/bower_components/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
 <!-- Select2 -->
