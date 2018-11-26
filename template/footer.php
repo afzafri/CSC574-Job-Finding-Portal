@@ -33,6 +33,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="./template/js/parallax.min.js"></script>
 <script src="./template/js/mail-script.js"></script>
 <script src="./template/js/main.js"></script>
+<!-- DataTables -->
 <script src="./dashboard/template/bower_components/DataTables/datatables.js"></script>
 <!-- Bootstrap FileInput -->
 <script src="./dashboard/template/bower_components/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>

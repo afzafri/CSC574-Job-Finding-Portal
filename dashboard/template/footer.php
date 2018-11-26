@@ -27,8 +27,7 @@
 <!-- AdminLTE App -->
 <script src="./template/dist/js/adminlte.min.js"></script>
 <!-- DataTables -->
-<script src="./template/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="./template/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="./template/bower_components/DataTables/datatables.js"></script>
 <!-- DateTimePicker -->
 <script src="./template/bower_components/moment/min/moment.min.js"></script>
 <script src="./template/bower_components/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>

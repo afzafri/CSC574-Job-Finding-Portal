@@ -77,7 +77,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Ionicons -->
   <link rel="stylesheet" href="./template/bower_components/Ionicons/css/ionicons.min.css">
   <!-- DataTables -->
-  <link rel="stylesheet" href="./template/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="./template/bower_components/DataTables/datatables.css">
   <!-- DateTimePicker -->
   <link rel="stylesheet" href="./template/bower_components/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
   <!-- Bootstrap FileInput -->
