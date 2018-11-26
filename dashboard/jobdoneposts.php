@@ -27,6 +27,7 @@
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Posts List</h3>
+    <a href="../index.php" class="btn btn-success pull-right"><i class="fa fa-fw fa-plus"></i> Create new post</a>
   </div>
   <!-- /.box-header -->
   <div class="box-body">
