@@ -50,11 +50,11 @@
   <div class="container">
     <div class="row">
 
-
+      <h3>Job Details</h3>
       <div class="col-sm-12 purple-box">
           <h4>
             <img src='<?php echo $jpprofilepic; ?>' width="50px"> <br>
-            <?php echo $jpname; ?> <br><br>
+            Job provided by <?php echo $jpname; ?> <br><br>
             Total Job Applications: <?php echo $totalApplied; ?>
           </h4>
         <hr>
@@ -71,13 +71,88 @@
               foreach ($areaTags as $areaTags) {
                 ?>
                   <li>
-                    <a href="./jobsearch.php?search=&states=&tags=<?php echo $areaTags; ?>"><?php echo $areaTags; ?></a>
+                    - <a href="./jobsearch.php?search=&states=&tags=<?php echo $areaTags; ?>"><?php echo $areaTags; ?></a>
                   </li>
                 <?php
               }
             ?>
           </ul>
         </div>
+      </div>
+
+    </div>
+
+    <br><br>
+    <div class="row">
+
+      <h3>Job Seekers Posts</h3>
+      <div class="col-sm-12 purple-box">
+        <table id="posts_table" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Job Seeker</th>
+                    <th>Post</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $count = 1;
+                try
+                {
+                  $stmtJD = $conn->prepare("
+                                          SELECT *
+                                          FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
+                                          WHERE D.JS_ID = S.JS_ID
+                                          AND D.J_ID = J.J_ID
+                                          AND J.JP_ID = P.JP_ID
+                                          AND D.J_ID = ?
+                                          ORDER BY POST_TIME DESC
+                                          ");
+
+                  $stmtJD->execute(array($jobid));
+
+                    while($resultJD = $stmtJD->fetch(PDO::FETCH_ASSOC)) {
+
+                      $jddesc = $resultJD['JD_DESC'];
+                      $jdpic = $resultJD['JD_PICTURE'];
+                      $jdposttime = date('F d, Y \a\t h:i A', strtotime($resultJD['POST_TIME']));
+                      $jsid = $resultJD['JS_ID'];
+                      $jsname = $resultJD['JS_NAME'];
+                      $jsprofilepic = ($resultJD['JS_PROFILEPIC'] != "") ? "./images/profilepics/".$resultJD['JS_PROFILEPIC'] : "./dashboard/template/dist/img/avatar.png";
+
+
+                      echo "
+                        <tr>
+                          <td>$count</td>
+                          <td>
+                            <img src='$jsprofilepic' width='50px'> &nbsp;
+                            $jsname
+                          </td>
+                          <td>
+                          $jddesc <br>
+                          ";
+                          if($jdpic !== "") {
+                            echo "<img src='./images/postspics/$jdpic' height='400px'> <br><br>";
+                          }
+                          echo"
+                          </td>
+                          <td>$jdposttime</td>
+                        </tr>
+                      ";
+
+                      $count++;
+                    }
+                }
+                catch(PDOException $e)
+                {
+                  echo "Connection failed : " . $e->getMessage();
+                }
+                ?>
+            </tbody>
+        </table>
+
       </div>
 
     </div>
@@ -90,3 +165,9 @@
 <!-- End testimonial Area -->
 
 <?php include './template/footer.php'; ?>
+
+<script type="text/javascript">
+$(document).ready( function () {
+  $('#posts_table').DataTable();
+} );
+</script>
