@@ -58,6 +58,37 @@
     }
   }
 
+  // function to show time ago
+  date_default_timezone_set("Asia/Kuala_Lumpur");
+  function time_elapsed_string($datetime, $full = false) {
+      $now = new DateTime;
+      $ago = new DateTime($datetime);
+      $diff = $now->diff($ago);
+
+      $diff->w = floor($diff->d / 7);
+      $diff->d -= $diff->w * 7;
+
+      $string = array(
+          'y' => 'year',
+          'm' => 'month',
+          'w' => 'week',
+          'd' => 'day',
+          'h' => 'hour',
+          'i' => 'minute',
+          's' => 'second',
+      );
+      foreach ($string as $k => &$v) {
+          if ($diff->$k) {
+              $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+          } else {
+              unset($string[$k]);
+          }
+      }
+
+      if (!$full) $string = array_slice($string, 0, 1);
+      return $string ? implode(', ', $string) . ' ago' : 'just now';
+  }
+
 ?>
 
 
@@ -269,8 +300,17 @@
                     <td>
                       <br>
                       <h5><a href="#"><?php echo $jsname; ?></a></h5>
-                      <p class="date"><?php echo $jdposttime; ?> </p>
 
+                      <?php
+                        if(date('Ymd') == date('Ymd', strtotime($resultJD['POST_TIME']))) {
+                          echo time_elapsed_string($resultJD['POST_TIME']);
+                        } else {
+                          ?>
+                          <p class="date"><?php echo $jdposttime; ?> </p>
+                          <?php
+                        }
+
+                       ?>
                     </td>
                   </tr>
                 </table>
@@ -333,86 +373,52 @@
           </form>
         </div>
 
-        <div class="single-widget category-widget">
-          <h4 class="title">Post Categories</h4>
-          <ul>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Techlology</h6> <span>37</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Lifestyle</h6> <span>24</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Fashion</h6> <span>59</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Art</h6> <span>29</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Food</h6> <span>15</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Architecture</h6> <span>09</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Adventure</h6> <span>44</span></a></li>
-          </ul>
-        </div>
-
         <div class="single-widget recent-posts-widget">
           <h4 class="title">Recent Posts</h4>
           <div class="blog-list ">
-            <div class="single-recent-post d-flex flex-row">
-              <div class="recent-thumb">
-                <img class="img-fluid" src="./template/img/blog/r1.jpg" alt="">
-              </div>
-              <div class="recent-details">
-                <a href="blog-single.html">
-                  <h4>
-                    Home Audio Recording
-                    For Everyone
-                  </h4>
-                </a>
-                <p>
-                  02 hours ago
-                </p>
-              </div>
-            </div>
-            <div class="single-recent-post d-flex flex-row">
-              <div class="recent-thumb">
-                <img class="img-fluid" src="./template/img/blog/r2.jpg" alt="">
-              </div>
-              <div class="recent-details">
-                <a href="blog-single.html">
-                  <h4>
-                    Home Audio Recording
-                    For Everyone
-                  </h4>
-                </a>
-                <p>
-                  02 hours ago
-                </p>
-              </div>
-            </div>
-            <div class="single-recent-post d-flex flex-row">
-              <div class="recent-thumb">
-                <img class="img-fluid" src="./template/img/blog/r3.jpg" alt="">
-              </div>
-              <div class="recent-details">
-                <a href="blog-single.html">
-                  <h4>
-                    Home Audio Recording
-                    For Everyone
-                  </h4>
-                </a>
-                <p>
-                  02 hours ago
-                </p>
-              </div>
-            </div>
-            <div class="single-recent-post d-flex flex-row">
-              <div class="recent-thumb">
-                <img class="img-fluid" src="./template/img/blog/r4.jpg" alt="">
-              </div>
-              <div class="recent-details">
-                <a href="blog-single.html">
-                  <h4>
-                    Home Audio Recording
-                    For Everyone
-                  </h4>
-                </a>
-                <p>
-                  02 hours ago
-                </p>
-              </div>
-            </div>
+            <?php
+            $stmtRecent = $conn->prepare("
+                                        SELECT *
+                                        FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
+                                        WHERE D.JS_ID = S.JS_ID
+                                        AND D.J_ID = J.J_ID
+                                        AND J.JP_ID = P.JP_ID
+                                        AND DATE(POST_TIME) = CURDATE()
+                                        ORDER BY POST_TIME DESC
+                                        LIMIT 5
+                                    ");
+              $stmtRecent->execute();
+              while($result = $stmtRecent->fetch(PDO::FETCH_ASSOC)) {
+                $jdid = $result['JD_ID'];
+                $jdpic = $result['JD_PICTURE'];
+                $jdposttime = $result['POST_TIME'];
+                $jid = $result['J_ID'];
+                $jtitle = $result['J_TITLE'];
+                $jsid = $result['JS_ID'];
+                $jsname = $result['JS_NAME'];
+                ?>
+                  <div class="single-recent-post d-flex flex-row">
+                    <div class="recent-thumb">
+                        <?php
+                          if($jdpic !== "") {
+                            echo "<img class='img-fluid' src='./images/postspics/$jdpic' alt=''>";
+                          }
+                        ?>
+                    </div>
+                    <div class="recent-details">
+                      <a href="blog-single.html">
+                        <h4>
+                          <?php echo $jtitle." by ".$jsname; ?>
+                        </h4>
+                      </a>
+                      <p>
+                        <?php echo time_elapsed_string($jdposttime); ?>
+                      </p>
+                    </div>
+                  </div>
+                <?php
+              }
+              ?>
           </div>
         </div>
 
@@ -430,7 +436,7 @@
         </div>
 
         <div class="single-widget tags-widget">
-          <h4 class="title">Tag Clouds</h4>
+          <h4 class="title">Post Categories</h4>
            <ul>
              <?php
                $listAreaTags = array();
