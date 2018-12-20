@@ -286,7 +286,7 @@
 
               <div class="single-post">
 
-                <a href="blog-single.html">
+                <a href="./viewjob.php?jobid=<?php echo $jid; ?>" title="View Job Details">
                   <h1>
                     <?php echo $jtitle; ?>
                   </h1>

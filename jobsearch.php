@@ -390,7 +390,7 @@ if(isset($_POST['applyjob'])) {
           <div class="single-post">
             <div class="row">
               <div class="col-sm-10">
-                <a href="single.html"><h4><?php echo $jtitle; ?></h4></a>
+                <a href="./viewjob.php?jobid=<?php echo $jid; ?>"><h4><?php echo $jtitle; ?></h4></a>
                 <h6>by <?php echo $jpname; ?></h6>
               </div>
               <div class="col-sm-2">
@@ -540,6 +540,7 @@ if(isset($_POST['applyjob'])) {
                   $total = $result['TOTAL'];
                 ?>
                 <div class="single-rated">
+                  <a href="./viewjob.php?jobid=<?php echo $jid; ?>" title="View Job Details">
                   <h4><?php echo $jtitle; ?></h4>
                   <h6><?php echo $jpname; ?></h6>
                   <p>
@@ -548,6 +549,7 @@ if(isset($_POST['applyjob'])) {
                   <h5>Total Applications: <?php echo $total; ?></h5>
                   <p class="address"><span class="lnr lnr-map"></span> <?php echo $jaddress; ?></p>
                   <p class="address"><span class="lnr lnr-database"></span> RM <?php echo $jsalary; ?></p>
+                  </a>
                 </div>
                 <?php
               }
