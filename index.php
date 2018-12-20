@@ -264,7 +264,7 @@
                 <table>
                   <tr>
                     <td>
-                      <img src='<?php echo $jsprofilepic; ?>' alt='$jtitle' width="50px"> &nbsp;
+                      <img src='<?php echo $jsprofilepic; ?>' alt='<?php echo $jtitle; ?>' width="50px"> &nbsp;
                     </td>
                     <td>
                       <br>
