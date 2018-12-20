@@ -518,42 +518,40 @@ if(isset($_POST['applyjob'])) {
         <div class="single-slidebar">
           <h4>Top rated job posts</h4>
           <div class="active-relatedjob-carusel">
-            <div class="single-rated">
-              <img class="img-fluid" src="./template/img/r1.jpg" alt="">
-              <h4>Creative Art Designer</h4>
-              <h6>Premium Labels Limited</h6>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-              </p>
-              <h5>Job Nature: Full time</h5>
-              <p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
-              <p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-              <a href="#" class="btns text-uppercase">Apply job</a>
-            </div>
-            <div class="single-rated">
-              <img class="img-fluid" src="./template/img/r1.jpg" alt="">
-              <h4>Creative Art Designer</h4>
-              <h6>Premium Labels Limited</h6>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-              </p>
-              <h5>Job Nature: Full time</h5>
-              <p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
-              <p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-              <a href="#" class="btns text-uppercase">Apply job</a>
-            </div>
-            <div class="single-rated">
-              <img class="img-fluid" src="./template/img/r1.jpg" alt="">
-              <h4>Creative Art Designer</h4>
-              <h6>Premium Labels Limited</h6>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-              </p>
-              <h5>Job Nature: Full time</h5>
-              <p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
-              <p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-              <a href="#" class="btns text-uppercase">Apply job</a>
-            </div>
+            <?php
+            $stmtTop = $conn->prepare("
+                                        SELECT *, COUNT(*) AS TOTAL
+                                        FROM JOB_APPLICATION A, JOB J, JOB_PROVIDER P
+                                        WHERE A.STATUS = 1
+                                        AND J.J_ID = A.J_ID
+                                        AND J.JP_ID = P.JP_ID
+                                        GROUP BY A.J_ID
+                                        ORDER BY TOTAL DESC
+                                        LIMIT 3
+                                    ");
+              $stmtTop->execute();
+              while($result = $stmtTop->fetch(PDO::FETCH_ASSOC)) {
+                  $jid = $result['J_ID'];
+                  $jtitle = $result['J_TITLE'];
+                  $jdesc = $result['J_DESC'];
+                  $jsalary = $result['J_SALARY'];
+                  $jaddress = $result['J_ADDRESS'];
+                  $jpname = $result['JP_NAME'];
+                  $total = $result['TOTAL'];
+                ?>
+                <div class="single-rated">
+                  <h4><?php echo $jtitle; ?></h4>
+                  <h6><?php echo $jpname; ?></h6>
+                  <p>
+                    <?php echo $jdesc; ?>
+                  </p>
+                  <h5>Total Applications: <?php echo $total; ?></h5>
+                  <p class="address"><span class="lnr lnr-map"></span> <?php echo $jaddress; ?></p>
+                  <p class="address"><span class="lnr lnr-database"></span> RM <?php echo $jsalary; ?></p>
+                </div>
+                <?php
+              }
+              ?>
           </div>
         </div>
 
