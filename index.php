@@ -422,19 +422,6 @@
           </div>
         </div>
 
-        <div class="single-widget category-widget">
-          <h4 class="title">Post Archive</h4>
-          <ul>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Dec '17</h6> <span>37</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Nov '17</h6> <span>24</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Oct '17</h6> <span>59</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Sep '17</h6> <span>29</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Aug '17</h6> <span>15</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Jul '17</h6> <span>09</span></a></li>
-            <li><a href="#" class="justify-content-between align-items-center d-flex"><h6>Jun '17</h6> <span>44</span></a></li>
-          </ul>
-        </div>
-
         <div class="single-widget tags-widget">
           <h4 class="title">Post Categories</h4>
            <ul>
@@ -477,6 +464,29 @@
                }
              ?>
            </ul>
+        </div>
+
+        <div class="single-widget category-widget">
+          <h4 class="title">Post Archive</h4>
+          <ul>
+            <?php
+            $stmtArchive = $conn->prepare("
+                                      SELECT MONTH(POST_TIME) AS MONTH, COUNT(*) AS TOTAL
+                                      FROM JOB_DONE
+                                      WHERE YEAR(POST_TIME) = YEAR(CURRENT_DATE)
+                                      GROUP BY MONTH(POST_TIME)
+                                      ORDER BY MONTH(POST_TIME) DESC
+                                    ");
+              $stmtArchive->execute();
+              while($result = $stmtArchive->fetch(PDO::FETCH_ASSOC)) {
+                $postmonth = (DateTime::createFromFormat('!m', $result['MONTH']))->format('F');
+                $posttotal = $result['TOTAL'];
+                ?>
+                  <li><a href="#" class="justify-content-between align-items-center d-flex"><h6><?php echo $postmonth; ?></h6> <span><?php echo $posttotal; ?></span></a></li>
+                <?php
+              }
+              ?>
+          </ul>
         </div>
 
       </div>
