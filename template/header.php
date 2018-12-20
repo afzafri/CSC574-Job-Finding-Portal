@@ -96,6 +96,14 @@
       background-image: -ms-linear-gradient(0deg, #bfacff 0%, #795fff 100%);
       border: 1px solid #49e4fa;
     }
+    .purple-box {
+      color: #fff;
+      box-shadow: -14.142px 14.142px 20px 0px rgba(157, 157, 157, 0.5);
+      background-image: -moz-linear-gradient(0deg, #bfacff 0%, #795fff 100%);
+      background-image: -webkit-linear-gradient(0deg, #bfacff 0%, #795fff 100%);
+      background-image: -ms-linear-gradient(0deg, #bfacff 0%, #795fff 100%);
+      padding: 25px 25px 25px 25px;
+    }
     </style>
   </head>
   <body>
