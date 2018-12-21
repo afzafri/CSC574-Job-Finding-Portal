@@ -95,7 +95,7 @@
                 <td>";
                 ?>
                 <a href="../viewprovider.php?id=<?php echo $jpid; ?>" class="btn btn-success" title='View account'><i class="fa fa-fw fa-eye"></i></a>
-                <form action='./manageseeker.php' method='post' onsubmit='return confirm("Delete this job provider?");'>
+                <form action='./manageprovider.php' method='post' onsubmit='return confirm("Delete this job provider?");'>
                   <input type='hidden' name='loginid' value='<?php echo $lid; ?>'>
                   <input type='hidden' name='providerid' value='<?php echo $jpid; ?>'>
                   <button type='submit' name='deleteProvider' class='btn btn-danger' title='Delete account'><i class="fa fa-fw fa-trash"></i></button>
