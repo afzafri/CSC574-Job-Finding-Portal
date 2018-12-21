@@ -233,6 +233,7 @@ desired effect
         <?php
           if($level == 1) {
             echo '<li><a href="#"><i class="fa fa-fw fa-list-alt"></i> <span>Portal Statistics</span></a></li>
+                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Staff Account</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Account</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Job Provider Account</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Job Offers</span></a></li>
