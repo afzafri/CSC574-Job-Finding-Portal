@@ -50,7 +50,7 @@
             <div class="row">
               <div class="col-xs-12 col-sm-3 center">
                 <span class="profile-picture">
-                  <img class="editable img-responsive" src="<?php echo $jpprofilepic; ?>">
+                  <img class="editable img-responsive" src="<?php echo $jpprofilepic; ?>" width="200px">
                 </span>
 
                 <div class="space space-4"></div>
