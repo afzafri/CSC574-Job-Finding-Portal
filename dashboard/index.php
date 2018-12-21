@@ -359,8 +359,8 @@
                 echo "
                   <tr>
                     <td>".$count."</td>
-                    <td>".$jobprovider."</td>
-                    <td>".$jobtitle."</td>
+                    <td><a href='../viewprovider.php?id=$jpid'>".$jobprovider."</a></td>
+                    <td><a href='../viewjob.php?jobid=$jid'>".$jobtitle."</a></td>
                     <td>".$jobsalary."</td>
                     <td>".$startdate." - ".$enddate."</td>
                     <td>".$applydate."</td>

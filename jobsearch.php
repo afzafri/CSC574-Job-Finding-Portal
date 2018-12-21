@@ -391,7 +391,7 @@ if(isset($_POST['applyjob'])) {
             <div class="row">
               <div class="col-sm-10">
                 <a href="./viewjob.php?jobid=<?php echo $jid; ?>"><h4><?php echo $jtitle; ?></h4></a>
-                <h6>by <?php echo $jpname; ?></h6>
+                <h6>by <a href="./viewprovider.php?id=<?php echo $jpid; ?>"><?php echo $jpname; ?></a></h6>
               </div>
               <div class="col-sm-2">
                 <?php
@@ -429,6 +429,9 @@ if(isset($_POST['applyjob'])) {
                 </div>
               </div>
             </div>
+
+            <br>
+            <a class="ticker-btn pull-right" href="./viewjob.php?jobid=<?php echo $jid; ?>">View Job Details</a> <br>
           </div>
 
             <?php

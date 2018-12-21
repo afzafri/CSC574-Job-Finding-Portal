@@ -277,6 +277,7 @@
             $jtitle = $resultJD['J_TITLE'];
             $areaTags = explode(",", $resultJD['J_AREA']);
             $jsid = $resultJD['JS_ID'];
+            $jpid = $resultJD['JP_ID'];
             $jpname = $resultJD['JP_NAME'];
             $jsname = $resultJD['JS_NAME'];
             $jsprofilepic = ($resultJD['JS_PROFILEPIC'] != "") ? "./images/profilepics/".$resultJD['JS_PROFILEPIC'] : "./dashboard/template/dist/img/avatar.png";
@@ -316,7 +317,7 @@
                 </table>
 
                 <p class="text-left">
-                  <i class="fa fa-building" aria-hidden="true"></i> <?php echo $jpname; ?> <br>
+                  <i class="fa fa-building" aria-hidden="true"></i> <a href="./viewprovider.php?id=<?php echo $jpid; ?>"><?php echo $jpname; ?></a> <br>
                   <i class="fa fa-fw fa-map-marker"></i> <?php echo $jaddress; ?>
                 </p>
                 <p>
@@ -406,11 +407,9 @@
                         ?>
                     </div>
                     <div class="recent-details">
-                      <a href="blog-single.html">
                         <h4>
                           <?php echo $jtitle." by ".$jsname; ?>
                         </h4>
-                      </a>
                       <p>
                         <?php echo time_elapsed_string($jdposttime); ?>
                       </p>

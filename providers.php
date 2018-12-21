@@ -51,7 +51,7 @@
               echo "
                 <tr>
                   <td>$count</td>
-                  <td>$jpname</td>
+                  <td><a href='./viewprovider.php?id=$jpid'>$jpname</a></td>
                   <td>$jpaddress</td>
                   <td>
                     Phone: $jpphone <br>
