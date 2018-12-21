@@ -53,7 +53,7 @@
 
    // DataTables
    var boxTitle = $('.box-title').text();
-   var table = $('#jobTable, #applicationsTable, #postsTable, #seekersTable, #providersTable').DataTable( {
+   var table = $('#jobTable, #applicationsTable, #postsTable, #seekersTable, #providersTable, #staffsTable').DataTable( {
        dom: 'Bfrtilp',
        buttons: [
              'copy',
