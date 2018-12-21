@@ -132,8 +132,8 @@
                         <tr>
                           <td>$count</td>
                           <td>
-                            <img src='$jsprofilepic' width='50px'> &nbsp;
-                            $jsname
+                            <img src='$jsprofilepic' width='50px'> <br>
+                            <a href='./viewseeker.php?id=$jsid'>$jsname</a>
                           </td>
                           <td>
                           $jddesc <br>

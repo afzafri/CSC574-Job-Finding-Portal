@@ -195,7 +195,7 @@
                 echo "
                   <tr>
                     <td>".$count."</td>
-                    <td>".$jtitle."</td>
+                    <td><a href='../viewjob.php?jobid=$jid'>$jtitle</a></td>
                     <td>".$jdesc."</td>
                     <td>".$jarea."</td>
                     <td>".$jsalary."</td>

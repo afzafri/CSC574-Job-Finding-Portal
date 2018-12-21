@@ -300,7 +300,7 @@
                     </td>
                     <td>
                       <br>
-                      <h5><a href="#"><?php echo $jsname; ?></a></h5>
+                      <h5><a href="./viewseeker.php?id=<?php echo $jsid; ?>"><?php echo $jsname; ?></a></h5>
 
                       <?php
                         if(date('Ymd') == date('Ymd', strtotime($resultJD['POST_TIME']))) {

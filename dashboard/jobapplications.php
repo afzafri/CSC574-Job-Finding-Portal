@@ -99,8 +99,8 @@
             echo "
               <tr>
                 <td>".$count."</td>
-                <td>".$applicant."</td>
-                <td>".$jobtitle."</td>
+                <td><a href='../viewseeker.php?id=$jsid'>$applicant</a></td>
+                <td><a href='../viewjob.php?jobid=$jid'>$jobtitle</a></td>
                 <td>".$jobsalary."</td>
                 <td>".$startdate." - ".$enddate."</td>
                 <td>".$applydate."</td>
