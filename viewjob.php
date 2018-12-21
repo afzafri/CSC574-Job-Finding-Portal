@@ -22,6 +22,7 @@
     $jstart = date('d/m/Y h:i A', strtotime($job['J_START']));
     $jend = date('d/m/Y h:i A', strtotime($job['J_END']));
     $jstatus = $job['J_STATUS'];
+    $jpid = $job['JP_ID'];
     $jpname = $job['JP_NAME'];
     $jpprofilepic = ($job['JP_PROFILEPIC'] != "") ? "./images/profilepics/".$job['JP_PROFILEPIC'] : "./dashboard/template/dist/img/avatar.png";
 
@@ -52,13 +53,17 @@
 
       <h3>Job Details</h3>
       <div class="col-sm-12 purple-box">
-          <h4>
-            <img src='<?php echo $jpprofilepic; ?>' width="50px"> <br>
-            Job provided by <?php echo $jpname; ?> <br><br>
-            Total Job Applications: <?php echo $totalApplied; ?>
-          </h4>
+          <table>
+            <tr>
+              <td><img src='<?php echo $jpprofilepic; ?>' width="50px"></td>
+              <td>
+                &nbsp; Job provided by <a href="./viewprovider.php?id=<?php echo $jpid; ?>"><?php echo $jpname; ?></a><br>
+                &nbsp; Total Job Applications: <?php echo $totalApplied; ?>
+              </td>
+            </tr>
+          </table>
         <hr>
-        <p><?php echo $jdesc; ?></p>
+        <p><?php echo $jtitle; ?> <br> <?php echo $jdesc; ?></p>
         <hr>
         <p class="address"><span class="lnr lnr-map"></span> <?php echo $jaddress ?></p>
         <p class="address"><span class="fa fa-hourglass-start"></span> <?php echo "Start Date: ".$jstart; ?></p>
