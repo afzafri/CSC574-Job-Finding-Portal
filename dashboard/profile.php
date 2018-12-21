@@ -2,6 +2,77 @@
   $pageTitle = "Profile";
   include './template/header.php';
 
+  if(isset($_POST['updateStaff'])) {
+    $useridup = $_POST['userid'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $username = $_POST['username'];
+    $ic = $_POST['ic'];
+    $address = $_POST['address'];
+    $department = $_POST['department'];
+    $phone = $_POST['phone'];
+    $profilepic = $currpicname;
+
+    // upload pic
+    $imgUpmsg = "";
+    if(isset($_FILES['profilepic']) && $_FILES['profilepic']['size'] > 0)
+    {
+      require_once('../uploader.class.php');
+      $obj = new Uploader();
+
+      $obj->dir = "../images/profilepics/"; //directory to store the image/file
+      $obj->files = $_FILES["profilepic"]; //receive from form
+      $obj->filetype = array('png','jpg','jpeg'); //set the allowed image/file extensions
+      $obj->size = 5000000; //set file/image size limit. note: 100000 is 100KB
+      $obj->upimg = true; //set true if want to upload image.
+
+      //upload
+      $stat = json_decode($obj->upload(), true);
+
+      if(array_key_exists('errors', $stat))
+      {
+        $imgUpmsg = $stat['errors']['status'];
+      }
+      else
+      {
+        // delete old profile pic
+        if($currpicname != "") {
+          unlink('../images/profilepics/'.$currpicname);
+        }
+
+        // set new profile pic
+        $profilepic = $stat['success']['filename'];
+        $imgUpmsg = $stat['success']['status'];
+      }
+    }
+
+    try
+    {
+      $stmt = $conn->prepare("UPDATE STAFF SET S_NAME = ?, S_IC = ?, S_ADDRESS = ?, S_DEPARTMENT = ?, S_PHONE = ?, S_PROFILEPIC = ? WHERE S_ID = ?");
+      $stmt->execute(array($name, $ic, $address, $department, $phone, $profilepic, $useridup));
+
+      $stmt = $conn->prepare("UPDATE LOGIN SET L_EMAIL = ?, L_USERNAME = ? WHERE L_ID = ?");
+      $stmt->execute(array($email, $username, $user_id));
+
+      $_SESSION['USER_EMAIL'] = $email;
+      $_SESSION['USER_USERNAME'] = $username;
+
+      echo ("<script LANGUAGE='JavaScript'>
+      window.alert('Succesfully Updated');
+      window.location.href='./profile.php';
+      </script>");
+
+    }
+    catch(PDOException $e)
+    {
+      echo "
+      <script>
+      alert('". $e->getMessage()."');
+      </script>";
+      echo "Connection failed : " . $e->getMessage();
+    }
+  }
+
   if(isset($_POST['updateJobProvider'])) {
     $useridup = $_POST['userid'];
     $name = $_POST['name'];
@@ -199,7 +270,52 @@
   </div>
 
   <?php
-    if($level == 2) {
+    if($level == 1) {
+      ?>
+
+      <form action="./profile.php" method="post" enctype="multipart/form-data" onsubmit="return confirm('Update profile?');">
+        <div class="box-body">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Name</label>
+            <input type="text" class="form-control" placeholder="Enter Name" name="name" value="<?php echo $user_name; ?>" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email</label>
+            <input type="email" class="form-control" placeholder="Enter Email" name="email" value="<?php echo $user_email; ?>" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Username</label>
+            <input type="text" class="form-control" placeholder="Enter Username" name="username" value="<?php echo $user_username; ?>" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">IC</label>
+            <input type="text" class="form-control" placeholder="Enter IC" name="ic" value="<?php echo $user_ic; ?>" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Address</label>
+            <textarea class="form-control" placeholder="Enter Address" name="address" required><?php echo $user_address; ?></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Department</label>
+            <input type="text" class="form-control" placeholder="Enter Department" name="department" value="<?php echo $user_department; ?>" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Phone</label>
+            <input type="text" class="form-control" placeholder="Enter Phone" name="phone" value="<?php echo $user_phone; ?>" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Upload profile picture</label>
+            <input type="file" class="form-control-file" name="profilepic" id="profilepic">
+          </div>
+        </div>
+        <div class="box-footer">
+          <input type="hidden" name="userid" value="<?php echo $user_ids; ?>">
+          <button type="submit" class="btn btn-success pull-right" name="updateStaff">Save changes</button>
+        </div>
+      </form>
+
+      <?php
+    } else if($level == 2) {
       ?>
 
       <form action="./profile.php" method="post" enctype="multipart/form-data" onsubmit="return confirm('Update profile?');">

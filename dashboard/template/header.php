@@ -16,6 +16,19 @@ try
 {
   if($level == 1) {
 
+    $stmt = $conn->prepare("SELECT * FROM STAFF WHERE L_ID = ?");
+    $stmt->execute(array($user_id));
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $user_ids = $result['S_ID'];
+    $user_name = $result['S_NAME'];
+    $user_ic = $result['S_IC'];
+    $user_department = $result['S_DEPARTMENT'];
+    $user_address = $result['S_ADDRESS'];
+    $user_phone = $result['S_PHONE'];
+    $currpicname = $result['S_PROFILEPIC'];
+    $user_profilepic = ($currpicname != "") ? "../images/profilepics/".$currpicname : "./template/dist/img/avatar.png";
+
   }
   else if($level == 2) {
 
