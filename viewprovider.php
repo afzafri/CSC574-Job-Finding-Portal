@@ -155,13 +155,16 @@
 
       <h3>Job List</h3>
       <div class="col-sm-12 purple-box">
-        <table id="posts_table" class="table table-bordered">
+        <table id="jobs_table" class="table table-bordered">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Job Seeker</th>
-                    <th>Post</th>
-                    <th>Date</th>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Area</th>
+                  <th>Salary</th>
+                  <th>Job Duration</th>
+                  <th>No. Applications</th>
                 </tr>
             </thead>
             <tbody>
@@ -169,44 +172,38 @@
                 $count = 1;
                 try
                 {
-                  $stmtJD = $conn->prepare("
-                                          SELECT *
-                                          FROM JOB_DONE D, JOB J, JOB_SEEKER S, JOB_PROVIDER P
-                                          WHERE D.JS_ID = S.JS_ID
-                                          AND D.J_ID = J.J_ID
-                                          AND J.JP_ID = P.JP_ID
-                                          AND D.J_ID = ?
-                                          ORDER BY POST_TIME DESC
+                  $stmtJ = $conn->prepare("
+                                          SELECT * FROM JOB WHERE JP_ID = ?
                                           ");
 
-                  $stmtJD->execute(array($jobid));
+                  $stmtJ->execute(array($id));
 
-                    while($resultJD = $stmtJD->fetch(PDO::FETCH_ASSOC)) {
+                    while($result = $stmtJ->fetch(PDO::FETCH_ASSOC)) {
 
-                      $jddesc = $resultJD['JD_DESC'];
-                      $jdpic = $resultJD['JD_PICTURE'];
-                      $jdposttime = date('F d, Y \a\t h:i A', strtotime($resultJD['POST_TIME']));
-                      $jsid = $resultJD['JS_ID'];
-                      $jsname = $resultJD['JS_NAME'];
-                      $jsprofilepic = ($resultJD['JS_PROFILEPIC'] != "") ? "./images/profilepics/".$resultJD['JS_PROFILEPIC'] : "./dashboard/template/dist/img/avatar.png";
+                      $jid = $result['J_ID'];
+                      $jtitle = $result['J_TITLE'];
+                      $jdesc = $result['J_DESC'];
+                      $jarea = $result['J_AREA'];
+                      $jsalary = $result['J_SALARY'];
+                      $jstart = date('d/m/Y h:i A', strtotime($result['J_START']));
+                      $jend = date('d/m/Y h:i A', strtotime($result['J_END']));
+                      $jstatus = $result['J_STATUS'];
 
+                      // count and get number of applications for each job
+                      $stmtApp = $conn->prepare("SELECT COUNT(*) AS TOTAL FROM JOB_APPLICATION WHERE J_ID = ?");
+                      $stmtApp->execute(array($jid));
+                      $resApp = $stmtApp->fetch(PDO::FETCH_ASSOC);
+                      $totalApp = $resApp['TOTAL'];
 
                       echo "
                         <tr>
-                          <td>$count</td>
-                          <td>
-                            <img src='$jsprofilepic' width='50px'> &nbsp;
-                            $jsname
-                          </td>
-                          <td>
-                          $jddesc <br>
-                          ";
-                          if($jdpic !== "") {
-                            echo "<img src='./images/postspics/$jdpic' height='400px'> <br><br>";
-                          }
-                          echo"
-                          </td>
-                          <td>$jdposttime</td>
+                          <td>".$count."</td>
+                          <td><a href='viewjob.php?jobid=".$jid."'>".$jtitle."</a></td>
+                          <td>".$jdesc."</td>
+                          <td>".$jarea."</td>
+                          <td>".$jsalary."</td>
+                          <td>".$jstart." to ".$jend."</td>
+                          <td>".$totalApp."</td>
                         </tr>
                       ";
 
@@ -236,7 +233,7 @@
 
 <script type="text/javascript">
 $(document).ready( function () {
-  $('#posts_table').DataTable();
+  $('#jobs_table').DataTable();
 } );
 </script>
 
