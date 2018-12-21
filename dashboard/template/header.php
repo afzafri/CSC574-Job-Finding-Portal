@@ -234,8 +234,8 @@ desired effect
           if($level == 1) {
             echo '<li><a href="#"><i class="fa fa-fw fa-list-alt"></i> <span>Portal Statistics</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Staff Account</span></a></li>
-                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Account</span></a></li>
-                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Job Provider Account</span></a></li>
+                  <li><a href="./manageseeker.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Seeker Account</span></a></li>
+                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Job Provider Account</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Job Offers</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Post</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>View and Generate Report</span></a></li>';
