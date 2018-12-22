@@ -62,7 +62,7 @@
           ORDER BY JP.JP_ID DESC
 
           ");
-          $stmt->execute(array($user_ids));
+          $stmt->execute();
 
           //fetch
           while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
