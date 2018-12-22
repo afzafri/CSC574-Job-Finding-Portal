@@ -2,6 +2,97 @@
   $pageTitle = "Manage Staff Accounts";
   include './template/header.php';
 
+  if(isset($_POST['registerStaff'])) {
+    $email = $_POST['email'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $password_confirm = $_POST['password_confirm'];
+
+    $name = $_POST['name'];
+    $ic = $_POST['ic'];
+    $address = $_POST['address'];
+    $department = $_POST['department'];
+    $phone = $_POST['phone'];
+
+    try
+    {
+      // check if email already registered
+      $stmt = $conn->prepare("SELECT * FROM LOGIN WHERE L_EMAIL = ?");
+      $stmt->execute(array($email));
+
+      if(!$stmt->fetch(PDO::FETCH_ASSOC)) {
+        // email not registered, register new
+
+        // check if password matched
+        if($password != $password_confirm)
+        {
+          echo "<script>alert('Password not match. Please check')</script>";
+          $errormsg = "<center><h4><font color='red'>Password not match. Please check</font></h4></center>";
+        } else {
+          // insert into login table
+          $stmt = $conn->prepare("INSERT INTO
+                                  LOGIN (L_EMAIL, L_USERNAME, L_PASSWORD, L_LEVEL)
+                                  VALUES (?, ?, ?, ?) ");
+
+          $stmt->execute(array($email, $username, md5($password), 1));
+
+          // get the login id
+          $loginid = $conn->lastInsertId();
+
+          // upload pic
+          $imgUpmsg = "";
+          $profilepic = "";
+          if(isset($_FILES['profilepic']) && $_FILES['profilepic']['size'] > 0)
+          {
+            require_once('../uploader.class.php');
+            $obj = new Uploader();
+
+            $obj->dir = "../images/profilepics/"; //directory to store the image/file
+            $obj->files = $_FILES["profilepic"]; //receive from form
+            $obj->filetype = array('png','jpg','jpeg'); //set the allowed image/file extensions
+            $obj->size = 5000000; //set file/image size limit. note: 100000 is 100KB
+            $obj->upimg = true; //set true if want to upload image.
+
+            //upload
+            $stat = json_decode($obj->upload(), true);
+
+            if(array_key_exists('errors', $stat))
+            {
+              $imgUpmsg = $stat['errors']['status'];
+            }
+            else
+            {
+              // set new profile pic
+              $profilepic = $stat['success']['filename'];
+              $imgUpmsg = $stat['success']['status'];
+            }
+          }
+
+          // insert into staff table
+          $stmt = $conn->prepare("INSERT INTO
+                                  STAFF (S_NAME, S_IC, S_ADDRESS, S_DEPARTMENT, S_PHONE, S_PROFILEPIC, L_ID)
+                                  VALUES (?,?,?,?,?,?,?) ");                    
+          $stmt->execute(array($name, $ic, $address, $department, $phone, $profilepic, $loginid));
+
+            echo "
+            <script>
+            alert('New account successfully registered.');
+            </script>";
+        }
+
+      } else {
+        // email already registered
+        echo "<script>alert('Email address already in used.')</script>";
+        $errormsg = "<center><h4><font color='red'>Email address already in used.</font></h4></center>";
+      }
+
+    }
+    catch(PDOException $e)
+    {
+      echo "Connection failed : " . $e->getMessage();
+    }
+  }
+
   if(isset($_POST['deleteStaff'])) {
 
     $loginid = $_POST['loginid'];
@@ -155,14 +246,6 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>
                     <input type="text" class="form-control" placeholder="Enter Name" name="name" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email</label>
-                    <input type="email" class="form-control" placeholder="Enter Email" name="email" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Username</label>
-                    <input type="text" class="form-control" placeholder="Enter Username" name="username" required>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">IC</label>
