@@ -236,7 +236,7 @@ desired effect
                   <li><a href="./managestaff.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Staff Account</span></a></li>
                   <li><a href="./manageseeker.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Seeker Account</span></a></li>
                   <li><a href="./manageprovider.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Job Provider Account</span></a></li>
-                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Job Offers</span></a></li>
+                  <li><a href="./managejob.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Job Offers</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Post</span></a></li>
                   <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>View and Generate Report</span></a></li>';
           }
