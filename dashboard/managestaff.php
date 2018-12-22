@@ -30,6 +30,7 @@
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Staffs List</h3>
+    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-register-staff"><i class="fa fa-fw fa-user-plus"></i> Register New Staff</button>
   </div>
   <!-- /.box-header -->
   <div class="box-body">
@@ -116,4 +117,98 @@
   <!-- /.box-body -->
 </div>
 
+<!--modal dialog -->
+<div class="modal fade" id="modal-register-staff" style="display: none;">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Register New Staff</h4>
+              </div>
+              <form action="./managestaff.php" method="post" enctype="multipart/form-data" onsubmit="return confirm('Register new Staff account?');">
+                <div class="modal-body">
+                <!--modal body-->
+                <div class="box-body">
+
+                  <h4><i class="fa fa-fw fa-lock"></i> Login Details</h4>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="text" class="form-control" placeholder="Enter Email" name="email" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" placeholder="Enter Username" name="username" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Password</label>
+                    <input type="text" class="form-control" placeholder="Enter Password" name="password" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Confirm Password</label>
+                    <input type="text" class="form-control" placeholder="Re-enter Password" name="password_confirm" required>
+                  </div>
+
+                  <br>
+                  <hr>
+                  <h4><i class="fa fa-fw fa-user"></i> Profile Details</h4>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Name" name="name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email" class="form-control" placeholder="Enter Email" name="email" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" placeholder="Enter Username" name="username" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">IC</label>
+                    <input type="text" class="form-control" placeholder="Enter IC" name="ic" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Address</label>
+                    <textarea class="form-control" placeholder="Enter Address" name="address" required></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Department</label>
+                    <input type="text" class="form-control" placeholder="Enter Department" name="department" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Phone</label>
+                    <input type="text" class="form-control" placeholder="Enter Phone" name="phone" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Upload profile picture</label>
+                    <input type="file" class="form-control-file" name="profilepic" id="profilepic">
+                  </div>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" name="registerStaff">Register</button>
+                </div>
+              </div>
+              </form>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+        </div>
+
 <?php include './template/footer.php'; ?>
+
+<script>
+  $(function () {
+    $("#profilepic").fileinput({
+      theme: 'fa',
+      dropZoneEnabled: false,
+      showUpload: false,
+      allowedFileExtensions: ['png','jpg','jpeg'],
+      maxFileSize: 5000,
+      msgPlaceholder: 'Choose profile picture...',
+    });
+  });
+  </script>
