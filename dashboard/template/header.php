@@ -152,7 +152,7 @@ desired effect
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="./index.html" class="logo">
+    <a href="./index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>J</b>FP</span>
       <!-- logo for regular state and mobile devices -->
@@ -232,13 +232,13 @@ desired effect
         <!-- Optionally, you can add icons to the links -->
         <?php
           if($level == 1) {
-            echo '<li><a href="#"><i class="fa fa-fw fa-list-alt"></i> <span>Portal Statistics</span></a></li>
+            echo '<li><a href="./index.php"><i class="fa fa-fw fa-bar-chart"></i> <span>Portal Statistics</span></a></li>
                   <li><a href="./managestaff.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Staff Account</span></a></li>
                   <li><a href="./manageseeker.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Seeker Account</span></a></li>
                   <li><a href="./manageprovider.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Job Provider Account</span></a></li>
                   <li><a href="./managejob.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage Job Offers</span></a></li>
                   <li><a href="./managepost.php"><i class="fa fa-fw fa-pencil-square-o"></i> <span>Manage User Post</span></a></li>
-                  <li><a href="#"><i class="fa fa-fw fa-pencil-square-o"></i> <span>View and Generate Report</span></a></li>';
+                  <li><a href="#"><i class="fa fa-fw fa-file-text"></i> <span>View and Generate Report</span></a></li>';
           }
           else if($level == 2) {
             echo '<li><a href="./index.php"><i class="fa fa-fw fa-list-alt"></i> <span>Manage Job Offers</span></a></li>
