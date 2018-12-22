@@ -100,7 +100,7 @@
                 <td>";
                 ?>
                 <a href="../viewjob.php?jobid=<?php echo $jid; ?>" class="btn btn-success" title='View job details'><i class="fa fa-fw fa-eye"></i></a>
-                <form action='./manageprovider.php' method='post' onsubmit='return confirm("Delete this job offer?");'>
+                <form action='./managejob.php' method='post' onsubmit='return confirm("Delete this job offer?");'>
                   <input type='hidden' name='offerid' value='<?php echo $jid; ?>'>
                   <button type='submit' name='deleteOffer' class='btn btn-danger' title='Delete job offer'><i class="fa fa-fw fa-trash"></i></button>
                 </form>
