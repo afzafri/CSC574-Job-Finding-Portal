@@ -159,6 +159,7 @@
             <th>Description</th>
             <th>Area</th>
             <th>Salary</th>
+            <th>Job Location</th>
             <th>Job Duration</th>
             <th>No. Applications</th>
             <th>Status</th>
@@ -182,6 +183,7 @@
                 $jdesc = $result['J_DESC'];
                 $jarea = $result['J_AREA'];
                 $jsalary = $result['J_SALARY'];
+                $jaddress = $result['J_ADDRESS'];
                 $jstart = date('d/m/Y h:i A', strtotime($result['J_START']));
                 $jend = date('d/m/Y h:i A', strtotime($result['J_END']));
                 $jstatus = $result['J_STATUS'];
@@ -199,6 +201,7 @@
                     <td>".$jdesc."</td>
                     <td>".$jarea."</td>
                     <td>".$jsalary."</td>
+                    <td>".$jaddress."</td>
                     <td>".$jstart." to ".$jend."</td>
                     <td>".$totalApp."</td>
                     <td>";
@@ -319,6 +322,7 @@
             <th>Job Provider</th>
             <th>Job Title</th>
             <th>Job Salary</th>
+            <th>Job Location</th>
             <th>Job Duration</th>
             <th>Apply Date</th>
             <th>Status</th>
@@ -353,6 +357,7 @@
                 $astatus = $result['STATUS'];
                 $jobtitle = $result['J_TITLE'];
                 $jobsalary = $result['J_SALARY'];
+                $jobaddress = $result['J_ADDRESS'];
                 $startdate = date('d/m/Y', strtotime($result['J_START']));
                 $enddate = date('d/m/Y', strtotime($result['J_END']));
                 $jobprovider = $result['JP_NAME'];
@@ -363,6 +368,7 @@
                     <td><a href='../viewprovider.php?id=$jpid'>".$jobprovider."</a></td>
                     <td><a href='../viewjob.php?jobid=$jid'>".$jobtitle."</a></td>
                     <td>".$jobsalary."</td>
+                    <td>".$jobaddress."</td>
                     <td>".$startdate." - ".$enddate."</td>
                     <td>".$applydate."</td>
                     <td>";

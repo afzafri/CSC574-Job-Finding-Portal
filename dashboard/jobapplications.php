@@ -60,6 +60,7 @@
         <th>Applicant</th>
         <th>Job Title</th>
         <th>Job Salary</th>
+        <th>Job Location</th>
         <th>Job Duration</th>
         <th>Apply Date</th>
         <th>Status</th>
@@ -91,6 +92,7 @@
             $applydate = date('d/m/Y h:i A', strtotime($result['APPLY_DATE']));
             $astatus = $result['STATUS'];
             $jobtitle = $result['J_TITLE'];
+            $jobaddress = $result['J_ADDRESS'];
             $jobsalary = $result['J_SALARY'];
             $startdate = date('d/m/Y', strtotime($result['J_START']));
             $enddate = date('d/m/Y', strtotime($result['J_END']));
@@ -102,6 +104,7 @@
                 <td><a href='../viewseeker.php?id=$jsid'>$applicant</a></td>
                 <td><a href='../viewjob.php?jobid=$jid'>$jobtitle</a></td>
                 <td>".$jobsalary."</td>
+                <td>".$jobaddress."</td>
                 <td>".$startdate." - ".$enddate."</td>
                 <td>".$applydate."</td>
                 <td>";
