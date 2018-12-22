@@ -1,6 +1,9 @@
-<?php
+ <?php
   $pageTitle = "Home";
   include './template/header.php';
+
+  // Statistics Page
+  include './statistics.php';
 
   if(isset($_POST['insertJob'])) {
 
@@ -142,7 +145,38 @@
 <!-- /.modal -->
 
 <?php
-  if($level == 2) {
+  if($level == 1) {
+    ?>
+
+    <h2 class="page-header">Statistics</h2>
+    <!-- Custom Tabs -->
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs ">
+        <li class="active"><a href="#tab_1" data-toggle="tab">Daily</a></li>
+        <li><a href="#tab_2" data-toggle="tab">Monthly</a></li>
+        <li><a href="#tab_3" data-toggle="tab">Yearly</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+          <h4><b class="label bg-red"><?php echo $offersDaily;?></b> total new job offers</h4>
+          <h4><b class="label bg-blue"><?php echo $applyDaily;?></b> total new job applications</h4>
+          <h4><b class="label bg-yellow"><?php echo $postsDaily;?></b> total new user posts</h4>
+        </div><!-- /.tab-pane -->
+        <div class="tab-pane" id="tab_2">
+          <h4><b class="label bg-red"><?php echo $offersMonthly;?></b> total new job offers</h4>
+          <h4><b class="label bg-blue"><?php echo $applyMonthly;?></b> total new job applications</h4>
+          <h4><b class="label bg-yellow"><?php echo $postsMonthly;?></b> total new user posts</h4>
+        </div><!-- /.tab-pane -->
+        <div class="tab-pane" id="tab_3">
+          <h4><b class="label bg-red"><?php echo $offersYearly;?></b> total new job offers</h4>
+          <h4><b class="label bg-blue"><?php echo $applyYearly;?></b> total new job applications</h4>
+          <h4><b class="label bg-yellow"><?php echo $postsYearly;?></b> total new user posts</h4>
+        </div><!-- /.tab-pane -->
+      </div><!-- /.tab-content -->
+    </div><!-- nav-tabs-custom -->
+
+    <?php
+  } else if($level == 2) {
     ?>
     <div class="box">
       <div class="box-header">
