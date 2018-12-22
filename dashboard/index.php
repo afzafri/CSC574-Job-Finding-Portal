@@ -301,6 +301,7 @@
                 </div>
                 <!-- /.modal-dialog -->
               </div>
+            </div>
     <?php
   } else if($level == 3) {
     ?>
