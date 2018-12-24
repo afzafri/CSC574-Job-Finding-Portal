@@ -52,7 +52,7 @@
     <h3 class="box-title">Applications List</h3>
   </div>
   <!-- /.box-header -->
-  <div class="box-body">
+  <div class="box-body table-responsive">
     <table id="applicationsTable" class="table table-bordered table-striped">
       <thead>
       <tr>

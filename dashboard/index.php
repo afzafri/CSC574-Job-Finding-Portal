@@ -184,7 +184,7 @@
           <div class="box-header">
             <h3 class="box-title">Top 10 Job Providers with Most Jobs</h3>
           </div>
-          <div class="box-body">
+          <div class="box-body table-responsive">
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -222,7 +222,7 @@
           <div class="box-header">
             <h3 class="box-title">Top 10 Job Seekers with Most Jobs Accepted</h3>
           </div>
-          <div class="box-body">
+          <div class="box-body table-responsive">
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -260,7 +260,7 @@
       <div class="box-header">
         <h3 class="box-title">Top 10 Jobs With Most Applications</h3>
       </div>
-      <div class="box-body">
+      <div class="box-body table-responsive">
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
@@ -301,7 +301,7 @@
         <h3 class="box-title">Total Jobs by States</h3>
       </div>
       <!-- /.box-header -->
-      <div class="box-body">
+      <div class="box-body table-responsive">
         <canvas id="jobsCountriesChart" width="400" height="150"></canvas>
       </div>
     </div>
@@ -311,7 +311,7 @@
         <h3 class="box-title">Total Jobs by Categories Tags</h3>
       </div>
       <!-- /.box-header -->
-      <div class="box-body">
+      <div class="box-body table-responsive">
         <div id="wordTags"></div>
       </div>
     </div>
@@ -326,7 +326,7 @@
         <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-add-job"><i class="fa fa-fw fa-plus"></i> Add Job</button>
       </div>
       <!-- /.box-header -->
-      <div class="box-body">
+      <div class="box-body table-responsive">
         <table id="jobTable" class="table table-bordered table-striped">
           <thead>
           <tr>
@@ -490,7 +490,7 @@
         <a href="../jobsearch.php" class="btn btn-success pull-right"><i class="fa fa-fw fa-search"></i> Find Job Offers</a>
       </div>
       <!-- /.box-header -->
-      <div class="box-body">
+      <div class="box-body table-responsive">
         <table id="applicationsTable" class="table table-bordered table-striped">
           <thead>
           <tr>

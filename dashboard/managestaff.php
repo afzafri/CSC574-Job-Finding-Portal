@@ -71,7 +71,7 @@
           // insert into staff table
           $stmt = $conn->prepare("INSERT INTO
                                   STAFF (S_NAME, S_IC, S_ADDRESS, S_DEPARTMENT, S_PHONE, S_PROFILEPIC, L_ID)
-                                  VALUES (?,?,?,?,?,?,?) ");                    
+                                  VALUES (?,?,?,?,?,?,?) ");
           $stmt->execute(array($name, $ic, $address, $department, $phone, $profilepic, $loginid));
 
             echo "
@@ -124,7 +124,7 @@
     <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-register-staff"><i class="fa fa-fw fa-user-plus"></i> Register New Staff</button>
   </div>
   <!-- /.box-header -->
-  <div class="box-body">
+  <div class="box-body table-responsive">
     <table id="staffsTable" class="table table-bordered table-striped">
       <thead>
       <tr>

@@ -30,7 +30,7 @@
     <a href="../index.php" class="btn btn-success pull-right"><i class="fa fa-fw fa-plus"></i> Create new post</a>
   </div>
   <!-- /.box-header -->
-  <div class="box-body">
+  <div class="box-body table-responsive">
     <table id="postsTable" class="table table-bordered table-striped">
       <thead>
       <tr>

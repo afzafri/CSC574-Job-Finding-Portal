@@ -7,7 +7,7 @@
 <section class="post-area section-gap">
   <div class="container">
 
-<table id="companies_table" class="table table-bordered">
+<table id="companies_table" class="table table-bordered table-responsive">
     <thead>
         <tr>
             <th>#</th>

@@ -28,7 +28,7 @@
     <h3 class="box-title">Job Offers List</h3>
   </div>
   <!-- /.box-header -->
-  <div class="box-body">
+  <div class="box-body table-responsive">
     <table id="offersTable" class="table table-bordered table-striped">
       <thead>
       <tr>
