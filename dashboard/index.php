@@ -148,7 +148,10 @@
   if($level == 1) {
     ?>
 
-    <h4>Data Statistics</h4>
+    <a href="./report.php" target="_blank" class="btn btn-success btn-lg pull-right"><i class="fa fa-fw fa-print"></i> Generate &amp; Print Report</a>
+    <br>
+
+    <h4>Portal Statistics</h4>
     <!-- Custom Tabs -->
     <div class="nav-tabs-custom">
       <ul class="nav nav-tabs ">
