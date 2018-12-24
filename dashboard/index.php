@@ -619,7 +619,7 @@ if($user_name == "") {
       data: {
           labels: <?php echo json_encode($listnegeri); ?>,
           datasets: [{
-              label: 'Total Jobs by Countries',
+              label: '# jobs',
               data: <?php echo json_encode($totalEachCountry); ?>,
               backgroundColor: bgcolors,
           }]
