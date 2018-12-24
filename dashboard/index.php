@@ -175,75 +175,81 @@
       </div><!-- /.tab-content -->
     </div><!-- nav-tabs-custom -->
 
-    <div class="box">
-      <div class="box-header">
-        <h3 class="box-title">Top 10 Job Providers with Most Jobs</h3>
-      </div>
-      <div class="box-body">
-        <table class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th width="40">#</th>
-              <th>Job Provider</th>
-              <th width="150">Total Jobs</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-              $count = 1;
-              while($result = $topjp->fetch(PDO::FETCH_ASSOC)) {
-                $jpid = $result['JP_ID'];
-                $jpname = $result['JP_NAME'];
-                $totaljobs = $result['TOTAL'];
-
-                ?>
-                  <tr>
-                    <td><?php echo $count; ?></td>
-                    <td><a href="../viewprovider.php?id=<?php echo $jpid; ?>"><?php echo $jpname; ?></a></td>
-                    <td><?php echo $totaljobs; ?></td>
-                  </tr>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Top 10 Job Providers with Most Jobs</h3>
+          </div>
+          <div class="box-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th width="40">#</th>
+                  <th>Job Provider</th>
+                  <th width="150">Total Jobs</th>
+                </tr>
+              </thead>
+              <tbody>
                 <?php
-                $count++;
-              }
-            ?>
-          </tbody>
-        </table>
-      </div>
-    </div>
+                  $count = 1;
+                  while($result = $topjp->fetch(PDO::FETCH_ASSOC)) {
+                    $jpid = $result['JP_ID'];
+                    $jpname = $result['JP_NAME'];
+                    $totaljobs = $result['TOTAL'];
 
-    <div class="box">
-      <div class="box-header">
-        <h3 class="box-title">Top 10 Job Seekers with Most Jobs Accepted</h3>
-      </div>
-      <div class="box-body">
-        <table class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th width="40">#</th>
-              <th>Job Seeker</th>
-              <th width="100">Total Jobs</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-              $count = 1;
-              while($result = $topjs->fetch(PDO::FETCH_ASSOC)) {
-                $jsid = $result['JS_ID'];
-                $jsname = $result['JS_NAME'];
-                $totaljobs = $result['TOTAL'];
-
+                    ?>
+                      <tr>
+                        <td><?php echo $count; ?></td>
+                        <td><a href="../viewprovider.php?id=<?php echo $jpid; ?>"><?php echo $jpname; ?></a></td>
+                        <td><?php echo $totaljobs; ?></td>
+                      </tr>
+                    <?php
+                    $count++;
+                  }
                 ?>
-                  <tr>
-                    <td><?php echo $count; ?></td>
-                    <td><a href="../viewseeker.php?id=<?php echo $jsid; ?>"><?php echo $jsname; ?></a></td>
-                    <td><?php echo $totaljobs; ?></td>
-                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Top 10 Job Seekers with Most Jobs Accepted</h3>
+          </div>
+          <div class="box-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th width="40">#</th>
+                  <th>Job Seeker</th>
+                  <th width="100">Total Jobs</th>
+                </tr>
+              </thead>
+              <tbody>
                 <?php
-                $count++;
-              }
-            ?>
-          </tbody>
-        </table>
+                  $count = 1;
+                  while($result = $topjs->fetch(PDO::FETCH_ASSOC)) {
+                    $jsid = $result['JS_ID'];
+                    $jsname = $result['JS_NAME'];
+                    $totaljobs = $result['TOTAL'];
+
+                    ?>
+                      <tr>
+                        <td><?php echo $count; ?></td>
+                        <td><a href="../viewseeker.php?id=<?php echo $jsid; ?>"><?php echo $jsname; ?></a></td>
+                        <td><?php echo $totaljobs; ?></td>
+                      </tr>
+                    <?php
+                    $count++;
+                  }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -287,7 +293,7 @@
       </div>
     </div>
 
-    
+
 
     <?php
   } else if($level == 2) {
