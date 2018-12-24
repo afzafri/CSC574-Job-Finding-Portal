@@ -298,7 +298,7 @@
 
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Total Jobs by Countries</h3>
+        <h3 class="box-title">Total Jobs by States</h3>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
