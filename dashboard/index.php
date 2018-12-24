@@ -767,7 +767,7 @@ if($user_name == "") {
 
 				_sorted[i][0] = _sorted[i][0].replace(/\s/,"&nbsp;");
 
-				_html += '<span class="tag" style="'+ _styles[_tmpsize] +'">' + _sorted[i][0] + '&nbsp;(' + _sorted[i][1] + ') </span>';
+				_html += '<span class="tag" style="'+ _styles[_tmpsize] +'color:'+random_rgba()+';">' + _sorted[i][0] + '&nbsp;(' + _sorted[i][1] + ') </span>';
 			}
 		}
 
