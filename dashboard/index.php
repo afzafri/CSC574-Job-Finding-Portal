@@ -602,6 +602,17 @@ if($user_name == "") {
 ?>
 
 <script>
+  function random_rgba() {
+      var o = Math.round, r = Math.random, s = 255;
+      return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + 1 + ')';
+  }
+
+  var bgcolors = Array();
+  var nocountries = <?php echo sizeof($listnegeri); ?>;
+  for(var i=0;i<nocountries;i++) {
+    bgcolors.push(random_rgba());
+  }
+
   var ctx = document.getElementById("jobsCountriesChart");
   var myChart = new Chart(ctx, {
       type: 'bar',
@@ -610,9 +621,7 @@ if($user_name == "") {
           datasets: [{
               label: 'Total Jobs by Countries',
               data: <?php echo json_encode($totalEachCountry); ?>,
-              borderColor: "rgba(0, 123, 255, 0.9)",
-              borderWidth: "0",
-              backgroundColor: "rgba(0, 123, 255, 0.5)"
+              backgroundColor: bgcolors,
           }]
       },
       options: {
