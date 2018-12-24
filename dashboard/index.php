@@ -625,6 +625,9 @@ if($user_name == "") {
           }]
       },
       options: {
+          legend: {
+             display: false,
+         },
           scaleShowValues: true,
           scales: {
               yAxes: [{
