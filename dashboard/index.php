@@ -308,7 +308,7 @@
 
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Total Jobs by Categories</h3>
+        <h3 class="box-title">Total Jobs by Categories Tags</h3>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
