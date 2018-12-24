@@ -142,6 +142,7 @@ try
   $tagsArr = array();
   // loop tags, to find total of jobs
   $listAreaTags = array();
+  $totalEachTags = array();
   $stmtTags = $conn->prepare("SELECT J_AREA FROM JOB WHERE J_STATUS = 1");
   $stmtTags->execute();
   while($result = $stmtTags->fetch(PDO::FETCH_ASSOC)) {
@@ -160,6 +161,7 @@ try
     $resArTag = $stmtArTag->fetch(PDO::FETCH_ASSOC);
     $totalArTag = $resArTag['TOTAL'];
 
+    $totalEachTags[] = $totalArTag;
     $tagsArr[] = array('tag' => $artag, 'total' => $totalArTag);
   }
   // sort the array by descending order by total jobs
