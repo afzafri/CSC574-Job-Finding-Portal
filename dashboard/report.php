@@ -177,5 +177,31 @@
       </tbody>
     </table><br><br>
 
+    <b>5.0 TOTAL JOBS BY STATES</b><br><br>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>States</th>
+          <th>Total Jobs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+          $count = 1;
+          foreach ($jobLocArr as $loc) {
+            ?>
+              <tr>
+                <td><?php echo $count; ?></td>
+                <td><?php echo $loc['state']; ?></td>
+                <td><?php echo $loc['total']; ?></td>
+              </tr>
+            <?php
+            $count++;
+          }
+        ?>
+      </tbody>
+    </table><br><br>
+
   </body>
 </html>
