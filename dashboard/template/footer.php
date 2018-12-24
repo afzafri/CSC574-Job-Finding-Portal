@@ -36,6 +36,8 @@
 <script src="./template/bower_components/select2/dist/js/select2.full.min.js"></script>
 <!-- CK Editor -->
 <script src="./template/bower_components/ckeditor/ckeditor.js"></script>
+<!-- ChartJS -->
+<script src="./template/bower_components/ChartJS/Chart.min.js"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
  Both of these plugins are recommended to enhance the
  user experience. -->
