@@ -124,6 +124,7 @@ try
   $jobLocArr = array();
   // loop states, to find total of jobs
   $listnegeri = ["JOHOR","KEDAH","KELANTAN","MELAKA","NEGERI SEMBILAN","PAHANG","PERLIS","PULAU PINANG","PERAK","SABAH","SELANGOR","KUALA LUMPUR","PUTRAJAYA","SARAWAK","TERENGGANU","LABUAN"];
+  $totalEachCountry = array();
   foreach ($listnegeri as $negeri)
   {
     $stmtJobLoc = $conn->prepare("SELECT COUNT(*) TOTAL FROM JOB WHERE J_ADDRESS LIKE ?");
@@ -131,6 +132,7 @@ try
     $resJobLoc = $stmtJobLoc->fetch(PDO::FETCH_ASSOC);
     $totalJobLoc = $resJobLoc['TOTAL'];
 
+    $totalEachCountry[] = $totalJobLoc;
     $jobLocArr[] = array('state' => $negeri, 'total' => $totalJobLoc);
   }
   // sort the array by descending order by total jobs

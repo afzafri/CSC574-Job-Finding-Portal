@@ -293,6 +293,15 @@
       </div>
     </div>
 
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Total Jobs by Countries</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <canvas id="jobsCountriesChart" width="400" height="150"></canvas>
+      </div>
+    </div>
 
 
     <?php
@@ -591,3 +600,35 @@ if($user_name == "") {
   <?php
 }
 ?>
+
+<script>
+  var ctx = document.getElementById("jobsCountriesChart");
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: <?php echo json_encode($listnegeri); ?>,
+          datasets: [{
+              label: 'Total Jobs by Countries',
+              data: <?php echo json_encode($totalEachCountry); ?>,
+              borderColor: "rgba(0, 123, 255, 0.9)",
+              borderWidth: "0",
+              backgroundColor: "rgba(0, 123, 255, 0.5)"
+          }]
+      },
+      options: {
+          scaleShowValues: true,
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }],
+              xAxes: [{
+                  ticks: {
+                      autoSkip: false
+                  }
+              }]
+          }
+      }
+  });
+</script>
