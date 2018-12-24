@@ -255,7 +255,7 @@
 
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Top 10 Job With Most Applications</h3>
+        <h3 class="box-title">Top 10 Jobs With Most Applications</h3>
       </div>
       <div class="box-body">
         <table class="table table-bordered table-striped">
@@ -300,6 +300,16 @@
       <!-- /.box-header -->
       <div class="box-body">
         <canvas id="jobsCountriesChart" width="400" height="150"></canvas>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Total Jobs by Categories</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <div id="wordTags"></div>
       </div>
     </div>
 
@@ -644,3 +654,143 @@ if($user_name == "") {
       }
   });
 </script>
+
+<!-- Generate Word Tags Clouds
+     Codes from: http://labs.polsys.net/tools/tagcloud/
+   -->
+<style media="screen">
+ #wordTags {
+  margin:10px;
+  text-align:center;
+  line-height: 30px;
+}
+</style>
+<script type="text/javascript" language="javascript">
+
+	var _styles = ["font-size:16px;color:#777777;",
+			       "font-size:18px;color:#777777;",
+				   "font-size:20px;color:#666666;",
+				   "font-size:22px;color:#666666;",
+				   "font-size:24px;color:#555555;",
+				   "font-size:26px;color:#555555;",
+				   "font-size:28px;color:#444444;",
+				   "font-size:30px;color:#444444;",
+				   "font-size:32px;color:#333333;",
+				   "font-size:34px;color:#333333;",
+				   "font-size:36px;color:#222222;",
+				   "font-size:38px;color:#222222;",
+				   "font-size:40px;color:#000000;",
+				   "font-size:42px;color:#000000;"]
+
+	var _biggest = 0;
+	var _smallest = 100000000000000;
+
+  createCloud("alpha","inline","950","asis");
+
+	function createCloud(_order,_layout,_width,_case) {
+
+		//var _textinput = $("#textinput").val();
+
+		var _taglist = {};
+		var _textlines = <?php echo json_encode($listTagsnCount); ?>;
+
+
+		if(_textlines[0].match(/:\d/)) {
+			for(var i = 0; i < _textlines.length; i++) {
+				_textlines[i] = $.trim(_textlines[i]);
+				var _tmp = _textlines[i].split(/[,\t:]/);
+				_taglist[_tmp[0]] = parseInt(_tmp[1]);
+			}
+		} else if(_textlines[0].match(/\t\d/)) {
+			for(var i = 0; i < _textlines.length; i++) {
+				_textlines[i] = $.trim(_textlines[i]);
+				var _tmp = _textlines[i].split(/[,\t:]/);
+				_taglist[_tmp[0]] = parseInt(_tmp[1]);
+			}
+		} else {
+			for(var i = 0; i < _textlines.length; i++) {
+				_textlines[i] = $.trim(_textlines[i]);
+				if(typeof(_taglist[_textlines[i]]) == "undefined") {
+					_taglist[_textlines[i]] = 1;
+				} else {
+					_taglist[_textlines[i]]++;
+				}
+			}
+		}
+
+		for(var _key in _taglist) {
+
+			if(_taglist[_key] < _smallest) {
+				_smallest = _taglist[_key];
+			}
+
+			if(_taglist[_key] > _biggest) {
+				_biggest = _taglist[_key];
+			}
+		}
+
+
+		var _sorted = [];
+		for(var _key in _taglist) {
+			var _tag = _key;
+			if(_case == "upper") { var _tag = _key.toUpperCase(); }
+			if(_case == "lower") { var _tag = _key.toLowerCase(); }
+			_sorted.push([_tag, _taglist[_key]])
+		}
+
+		if(_order == 'alpha') {
+			_sorted.sort(function(a, b) {
+				if(a[0][0] < b[0][0]) return -1;
+				if(a[0][0] > b[0][0]) return 1;
+				return 0;
+			});
+		}
+
+		if(_order == 'rank') {
+			_sorted.sort(function(a, b) {return parseInt(a[1]) - parseInt(b[1])})
+			_sorted.reverse();
+		}
+
+		var _html = "";
+
+		for(var i = 0; i < _sorted.length; i++) {
+
+			if (_sorted[i][1] >= _smallest) {
+
+				var _tmpsize = _sorted[i][1] - _smallest;
+
+				if(_tmpsize != 0) {
+					_tmpsize = Math.round(_tmpsize / (_biggest - _smallest) * (_styles.length - 1));
+				}
+
+				//console.log(_tmpsize);
+
+				_sorted[i][0] = _sorted[i][0].replace(/\s/,"&nbsp;");
+
+				_html += '<span class="tag" style="'+ _styles[_tmpsize] +'">' + _sorted[i][0] + '&nbsp;(' + _sorted[i][1] + ') </span>';
+			}
+		}
+
+
+		$("#wordTags").css("width",_width  + "px");
+		$("#wordTags").html(_html);
+
+
+		if(_layout == "inline") {
+			$(".tag").css("display",_layout);
+			$(".tag").css("line-height","normal");
+			if(_order == 'alpha') {
+				$(".tag").css("line-height","35px");
+			} else {
+				$(".tag").css("line-height","150%");
+			}
+
+		} else {
+			$(".tag").css("display",_layout);
+			$(".tag").css("line-height","normal");
+			$(".tag").css("line-height","130%");
+			$(".tag").css("padding-top","8px");
+		}
+	}
+
+	</script>
