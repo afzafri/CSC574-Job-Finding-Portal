@@ -203,5 +203,31 @@
       </tbody>
     </table><br><br>
 
+    <b>6.0 TOTAL JOBS BY CATEGORIES TAGS</b><br><br>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Categories Tags</th>
+          <th>Total Jobs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+          $count = 1;
+          foreach ($tagsArr as $tags) {
+            ?>
+              <tr>
+                <td><?php echo $count; ?></td>
+                <td><?php echo $tags['tag']; ?></td>
+                <td><?php echo $tags['total']; ?></td>
+              </tr>
+            <?php
+            $count++;
+          }
+        ?>
+      </tbody>
+    </table><br><br>
+
   </body>
 </html>
