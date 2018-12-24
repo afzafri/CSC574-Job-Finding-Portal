@@ -2,6 +2,7 @@
   include '../auth.php';
   include '../config.php';
   include './statistics.php';
+  date_default_timezone_set("Asia/Kuala_Lumpur");
 ?>
 
 <!DOCTYPE html>
@@ -42,11 +43,22 @@
       font-size: 12px;
       font-family: "Times New Roman", Times, serif;
     }
+
+    .generateon {
+      text-align: right;
+      color: grey;
+      font-style: italic;
+    }
     </style>
   </head>
   <body onload="window.print(); window.close();">
 
-    <center><h1>Portal Statistics Report</h1></center>
+    <center>
+      <h1>Portal Statistics Report</h1>
+    </center>
+
+    <p class="generateon">Report generated on <?php echo date("M d Y, h:i:sa"); ?></p>
+    <br>
 
     <b>1.0 DATA COUNTS</b><br><br>
     <table>
